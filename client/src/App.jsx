@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
+import Home from './components/home/Home';
+import store from './store';
 
 class App extends Component {
 
@@ -9,6 +11,8 @@ class App extends Component {
   };
 
   componentDidMount = () => {
+
+    console.log(store.getState());
     axios({
       url: 'https://jsonplaceholder.typicode.com/users',
       method: 'GET'
@@ -33,21 +37,18 @@ class App extends Component {
   };
 
   render() {
-    return (
-      <div className="App" style={Style.container}>
-        <h2>React app | Extension</h2>
-        {this.displayUsers(this.state.data)}
+    const state = store.getState() // entire state;
 
-      </div>
-    );
+    switch (state.navigation) {
+      case '/home':
+        return <Home />
+
+      default:
+        return <Home />;
+    }
+
   }
 }
 
-const Style = {
-  container: {
-    width: '600px',
-    height: '600px'
-  }
-};
 
 export default App;

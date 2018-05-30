@@ -1,0 +1,24 @@
+.container {
+    width: 240px;
+    margin: 0 auto;
+    max-width: 360px;
+    border-radius: 1px solid #555;
+}
+
+.btn {
+    padding: 10px;
+    border-radius: 4px;
+    width: 190px;
+    margin: 10px;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: grey;
+    color: #fff;
+}
+
+select {
+    margin-bottom: 20px;
+}
