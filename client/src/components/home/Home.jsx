@@ -23,7 +23,18 @@ class Home extends Component {
         }
     };
 
+
+
+    optionValue = (students) => {
+        return students.map(({ name }, index) => (
+            <option key={index} value={name}>{name}</option>
+        ));
+    };
+
     render() {
+        const { students } = this.props;
+
+        console.log('Students: ', students);
         return (
             <div className="container">
                 <p>Please select one of the option below</p>
@@ -51,10 +62,7 @@ class Home extends Component {
                 <p>Or prefill current student</p>
 
                 <select id='select_student'>
-                    <option value="Peter John">Peter John</option>
-                    <option value="Sarah Sardack">Sarah Sadrack</option>
-                    <option value="Sonson May">Sonson May</option>
-                    <option value="Sam Brown">Sam Brown</option>
+                    {this.optionValue(students)}
                 </select>
             </div>
         );

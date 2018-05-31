@@ -1,8 +1,16 @@
 const initialState = {
-    username: 'accime',
-    url: '/home',
-    users: []
+    url: '/add',
+    users: [],
+    students: [{
+        name: 'Please select a student name',
+        email: ''
+    }],
+    username: '',
+    name: '',
+    code: '',
+    email: ''
 };
+
 
 const reducers = (state = initialState, action) => {
 
@@ -22,7 +30,15 @@ const reducers = (state = initialState, action) => {
                 ...state,
                 ...action.data
             };
-
+        case 'SAVE_STUDENTS':
+            return {
+                ...state,
+                username: '',
+                name: '',
+                code: '',
+                email: '',
+                students: [...state.students, action.data]
+            };
         default:
             return state;
     }

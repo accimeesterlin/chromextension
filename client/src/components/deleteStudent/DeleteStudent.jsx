@@ -12,24 +12,25 @@ class DeleteStudent extends Component {
     displayUsers = (users) => {
 
         return users.map((user, index) => (
-            <div key={index} className='users'>
-                <div>
-                    <p>Name: {user.name}</p>
-                    <p>Email: {user.email}</p>
-                    <p>Username: {user.username}</p>
-                </div>
+            user.email !== '' ?
+                <div key={index} className='users'>
+                    <div>
+                        <p>Name: {user.name}</p>
+                        <p>Email: {user.email}</p>
+                        <p>Username: {user.username}</p>
+                    </div>
 
-                <button className='btn'>Delete</button>
-            </div>
+                    <button className='btn'>Delete</button>
+                </div> : ''
         ));
     };
     render() {
-        const { users, navigate } = this.props;
+        const { navigate, students } = this.props;
 
         return (
             <div className='delete-students'>
                 <h2>Delete Student</h2>
-                {this.displayUsers(users)}
+                {this.displayUsers(students)}
 
                 <NavigationButtons navigate={navigate} url={'/home'} />
             </div>

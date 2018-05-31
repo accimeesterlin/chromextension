@@ -24,3 +24,11 @@ export const fetchStudents = () => {
         })
     }
 };
+
+
+export const saveStudents = (data) => {
+    return {
+        type: 'SAVE_STUDENTS',
+        data
+    };
+};
