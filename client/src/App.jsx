@@ -1,54 +1,52 @@
 import React, { Component } from 'react';
 import './App.css';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import Home from './components/home/Home';
-import store from './store';
+import AddStudent from './components/addStudent/AddStudent';
+import DeleteStudent from './components/deleteStudent/DeleteStudent';
+import { getValue, navigate, fetchStudents, test } from './actions';
 
 class App extends Component {
 
   state = {
-    data: []
+    data: [],
+    navigation: '/add'
   };
 
-  componentDidMount = () => {
 
-    console.log(store.getState());
-    axios({
-      url: 'https://jsonplaceholder.typicode.com/users',
-      method: 'GET'
-    })
-      .then((response) => {
-        this.setState({ data: response.data });
-      })
-      .catch((err) => {
-        console.log('Error: ', err);
-      });
-  };
-
-  displayUsers = (users) => {
-
-    return users.map((user, index) => (
-      <div key={index}>
-        <p>Name: {user.name}</p>
-        <p>Email: {user.email}</p>
-        <p>Username: {user.username}</p>
-      </div>
-    ));
-  };
 
   render() {
-    const state = store.getState() // entire state;
 
-    switch (state.navigation) {
+    switch (this.props.url) {
       case '/home':
-        return <Home />
+        return <Home {...this.props} />
+      case '/add':
+        return <AddStudent {...this.props} />
+
+      case '/delete':
+        return <DeleteStudent {...this.props} />
 
       default:
-        return <Home />;
+        return <Home {...this.props} />;
     }
+
 
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    ...state
+  };
+};
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getValue: (data) => dispatch(getValue(data)),
+    fetchStudents: () => dispatch(fetchStudents()),
+    navigate: (data) => dispatch(navigate(data))
+  }
+};
+
+const AppComponent = connect(mapStateToProps, mapDispatchToProps)(App);
+export default AppComponent;

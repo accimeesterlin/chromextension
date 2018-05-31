@@ -1,0 +1,22 @@
+.delete-students {
+    max-width: 250px;
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    /* border: 1px solid red; */
+}
+
+.delete-students .users {
+    border: 1px solid #d9ddd9;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.delete-students .navigation-buttons {
+    position: fixed;
+    z-index: 9;
+    top: 45px;
+    left: 35%;
+}

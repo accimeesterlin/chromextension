@@ -1,15 +1,28 @@
 const initialState = {
     username: 'accime',
-    navigation: '/home'
+    url: '/home',
+    users: []
 };
 
 const reducers = (state = initialState, action) => {
 
     switch (action.type) {
-        case 'CHANGE_USERNAME':
-            
-            break;
-    
+        case 'NAVIGATION':
+            return {
+                ...state,
+                url: action.url
+            };
+        case 'FETCH_STUDENTS_FULFILLED':
+            return {
+                ...state,
+                users: action.payload.data
+            };
+        case 'GET_VALUE':
+            return {
+                ...state,
+                ...action.data
+            };
+
         default:
             return state;
     }
