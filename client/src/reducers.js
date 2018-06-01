@@ -1,10 +1,9 @@
+import syncStorage from './utils/syncStorage';
+
 const initialState = {
-    url: '/add',
+    url: '/home',
     users: [],
-    students: [{
-        name: 'Please select a student name',
-        email: ''
-    }],
+    students: [],
     username: '',
     name: '',
     code: '',
@@ -30,7 +29,21 @@ const reducers = (state = initialState, action) => {
                 ...state,
                 ...action.data
             };
+
+        case 'DELETE_STUDENT':
+            const {
+                students
+            } = state;
+
+            const deleteCondition = students.filter((student, index) => student.email !== action.email);
+            syncStorage.syncLocalStorage(deleteCondition);
+            return {
+                ...state,
+                students: deleteCondition
+            };
         case 'SAVE_STUDENTS':
+            syncStorage.syncLocalStorage([...state.students, action.data]);
+
             return {
                 ...state,
                 username: '',

@@ -4,25 +4,27 @@ import './deleteStudent.css';
 
 class DeleteStudent extends Component {
 
-    componentDidMount = () => {
-
-        this.props.fetchStudents();
+    deleteCurrentStudent = (index) => {
+        this.props.deleteStudent(index);
     };
 
     displayUsers = (users) => {
-
-        return users.map((user, index) => (
-            user.email !== '' ?
-                <div key={index} className='users'>
+        if (users.length > 0) {
+            return users.map(({ name, username, email }, index) => (
+                <div key={index} className='users' onClick={() => this.deleteCurrentStudent(email)}>
                     <div>
-                        <p>Name: {user.name}</p>
-                        <p>Email: {user.email}</p>
-                        <p>Username: {user.username}</p>
+                        <p>Name: {name}</p>
+                        <p>Email: {email}</p>
+                        <p>Username: {username}</p>
                     </div>
 
                     <button className='btn'>Delete</button>
-                </div> : ''
-        ));
+                </div>
+            ));
+        } else {
+            return <p className='no-more-students'>No more students</p>
+        }
+
     };
     render() {
         const { navigate, students } = this.props;

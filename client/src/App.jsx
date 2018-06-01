@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import Home from './components/home/Home';
 import AddStudent from './components/addStudent/AddStudent';
 import DeleteStudent from './components/deleteStudent/DeleteStudent';
-import { getValue, navigate, fetchStudents, saveStudents } from './actions';
-// import syncStorage from './utils/syncStorage';
+import { getValue, navigate, saveStudents, deleteStudent } from './actions';
+import syncStorage from './utils/syncStorage';
+
 class App extends Component {
 
   state = {
@@ -16,27 +17,29 @@ class App extends Component {
   componentDidMount = () => {
     // To sync with the extension storage
     // DO NOT remove these comments
-    // syncStorage.getLocalStorage('state', (data) => {
-    //   console.log('Add students on load: ', data);
-    //   if (data.students) {
-    //     this.props.saveStudents(data.students);
-    //   } else {
-    //     console.log('There is no students yet in the store');
-    //   }
+    const { saveStudents } = this.props;
 
-    // });
+    syncStorage.getLocalStorage('students', function (data) {
+      const students = data.students;
+
+      if (students.length > 1) {
+        for (let i = 0; i < students.length; i++) {
+          console.log('State: ', students[i]);
+          saveStudents(students[i]);
+        }
+      } else {
+        console.log('Storage is empty');
+      }
+    });
+
   };
+  // chrome.storage.sync.get(['students'], function(students) {
+  //   console.log('Students: ', students);
 
+  // });
 
 
   render() {
-    // const state = this.props;
-    // syncStorage.syncLocalStorage(state); // sync the local storage
-    // syncStorage.getLocalStorage('state', (data) => {
-    //   console.log('Inside State: ', data);
-    // }); // sync the local storage
-
-
 
     switch (this.props.url) {
       case '/home':
@@ -65,7 +68,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getValue: (data) => dispatch(getValue(data)),
     saveStudents: (data) => dispatch(saveStudents(data)),
-    fetchStudents: () => dispatch(fetchStudents()),
+    deleteStudent: (email) => dispatch(deleteStudent(email)),
     navigate: (data) => dispatch(navigate(data))
   }
 };

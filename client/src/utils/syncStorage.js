@@ -1,9 +1,8 @@
 const syncStorage = (() => {
 
-    const syncLocalStorage = (state) => {
-        console.log('Chrome: ', chrome);
+    const syncLocalStorage = (data) => {
         chrome.storage.sync.set({
-            state
+            students: data
         }, () => {
             console.log('Data successfully saved into Local Storage');
         });

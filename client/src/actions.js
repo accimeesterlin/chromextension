@@ -8,6 +8,13 @@ export const getValue = (data) => {
 };
 
 
+export const deleteStudent = (email) => {
+    return {
+        type: 'DELETE_STUDENT',
+        email
+    };
+};
+
 export const navigate = (data) => {
     return {
         type: 'NAVIGATION',
@@ -15,15 +22,7 @@ export const navigate = (data) => {
     }
 };
 
-export const fetchStudents = () => {
-    return {
-        type: "FETCH_STUDENTS",
-        payload: axios({
-            url: 'https://jsonplaceholder.typicode.com/users',
-            method: 'GET'
-        })
-    }
-};
+
 
 
 export const saveStudents = (data) => {

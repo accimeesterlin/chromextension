@@ -23,11 +23,24 @@ class Home extends Component {
         }
     };
 
+    handleChange = (event) => {
+        const value = event.target.value;
+
+        const { students } = this.props;
+
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, { students, value }, function (response) {
+                console.log(response.farewell);
+            });
+        });
+
+    };
+
 
 
     optionValue = (students) => {
-        return students.map(({ name }, index) => (
-            <option key={index} value={name}>{name}</option>
+        return students.map(({ name, email }, index) => (
+            <option key={index} value={email}>{name}</option>
         ));
     };
 
@@ -61,7 +74,8 @@ class Home extends Component {
 
                 <p>Or prefill current student</p>
 
-                <select id='select_student'>
+                <select id='select_student' onChange={this.handleChange}>
+                    <option value='default'>Please select a student</option>
                     {this.optionValue(students)}
                 </select>
             </div>

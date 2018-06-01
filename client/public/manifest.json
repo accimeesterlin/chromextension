@@ -4,11 +4,11 @@
     "description": "Build a basic extension",
     "manifest_version": 2,
     "permissions": ["activeTab", "declarativeContent", "storage"],
-    "background": {
-        "scripts": ["background.js"],
-        "persistent": false
-    },
-    "page_action": {
+    "browser_action": {
         "default_popup": "index.html"
-    }
+    },
+    "content_scripts": [{
+        "matches": ["http://*/*", "https://*/*"],
+        "js": ["autoprefill.js"]
+    }]
 }
