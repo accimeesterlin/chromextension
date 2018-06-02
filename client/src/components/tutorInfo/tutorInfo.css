@@ -1,0 +1,26 @@
+.tutor_info {
+    /* border: 1px solid #d9ddd9; */
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.tutor_info form button {
+    width: 80px;
+    padding: 8px;
+    font-size: 12px;
+    border-radius: 4px;
+    outline: none;
+}
+
+.tutor_info form div:first-child {
+    margin-bottom: 30px;
+}
+
+.tutor_info .go-back {
+    width: 80px;
+    margin-top: 10px;
+    margin-left: 10px;
+}

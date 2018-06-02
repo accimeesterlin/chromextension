@@ -23,6 +23,14 @@ export const navigate = (data) => {
 };
 
 
+export const saveTutorInfo = (data) => {
+    return {
+        type: 'SAVE_TUTOR_INFO',
+        data
+    }
+};
+
+
 
 
 export const saveStudents = (data) => {

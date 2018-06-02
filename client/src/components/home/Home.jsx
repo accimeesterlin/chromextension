@@ -13,8 +13,8 @@ class Home extends Component {
                 navigate({ url: '/delete' });
                 break;
 
-            case 'integrate_google':
-                navigate({ url: '/integrate' });
+            case 'tutor_name':
+                navigate({ url: '/tutor' });
                 break;
 
             default:
@@ -23,17 +23,18 @@ class Home extends Component {
         }
     };
 
-    handleChange = (event) => {
-        const value = event.target.value;
-
-        const { students } = this.props;
-
+    sendMessageToContentScripts = (students, value) => {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             chrome.tabs.sendMessage(tabs[0].id, { students, value }, function (response) {
                 console.log(response.farewell);
             });
         });
+    };
 
+    handleChange = (event) => {
+        const value = event.target.value;
+        const { students } = this.props;
+        this.sendMessageToContentScripts(students, value);
     };
 
 
@@ -44,12 +45,21 @@ class Home extends Component {
         ));
     };
 
+    displayTutorInfo = (name) => {
+        if (name) {
+            return (<p className='title'>Hi, {name}</p>);
+        } else {
+            return '';
+        }
+    };
+
     render() {
-        const { students } = this.props;
+        const { students, tutor_name } = this.props;
 
         console.log('Students: ', students);
         return (
             <div className="container">
+                {this.displayTutorInfo(tutor_name)}
                 <p>Please select one of the option below</p>
 
                 <div className="buttons">
@@ -67,8 +77,8 @@ class Home extends Component {
 
                     <button
                         className='btn'
-                        onClick={() => this.navigateUser('integrate_google')}>
-                        Add/Integrate Google Calendar
+                        onClick={() => this.navigateUser('tutor_name')}>
+                        Add your tutor info
                     </button>
                 </div>
 

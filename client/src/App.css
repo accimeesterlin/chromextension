@@ -1,9 +1,22 @@
 html,
 body {
-    width: 240px;
+    width: 320px;
     max-height: 581px;
 }
 
 #root {
-    height: 310px;
+    height: 350px;
+}
+
+.notication {
+    text-align: center;
+    padding: 1px;
+    border-radius: 4px;
+    background: #dff0d8;
+    color: #3c763d;
+    border-color: #d6e9c6;
+}
+
+.notication p {
+    line-height: 25px;
 }

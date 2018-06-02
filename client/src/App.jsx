@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import Home from './components/home/Home';
 import AddStudent from './components/addStudent/AddStudent';
 import DeleteStudent from './components/deleteStudent/DeleteStudent';
-import { getValue, navigate, saveStudents, deleteStudent } from './actions';
+import TutorInfo from './components/tutorInfo/TutorInfo';
+import { getValue, navigate, saveStudents, deleteStudent, saveTutorInfo } from './actions';
 import syncStorage from './utils/syncStorage';
 
 class App extends Component {
@@ -14,11 +15,20 @@ class App extends Component {
     navigation: '/add'
   };
 
-  componentDidMount = () => {
-    // To sync with the extension storage
-    // DO NOT remove these comments
+  displayNotification = () => {
+    const { notification, notificationMessage } = this.props;
+    if (notification) {
+
+      return (<div className='notication'>
+        <p>{notificationMessage}</p>
+      </div>);
+    }
+  };
+
+  getStudentsFromLocalStorage = () => {
     const { saveStudents } = this.props;
 
+    // Get Students from Storage on loads
     syncStorage.getLocalStorage('students', function (data) {
       const students = data.students;
 
@@ -31,6 +41,25 @@ class App extends Component {
         console.log('Storage is empty');
       }
     });
+  };
+
+  // Get Tutor Infor from Local Storage
+  getTutorInfoFromLocalStoraage = () => {
+    const { saveTutorInfo } = this.props;
+    const info = ['tutor_name', 'google_sheet_url']; // data to get
+
+    for (let i = 0; i < info.length; i++) {
+      chrome.storage.sync.get(info[i], function (data) {
+        const key = info[i];
+        saveTutorInfo({ [key]: data[key] });
+      })
+    }
+
+  };
+
+  componentDidMount = () => {
+    this.getStudentsFromLocalStorage();
+    this.getTutorInfoFromLocalStoraage();
 
   };
   // chrome.storage.sync.get(['students'], function(students) {
@@ -40,18 +69,22 @@ class App extends Component {
 
 
   render() {
+    const { props, displayNotification } = this;
 
     switch (this.props.url) {
       case '/home':
-        return <Home {...this.props} />
+        return <Home {...props} displayNotification={displayNotification} />
       case '/add':
-        return <AddStudent {...this.props} />
+        return <AddStudent {...props} displayNotification={displayNotification} />
 
       case '/delete':
-        return <DeleteStudent {...this.props} />
+        return <DeleteStudent {...props} displayNotification={displayNotification} />
+
+      case '/tutor':
+        return <TutorInfo {...props} displayNotification={displayNotification} />
 
       default:
-        return <Home {...this.props} />;
+        return <Home {...props} displayNotification={displayNotification} />;
     }
 
 
@@ -68,6 +101,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getValue: (data) => dispatch(getValue(data)),
     saveStudents: (data) => dispatch(saveStudents(data)),
+    saveTutorInfo: (data) => dispatch(saveTutorInfo(data)),
     deleteStudent: (email) => dispatch(deleteStudent(email)),
     navigate: (data) => dispatch(navigate(data))
   }

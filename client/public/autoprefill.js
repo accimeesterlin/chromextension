@@ -1,15 +1,11 @@
 const log = console.log;
 log('Hello World');
 
-
-
-
 // Constants
 const TUTOR_NAME_WRAPPER = '.freebirdFormviewerViewItemsTextItemWrapper';
 const RADIO_INPUT = 'quantumWizTogglePaperradioEl'; // aria-checked
 const PLACE_HOLDER = 'quantumWizTextinputPaperinputPlaceholder';
 const TEXTAREA_PLACEHOLDER = 'quantumWizTextinputPapertextareaPlaceholder';
-
 
 const removePlaceholder = () => {
     $(`.${PLACE_HOLDER}, .${TEXTAREA_PLACEHOLDER}`).each(function () {
@@ -18,13 +14,10 @@ const removePlaceholder = () => {
     });
 };
 
-
-
 const getStudentInput = (student) => {
     const inputs = document.querySelectorAll('input[type="text"]');
     autoFillStudentInput(inputs, student);
 };
-
 
 const autoFillStudentInput = (inputs, student) => {
     const studentClassCode = inputs[0];
@@ -41,7 +34,10 @@ const autoFillStudentInput = (inputs, student) => {
 };
 
 const fillInTutorName = () => {
-    $(`${TUTOR_NAME_WRAPPER} input[type="text"]`).val('Esterling Accime');
+    chrome.storage.sync.get('tutor_name', function (data) {
+        const name = data.tutor_name;
+        $(`${TUTOR_NAME_WRAPPER} input[type="text"]`).val(name);
+    });
 };
 
 const fillInSessionDate = () => {
@@ -52,8 +48,6 @@ const fillInSessionDate = () => {
 const fillInComments = () => {
     $('textarea').val('N/A');
 };
-
-
 
 const validateSecondPage = () => {
     console.log('Validate Function: ')
@@ -68,7 +62,6 @@ const validateSecondPage = () => {
             fillInComments();
 
             removePlaceholder();
-
         }
     })
 };
@@ -86,7 +79,6 @@ const grabSelectedStudent = (students, value) => {
         }
         return true;
     });
-
     return current_student;
 };
 
@@ -101,5 +93,4 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     sendResponse({
         farewell: 'goodbye'
     })
-
 });

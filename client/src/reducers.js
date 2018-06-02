@@ -7,7 +7,11 @@ const initialState = {
     username: '',
     name: '',
     code: '',
-    email: ''
+    email: '',
+    tutor_name: '',
+    google_sheet_url: '',
+    notification: false,
+    notificationMessage: ''
 };
 
 
@@ -17,17 +21,36 @@ const reducers = (state = initialState, action) => {
         case 'NAVIGATION':
             return {
                 ...state,
+                notification: false,
+                notificationMessage: '',
                 url: action.url
             };
-        case 'FETCH_STUDENTS_FULFILLED':
-            return {
-                ...state,
-                users: action.payload.data
-            };
+
         case 'GET_VALUE':
             return {
                 ...state,
-                ...action.data
+                ...action.data,
+                notification: false,
+                notificationMessage: ''
+            };
+
+        case 'SAVE_TUTOR_INFO':
+            const {
+                tutor_name,
+                google_sheet_url
+            } = action.data;
+            chrome.storage.sync.set({
+                tutor_name,
+                google_sheet_url
+            }, function () {
+                console.log('Tutor/Sheet has successfully been saved!');
+            });
+
+            return {
+                ...state,
+                ...action.data,
+                notification: true,
+                notificationMessage: 'Your info has successfully been saved!'
             };
 
         case 'DELETE_STUDENT':
@@ -39,7 +62,7 @@ const reducers = (state = initialState, action) => {
             syncStorage.syncLocalStorage(deleteCondition);
             return {
                 ...state,
-                students: deleteCondition
+                students: deleteCondition,
             };
         case 'SAVE_STUDENTS':
             syncStorage.syncLocalStorage([...state.students, action.data]);
@@ -50,7 +73,9 @@ const reducers = (state = initialState, action) => {
                 name: '',
                 code: '',
                 email: '',
-                students: [...state.students, action.data]
+                students: [...state.students, action.data],
+                notification: true,
+                notificationMessage: `We have successfully ${action.data.name} into your student list!`
             };
         default:
             return state;

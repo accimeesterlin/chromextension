@@ -10,15 +10,15 @@ class DeleteStudent extends Component {
 
     displayUsers = (users) => {
         if (users.length > 0) {
-            return users.map(({ name, username, email }, index) => (
-                <div key={index} className='users' onClick={() => this.deleteCurrentStudent(email)}>
+            return users.map(({ name, code, email }, index) => (
+                <div key={index} className='users' >
                     <div>
                         <p>Name: {name}</p>
                         <p>Email: {email}</p>
-                        <p>Username: {username}</p>
+                        <p>Code: {code}</p>
                     </div>
 
-                    <button className='btn'>Delete</button>
+                    <button onClick={() => this.deleteCurrentStudent(email)}>Delete</button>
                 </div>
             ));
         } else {
@@ -26,15 +26,23 @@ class DeleteStudent extends Component {
         }
 
     };
+
+    deleteStudentTitle = (students) => {
+
+        if (students.length > 0) {
+            return (<p className='title'>Delete Student</p>);
+        } else {
+            return '';
+        }
+    };
     render() {
         const { navigate, students } = this.props;
 
         return (
             <div className='delete-students'>
-                <h2>Delete Student</h2>
+                <button className='go-back' onClick={() => navigate({ url: '/home' })}>Go back</button>
+                {this.deleteStudentTitle(students)}
                 {this.displayUsers(students)}
-
-                <NavigationButtons navigate={navigate} url={'/home'} />
             </div>
         );
     }

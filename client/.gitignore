@@ -10,6 +10,9 @@
 /build
 
 
+build.zip
+build.pem
+build.crx
 # misc
 .DS_Store
 .env
