@@ -1,3 +1,9 @@
-#root {
+html,
+body {
     width: 240px;
+    max-height: 581px;
+}
+
+#root {
+    height: 310px;
 }

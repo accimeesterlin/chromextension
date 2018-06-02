@@ -5,10 +5,11 @@
     "manifest_version": 2,
     "permissions": ["activeTab", "declarativeContent", "storage"],
     "browser_action": {
-        "default_popup": "index.html"
+        "default_popup": "index.html",
+        "default_title": "Tutor App"
     },
     "content_scripts": [{
         "matches": ["http://*/*", "https://*/*"],
-        "js": ["autoprefill.js"]
+        "js": ["moment.js", "jquery.js", "autoprefill.js"]
     }]
 }

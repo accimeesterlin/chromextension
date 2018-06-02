@@ -22,7 +22,7 @@ class App extends Component {
     syncStorage.getLocalStorage('students', function (data) {
       const students = data.students;
 
-      if (students.length > 1) {
+      if (students.length > 0) {
         for (let i = 0; i < students.length; i++) {
           console.log('State: ', students[i]);
           saveStudents(students[i]);
