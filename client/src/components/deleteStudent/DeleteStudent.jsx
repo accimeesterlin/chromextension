@@ -9,7 +9,7 @@ class DeleteStudent extends Component {
     displayUsers = (users) => {
         const { deleteStudent } = this.props;
         if (users.length > 0) {
-            users.sort((a, b) => a.name.localeCompare(b.name))
+            users.sort((a, b) => a.name === b.name ? 0 : +(a.name > b.name) || -1)
             return users.map(({ name, code, email }, index) => (
                 <div key={index} className='users' >
                     <div>

@@ -31,7 +31,6 @@ class TutorInfo extends Component {
             } catch (error) {
                 // TODO
                 // Handle multiple cases of failures
-
             }
         }
         this.checkImportStatus(lists_students);

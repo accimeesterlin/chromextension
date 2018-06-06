@@ -49,6 +49,14 @@ export const saveStudents = (data) => {
 };
 
 
+export const loadLastStudent = (student) => {
+    return {
+        type: 'LOAD_STUDENT',
+        student
+    }
+};
+
+
 export const isColumnFiltered = (data) => {
     return {
         type: 'IS_COLUMN_FILTERED',

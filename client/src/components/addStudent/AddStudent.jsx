@@ -3,12 +3,34 @@ import Footer from '../../common/Footer';
 import './addstudent.css';
 class AddStudent extends Component {
 
+
+    componentDidMount = () => {
+        this.getStudentInfoFromLocalStorage();
+    };
+
+    getStudentInfoFromLocalStorage = () => {
+        chrome.storage.sync.get(['name', 'code', 'email', 'username'], (student) => {
+            console.log('Student Local Storage: ', student);
+            this.props.loadLastStudent(student);
+        });
+    };
+
+    storeStudentBasicInfo = (data) => {
+        chrome.storage.sync.set(data, () => {
+            console.log('Student Info has successfully been saved into Local Storage');
+        });
+    };
+
     // Store the value from the input in the store
     handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
 
         this.props.getValue({
+            [name]: value
+        });
+
+        this.storeStudentBasicInfo({
             [name]: value
         });
 
@@ -25,6 +47,12 @@ class AddStudent extends Component {
             username
         });
 
+        chrome.storage.sync.set({
+            name: '',
+            email: '',
+            code: '',
+            username: ''
+        });
     };
 
 

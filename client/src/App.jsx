@@ -13,7 +13,8 @@ import {
   saveTutorInfo,
   handleError,
   fetchGoogleSheetStudent,
-  saveGoogleSheetStudents
+  saveGoogleSheetStudents,
+  loadLastStudent
 } from './actions';
 import syncStorage from './utils/syncStorage';
 
@@ -38,14 +39,12 @@ class App extends Component {
 
   // Get Students from Storage on loads
   getStudentsFromLocalStorage = () => {
-    const { saveStudents } = this.props;
+    const { saveGoogleSheetStudents } = this.props;
     syncStorage.getLocalStorage('students', function (data) {
+      console.log('Students: ', data.students);
       const students = data.students;
       if (students.length > 0) {
-        for (let i = 0; i < students.length; i++) {
-          console.log('State: ', students[i]);
-          saveStudents(students[i]);
-        }
+        saveGoogleSheetStudents(students);
       } else {
         console.log('Storage is empty');
       }
@@ -122,6 +121,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getValue: (data) => dispatch(getValue(data)),
     saveStudents: (data) => dispatch(saveStudents(data)),
+    loadLastStudent: (student) => dispatch(loadLastStudent(student)),
     saveTutorInfo: (data) => dispatch(saveTutorInfo(data)),
     deleteStudent: (email) => dispatch(deleteStudent(email)),
     saveGoogleSheetStudents: (students) => dispatch(saveGoogleSheetStudents(students)),

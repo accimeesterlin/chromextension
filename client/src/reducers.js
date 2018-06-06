@@ -59,6 +59,7 @@ const reducers = (state = initialState, action) => {
         case 'SAVE_GOOGLE_SHEET_STUDENTS':
             const all_students = state.students.concat(action.list_students);
             const list_students = removeDuplicate(all_students);
+            syncStorage.syncLocalStorage(list_students);
 
             return {
                 ...state,
@@ -134,6 +135,12 @@ const reducers = (state = initialState, action) => {
                 ...state,
                 error: action.error,
                 errorMessage: action.errorMessage
+            };
+
+        case 'LOAD_STUDENT':
+            return {
+                ...state,
+                ...action.student
             };
 
         case 'SAVE_STUDENTS':

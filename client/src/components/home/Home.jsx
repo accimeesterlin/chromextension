@@ -45,7 +45,7 @@ class Home extends Component {
     // List all the students in the option
     optionValue = (students) => {
         console.log('Students Home: ', students)
-        students.sort((a, b) => a.name.localeCompare(b.name))
+        students.sort((a, b) => a.name === b.name ? 0 : +(a.name > b.name) || -1);
         return students.map(({ name, email }, index) => (
             <option key={index} value={email}>{name}</option>
         ));
