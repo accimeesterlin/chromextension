@@ -51,6 +51,15 @@ class Home extends Component {
         ));
     };
 
+    // List all students in dropdown
+    listValue = (students) => {
+        students.sort((a, b) => a.name === b.name ? 0 : +(a.name > b.name) || -1);
+        return students.map(({
+            name,
+            email
+        }, index) => (<a onClick={this.handleChange} key={index} value={email}>{name}</a>));
+    };
+
     // Display Tutor title
     displayTutorInfo = (name) => {
         if (name) {
@@ -60,6 +69,26 @@ class Home extends Component {
         }
     };
 
+    showStudents = () => {
+	       document.getElementById("myDropdown").style.display = ("block");
+    }
+
+    filterFunction = () => {
+    	var input, filter, ul, li, a, i;
+    	var input = document.getElementById("myInput");
+    	var filter = input.value.toUpperCase();
+    	var div = document.getElementById("myDropdown");
+    	var a = div.getElementsByTagName("a");
+        div.style.display = "block";
+    	for (i = 0; i < a.length; i++) {
+    	  if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+    		a[i].style.display = "";
+    	  } else {
+    		a[i].style.display = "none";
+    	  }
+    	}
+    }
+
     render() {
         const { students, tutor_name } = this.props;
         console.log('State of Students: ', students);
@@ -67,34 +96,36 @@ class Home extends Component {
         return (
             <div className="container">
                 {this.displayTutorInfo(tutor_name)}
-                <p>Please select one of the option below</p>
+                <p>Please select one of the options below:</p>
 
                 <div className="buttons">
                     <button
-                        className='btn'
+                        className='btn btn-inline'
                         onClick={() => this.navigateUser('add_student')}>
                         Add a student
                     </button>
 
                     <button
-                        className='btn'
+                        className='btn btn-inline'
                         onClick={() => this.navigateUser('delete_student')}>
                         Delete a student
                     </button>
 
                     <button
-                        className='btn'
+                        className='btn btn-green'
                         onClick={() => this.navigateUser('tutor_name')}>
                         Add your tutor info
                     </button>
                 </div>
 
                 <p>Or prefill current student</p>
-
-                <select id='select_student' onChange={this.handleChange}>
-                    <option value='default'>Please select a student</option>
-                    {this.optionValue(students)}
-                </select>
+                
+                <input type="text" placeholder="Filter Students.." id="myInput" onClick={this.showStudents} onKeyUp={this.filterFunction}/>
+                <div className="dropdown">
+                    <div id="myDropdown" className="dropdown-content">
+                        {this.listValue(students)}
+                    </div>
+                </div>
 
                 <Footer />
             </div>
