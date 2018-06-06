@@ -19,8 +19,24 @@
     margin-bottom: 30px;
 }
 
+.tutor_info .error {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.tutor_info .error p {
+    line-height: 20px;
+}
+
 .tutor_info .go-back {
     width: 80px;
     margin-top: 10px;
     margin-left: 10px;
+}
+
+.tutor_info li {
+    margin-top: 10px;
 }

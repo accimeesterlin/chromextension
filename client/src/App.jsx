@@ -5,8 +5,8 @@ import Home from './components/home/Home';
 import AddStudent from './components/addStudent/AddStudent';
 import DeleteStudent from './components/deleteStudent/DeleteStudent';
 import TutorInfo from './components/tutorInfo/TutorInfo';
-import { getValue, navigate, saveStudents, deleteStudent, saveTutorInfo } from './actions';
-import syncStorage from './utils/syncStorage';
+import { getValue, navigate, saveStudents, deleteStudent, saveTutorInfo, fetchGoogleSheetStudent } from './actions';
+// import syncStorage from './utils/syncStorage';
 
 class App extends Component {
 
@@ -25,41 +25,41 @@ class App extends Component {
     }
   };
 
-  getStudentsFromLocalStorage = () => {
-    const { saveStudents } = this.props;
+  // getStudentsFromLocalStorage = () => {
+  //   const { saveStudents } = this.props;
 
-    // Get Students from Storage on loads
-    syncStorage.getLocalStorage('students', function (data) {
-      const students = data.students;
+  //   // Get Students from Storage on loads
+  //   syncStorage.getLocalStorage('students', function (data) {
+  //     const students = data.students;
 
-      if (students.length > 0) {
-        for (let i = 0; i < students.length; i++) {
-          console.log('State: ', students[i]);
-          saveStudents(students[i]);
-        }
-      } else {
-        console.log('Storage is empty');
-      }
-    });
-  };
+  //     if (students.length > 0) {
+  //       for (let i = 0; i < students.length; i++) {
+  //         console.log('State: ', students[i]);
+  //         saveStudents(students[i]);
+  //       }
+  //     } else {
+  //       console.log('Storage is empty');
+  //     }
+  //   });
+  // };
 
-  // Get Tutor Infor from Local Storage
-  getTutorInfoFromLocalStoraage = () => {
-    const { saveTutorInfo } = this.props;
-    const info = ['tutor_name', 'google_sheet_url']; // data to get
+  // // Get Tutor Infor from Local Storage
+  // getTutorInfoFromLocalStoraage = () => {
+  //   const { saveTutorInfo } = this.props;
+  //   const info = ['tutor_name', 'google_sheet_url']; // data to get
 
-    for (let i = 0; i < info.length; i++) {
-      chrome.storage.sync.get(info[i], function (data) {
-        const key = info[i];
-        saveTutorInfo({ [key]: data[key] });
-      })
-    }
+  //   for (let i = 0; i < info.length; i++) {
+  //     chrome.storage.sync.get(info[i], function (data) {
+  //       const key = info[i];
+  //       saveTutorInfo({ [key]: data[key] });
+  //     })
+  //   }
 
-  };
+  // };
 
   componentDidMount = () => {
-    this.getStudentsFromLocalStorage();
-    this.getTutorInfoFromLocalStoraage();
+    // this.getStudentsFromLocalStorage();
+    // this.getTutorInfoFromLocalStoraage();
 
   };
   // chrome.storage.sync.get(['students'], function(students) {
@@ -102,6 +102,7 @@ const mapDispatchToProps = (dispatch) => {
     getValue: (data) => dispatch(getValue(data)),
     saveStudents: (data) => dispatch(saveStudents(data)),
     saveTutorInfo: (data) => dispatch(saveTutorInfo(data)),
+    fetchGoogleSheetStudent: (sheet_id) => dispatch(fetchGoogleSheetStudent(sheet_id)),
     deleteStudent: (email) => dispatch(deleteStudent(email)),
     navigate: (data) => dispatch(navigate(data))
   }

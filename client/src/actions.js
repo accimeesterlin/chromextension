@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+
+
+
 export const getValue = (data) => {
     return {
         type: 'GET_VALUE',
@@ -31,11 +34,23 @@ export const saveTutorInfo = (data) => {
 };
 
 
-
-
 export const saveStudents = (data) => {
     return {
         type: 'SAVE_STUDENTS',
         data
+    };
+};
+
+
+export const fetchGoogleSheetStudent = (sheet_id) => {
+    const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${sheet_id}/values/Sheet1?`;
+    const params = `key=AIzaSyCqo2Ufn8KUXDBUxHUc7MBXoXv8wdBOfK0`;
+
+    return {
+        type: "FETCH_GOOGLE_SHEET_STUDENT",
+        payload: axios({
+            url: endpoint + params,
+            method: 'GET'
+        })
     };
 };
