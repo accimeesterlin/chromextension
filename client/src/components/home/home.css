@@ -1,7 +1,7 @@
 .container {
     width: 240px;
     margin: 0 auto;
-    height: inherit;
+    /* height: 370px; */
     max-width: 420px;
     /* border: 1px solid #d9ddd9; */
     border-radius: 4px;

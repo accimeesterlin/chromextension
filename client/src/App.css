@@ -1,11 +1,8 @@
 html,
-body {
-    width: 320px;
-    max-height: 581px;
-}
-
+body,
 #root {
-    height: 350px;
+    width: 320px;
+    /* height: 370px; */
 }
 
 .notication {
