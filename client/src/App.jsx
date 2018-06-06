@@ -5,8 +5,17 @@ import Home from './components/home/Home';
 import AddStudent from './components/addStudent/AddStudent';
 import DeleteStudent from './components/deleteStudent/DeleteStudent';
 import TutorInfo from './components/tutorInfo/TutorInfo';
-import { getValue, navigate, saveStudents, deleteStudent, saveTutorInfo, fetchGoogleSheetStudent } from './actions';
-// import syncStorage from './utils/syncStorage';
+import {
+  getValue,
+  navigate,
+  saveStudents,
+  deleteStudent,
+  saveTutorInfo,
+  handleError,
+  fetchGoogleSheetStudent,
+  saveGoogleSheetStudents
+} from './actions';
+import syncStorage from './utils/syncStorage';
 
 class App extends Component {
 
@@ -15,52 +24,55 @@ class App extends Component {
     navigation: '/add'
   };
 
+  // Display Notification and Notification Message
   displayNotification = () => {
     const { notification, notificationMessage } = this.props;
     if (notification) {
-
       return (<div className='notication'>
         <p>{notificationMessage}</p>
       </div>);
     }
   };
 
-  // getStudentsFromLocalStorage = () => {
-  //   const { saveStudents } = this.props;
 
-  //   // Get Students from Storage on loads
-  //   syncStorage.getLocalStorage('students', function (data) {
-  //     const students = data.students;
 
-  //     if (students.length > 0) {
-  //       for (let i = 0; i < students.length; i++) {
-  //         console.log('State: ', students[i]);
-  //         saveStudents(students[i]);
-  //       }
-  //     } else {
-  //       console.log('Storage is empty');
-  //     }
-  //   });
-  // };
+  // Get Students from Storage on loads
+  getStudentsFromLocalStorage = () => {
+    const { saveStudents } = this.props;
+    syncStorage.getLocalStorage('students', function (data) {
+      const students = data.students;
+      if (students.length > 0) {
+        for (let i = 0; i < students.length; i++) {
+          console.log('State: ', students[i]);
+          saveStudents(students[i]);
+        }
+      } else {
+        console.log('Storage is empty');
+      }
+    });
+  };
 
-  // // Get Tutor Infor from Local Storage
-  // getTutorInfoFromLocalStoraage = () => {
-  //   const { saveTutorInfo } = this.props;
-  //   const info = ['tutor_name', 'google_sheet_url']; // data to get
+  // Get Tutor Infor from Local Storage
+  getTutorInfoFromLocalStorage = () => {
+    const { saveTutorInfo } = this.props;
+    const info = ['tutor_name']; // data to get
+    for (let i = 0; i < info.length; i++) {
+      try {
+        chrome.storage.sync.get(info[i], function (data) {
+          const key = info[i];
+          saveTutorInfo({ [key]: data[key] });
+        })
+      } catch (error) {
+        // TODO
+      }
+    }
 
-  //   for (let i = 0; i < info.length; i++) {
-  //     chrome.storage.sync.get(info[i], function (data) {
-  //       const key = info[i];
-  //       saveTutorInfo({ [key]: data[key] });
-  //     })
-  //   }
+  };
 
-  // };
-
+  // On load, get students object and tutor info from local storage
   componentDidMount = () => {
-    // this.getStudentsFromLocalStorage();
-    // this.getTutorInfoFromLocalStoraage();
-
+    this.getStudentsFromLocalStorage();
+    this.getTutorInfoFromLocalStorage();
   };
   // chrome.storage.sync.get(['students'], function(students) {
   //   console.log('Students: ', students);
@@ -73,15 +85,24 @@ class App extends Component {
 
     switch (this.props.url) {
       case '/home':
-        return <Home {...props} displayNotification={displayNotification} />
+        return <Home
+          {...props}
+          displayNotification={displayNotification} />
+
       case '/add':
-        return <AddStudent {...props} displayNotification={displayNotification} />
+        return <AddStudent
+          {...props}
+          displayNotification={displayNotification} />
 
       case '/delete':
-        return <DeleteStudent {...props} displayNotification={displayNotification} />
+        return <DeleteStudent
+          {...props}
+          displayNotification={displayNotification} />
 
       case '/tutor':
-        return <TutorInfo {...props} displayNotification={displayNotification} />
+        return <TutorInfo
+          {...props}
+          displayNotification={displayNotification} />
 
       default:
         return <Home {...props} displayNotification={displayNotification} />;
@@ -102,9 +123,12 @@ const mapDispatchToProps = (dispatch) => {
     getValue: (data) => dispatch(getValue(data)),
     saveStudents: (data) => dispatch(saveStudents(data)),
     saveTutorInfo: (data) => dispatch(saveTutorInfo(data)),
-    fetchGoogleSheetStudent: (sheet_id) => dispatch(fetchGoogleSheetStudent(sheet_id)),
     deleteStudent: (email) => dispatch(deleteStudent(email)),
-    navigate: (data) => dispatch(navigate(data))
+    saveGoogleSheetStudents: (students) => dispatch(saveGoogleSheetStudents(students)),
+    handleError: (error) => dispatch(handleError(error)),
+    navigate: (data) => dispatch(navigate(data)),
+    fetchGoogleSheetStudent: (sheet_id) => dispatch(fetchGoogleSheetStudent(sheet_id))
+
   }
 };
 

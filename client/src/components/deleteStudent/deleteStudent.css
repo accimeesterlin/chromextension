@@ -28,6 +28,7 @@
     border: 1px solid #d9ddd9;
     margin-top: 10px;
     padding: 5px;
+    font-size: 11px;
     border-radius: 4px;
     max-width: 100%;
     width: 200px;
@@ -42,8 +43,9 @@
     background-color: #d9534f;
     border-color: #d43f3a;
     border-radius: 4px;
-    padding: 5px;
-    width: 70px;
+    padding: 2px;
+    width: 50px;
+    outline: none;
 }
 
 .delete-students .no-more-students {

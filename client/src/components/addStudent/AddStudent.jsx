@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavigationButton from '../../common/NavigationButton';
+import Footer from '../../common/Footer';
 import './addstudent.css';
 class AddStudent extends Component {
 
@@ -26,8 +26,6 @@ class AddStudent extends Component {
         });
 
     };
-
-
 
 
     render() {
@@ -87,6 +85,8 @@ class AddStudent extends Component {
 
                     <button>Add a student</button>
                 </form>
+
+                <Footer />
             </div>
         );
     }

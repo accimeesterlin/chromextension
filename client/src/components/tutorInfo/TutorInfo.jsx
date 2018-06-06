@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import Footer from '../../common/Footer';
 import './tutorInfo.css';
 
 class TutorInfo extends Component {
 
+    // Pull Sheet ID from Google Spreadsheet URL User Input
+    // Pull tutor students record from Google Sheets
+    // Add every object of student into an array
     getGoogleSheetId = async (url) => {
         const sheet_id = new RegExp("/spreadsheets/d/([a-zA-Z0-9-_]+)").exec(url)[1];
         const values = await this.props.fetchGoogleSheetStudent(sheet_id);
@@ -10,92 +14,127 @@ class TutorInfo extends Component {
     };
 
 
+    // Flatten array of array to array of object
+    // Remove duplicate students
     filterGoogleSheetsStudents = (response) => {
         const students = response.value.data.values;
         const lists_students = [];
-
         for (let i = 0; i < students.length; i++) {
-
             try {
-                if (students[i][3].includes('@')) {
-
-                    lists_students.push({
-                        code: students[i][0],
-                        name: students[i][2],
-                        email: students[i][3],
-                        username: students[i][4]
-                    });
+                const email = students[i][3];
+                if (email.includes('@')) {
+                    const code = students[i][0];
+                    const name = students[i][2];
+                    const username = students[i][4];
+                    lists_students.push({ code, name, email, username });
                 }
             } catch (error) {
-                // console.log('Not found');
+                // TODO
+                // Handle multiple cases of failures
+
             }
         }
-
-        this.removeDuplicate(lists_students);
+        this.checkImportStatus(lists_students);
     };
 
-    removeDuplicate = students => {
-        const results = students = students.filter((thing, index, self) =>
-            index === self.findIndex((t) => (
-                t.email === thing.email
-            ))
-        );
 
-        console.log('Remove Duplicate: ', results);
-        this.saveGoogleSheetStudents(results);
-
-    };
-
-    saveGoogleSheetStudents = (students) => {
-        console.log('Students: ', students);
-        for (let i = 0; i < students.length; i++) {
-            this.props.saveStudents(students[i])
+    checkImportStatus = (students) => {
+        const { tutor_name } = this.props;
+        if (students.length > 0) {
+            this.props.saveGoogleSheetStudents(students, tutor_name || '');
+        } else {
+            this.props.handleError({
+                error: true,
+                errorMessage: 'Unable to import your students'
+            })
         }
     };
 
+    // Get input values
     handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
         this.props.getValue({ [name]: value });
     };
 
+    rangeError = (errorMessage) => {
+        return (
+            <div className='error'>
+                <p>{errorMessage}</p>
+                <ul>
+                    <li>Change Google Sheet Tab Name to <strong>Roster</strong></li>
+                </ul>
+            </div>
+        );
+    };
+
+
+    permissionError = (errorMessage) => {
+        return (
+            <div className='error'>
+                <p>{errorMessage}</p>
+                <p>Make sure that your Google Sheet Permission is either Public or people with link (no signin required)</p>
+                <p>To Change access: </p>
+                <ul>
+                    <li>Open sheet in google drive</li>
+                    <li>On top right corner, click share</li>
+                    <li> On bottom of prompt window, click advanced</li>
+                    <li> Change permission to public or people with link (no signin required)</li>
+                </ul>
+            </div>
+        )
+    };
+
+    columnError = (message) => {
+        return (
+            <div className='error'>
+                <p>{message}</p>
+                <p>You need to have at least 5 columns in your spreadsheet</p>
+                <p>Follow this format</p>
+                <ul>
+                    <li>Class Code </li>
+                    <li>University (Can be blank)</li>
+                    <li>Student Name</li>
+                    <li>Student Email</li>
+                    <li>Github Username</li>
+                </ul>
+            </div>
+        );
+    };
+
+    // Display Error in case Google Sheet API fails. 
     displayErrorMessage = () => {
         const { error, errorMessage } = this.props;
+        const { permissionError, columnError, rangeError } = this;
         if (error) {
-            return (
-                <div className='error'>
-                    <p>{errorMessage}</p>
-                    <p>Make sure that your Google Sheet Permission is either Public or people with link (no signin required)</p>
-                    <p>To Change access: </p>
-                    <ul>
-                        <li>Open sheet in google drive</li>
-                        <li>On top right corner, click share</li>
-                        <li> On bottom of prompt window, click advanced</li>
-                        <li> Change permission to public or people with link (no signin required)</li>
-                    </ul>
-                </div>
-            )
-        } else {
-            this.props.displayNotification();
+
+            if (errorMessage.includes('permission')) {
+                return permissionError(errorMessage);
+            }
+
+            if (errorMessage.includes('import')) {
+                return columnError(errorMessage);
+            }
+
+            else {
+                return rangeError(errorMessage);
+            }
         }
     };
 
-
-    googleSheetInstructions = () => {
-        console.log('Hello World');
-    };
-
-
+    // Submit form with tutor name, and google sheet (optional)
+    // Save tutor info
+    // Call Google Sheet API for tutor student Roster
     submit = (event) => {
         event.preventDefault();
         const { tutor_name, google_sheet_url } = this.props;
-
         this.props.saveTutorInfo({
-            tutor_name,
-            google_sheet_url
+            tutor_name
         });
 
-        this.getGoogleSheetId(google_sheet_url);
+        if (google_sheet_url) {
+            this.getGoogleSheetId(google_sheet_url);
+        }
     };
 
     render() {
@@ -105,6 +144,7 @@ class TutorInfo extends Component {
                 <button className='go-back' onClick={() => this.props.navigate({ url: '/home' })}>Go back</button>
                 <div className="notify">
                     {this.displayErrorMessage()}
+                    {this.props.displayNotification()}
                 </div>
                 <form onSubmit={this.submit}>
                     <div>
@@ -118,13 +158,14 @@ class TutorInfo extends Component {
                     </div>
 
                     <div>
-                        <label htmlFor='google_sheet_url'>Google Sheet URL - In Beta:  </label>
+                        <label htmlFor='google_sheet_url'>Google Sheet URL:  </label>
                         <input
                             type='text' name='google_sheet_url'
                             onChange={this.handleChange}
                             onFocus={this.googleSheetInstructions}
+                            value={google_sheet_url}
                             placeholder='Enter your student google sheet url'
-                            value={google_sheet_url} />
+                        />
                     </div>
                     <div className="buttons">
                         <button>Add</button>
@@ -136,6 +177,8 @@ class TutorInfo extends Component {
                     href="https://docs.google.com/spreadsheets/d/1LSGuoaYRKOpkF50r8S-lpMzbNIJ9jMKCIvudNt-3Bj0/edit#gid=0"
                     target='_blank'
                     rel="noopener noreferrer"> Tutor’s Tracking Spreadsheet EXAMPLE </a>
+
+                <Footer />
             </div>
         );
     };

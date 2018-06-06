@@ -1,7 +1,7 @@
-// import syncStorage from './utils/syncStorage';
+import syncStorage from './utils/syncStorage';
 
 const initialState = {
-    url: '/tutor',
+    url: '/home',
     users: [],
     students: [],
     username: '',
@@ -13,10 +13,25 @@ const initialState = {
     notification: false,
     notificationMessage: '',
     error: false,
+    status: '',
     pending: '',
-    errorMessage: ''
+    errorMessage: '',
+    isFiltered: false
 };
 
+const removeDuplicate = (students) => {
+    if (students.length > 0) {
+        var results = students.filter((thing, index, self) =>
+            index === self.findIndex((t) => (
+                t.email === thing.email
+            ))
+        );
+        return results;
+    } else {
+        return students;
+    }
+
+};
 
 const reducers = (state = initialState, action) => {
 
@@ -41,42 +56,61 @@ const reducers = (state = initialState, action) => {
                 error: false
             };
 
+        case 'SAVE_GOOGLE_SHEET_STUDENTS':
+            const all_students = state.students.concat(action.list_students);
+            const list_students = removeDuplicate(all_students);
+
+            return {
+                ...state,
+                students: [...list_students],
+                tutor_name: action.tutor_name,
+                notification: true,
+                notificationMessage: 'We have successfully imported all your students'
+            };
+
         case 'SAVE_TUTOR_INFO':
-            // const {
-            //     tutor_name,
-            //     google_sheet_url
-            // } = action.data;
-            // chrome.storage.sync.set({
-            //     tutor_name,
-            //     google_sheet_url
-            // }, function () {
-            //     console.log('Tutor/Sheet has successfully been saved!');
-            // });
+            const {
+                tutor_name
+            } = action.data;
+            try {
+                chrome.storage.sync.set({
+                    tutor_name
+                }, function () {
+                    console.log('Tutor/Sheet has successfully been saved!');
+                });
+            } catch (error) {
+                // TODO
+            }
 
             return {
                 ...state,
                 ...action.data,
                 notification: true,
-                notificationMessage: 'Your info has successfully been saved!'
+                error: false,
+                google_sheet_url: '',
+                notificationMessage: 'Your Tutor Name has successfully been saved!'
             };
         case 'FETCH_GOOGLE_SHEET_STUDENT_PENDING':
             return {
                 ...state,
                 notification: false,
+                status: 'pending',
                 notificationMessage: ''
             };
 
         case 'FETCH_GOOGLE_SHEET_STUDENT_FULFILLED':
             return {
                 ...state,
-                notification: true,
-                notificationMessage: 'All students have successfully been imported'
+                status: 'success',
+                error: false,
+                google_sheet_url: ''
             };
 
         case 'FETCH_GOOGLE_SHEET_STUDENT_REJECTED':
             return {
                 ...state,
                 error: true,
+                status: 'rejected',
                 errorMessage: action.payload.response.data.error.message || 'Error occurs'
             };
 
@@ -85,14 +119,26 @@ const reducers = (state = initialState, action) => {
                 students
             } = state;
 
-            const deleteCondition = students.filter((student, index) => student.email !== action.email);
-            // syncStorage.syncLocalStorage(deleteCondition);
+            const deleteCondition = students.filter((student, index) => {
+                return student.email !== action.email
+            });
+
+            syncStorage.syncLocalStorage(deleteCondition);
             return {
                 ...state,
                 students: deleteCondition,
             };
+
+        case 'HANDLE_ERROR':
+            return {
+                ...state,
+                error: action.error,
+                errorMessage: action.errorMessage
+            };
+
         case 'SAVE_STUDENTS':
-            // syncStorage.syncLocalStorage([...state.students, action.data]);
+            const filter_students = removeDuplicate(state.students);
+            syncStorage.syncLocalStorage([...filter_students, action.data]);
 
             return {
                 ...state,
@@ -100,10 +146,11 @@ const reducers = (state = initialState, action) => {
                 name: '',
                 code: '',
                 email: '',
-                students: [...state.students, action.data],
+                students: [...filter_students, action.data],
                 notification: true,
                 notificationMessage: `We have successfully ${action.data.name} into your student list!`
             };
+
         default:
             return state;
     }

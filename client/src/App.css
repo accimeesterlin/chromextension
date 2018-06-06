@@ -20,3 +20,7 @@ body {
 .notication p {
     line-height: 25px;
 }
+
+.footer p {
+    text-align: center;
+}

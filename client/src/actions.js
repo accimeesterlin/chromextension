@@ -1,7 +1,7 @@
 import axios from 'axios';
-
-
-
+import {
+    google_sheet_api_key
+} from './keys';
 
 export const getValue = (data) => {
     return {
@@ -33,6 +33,13 @@ export const saveTutorInfo = (data) => {
     }
 };
 
+export const saveGoogleSheetStudents = (list_students, tutor_name) => {
+    return {
+        type: 'SAVE_GOOGLE_SHEET_STUDENTS',
+        list_students,
+        tutor_name
+    };
+};
 
 export const saveStudents = (data) => {
     return {
@@ -42,9 +49,22 @@ export const saveStudents = (data) => {
 };
 
 
+export const isColumnFiltered = (data) => {
+    return {
+        type: 'IS_COLUMN_FILTERED',
+        data
+    };
+};
+export const handleError = (error) => {
+    return {
+        type: 'HANDLE_ERROR',
+        ...error
+    };
+};
+
 export const fetchGoogleSheetStudent = (sheet_id) => {
-    const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${sheet_id}/values/Sheet1?`;
-    const params = `key=AIzaSyCqo2Ufn8KUXDBUxHUc7MBXoXv8wdBOfK0`;
+    const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${sheet_id}/values/Roster?`;
+    const params = `key=${google_sheet_api_key}`;
 
     return {
         type: "FETCH_GOOGLE_SHEET_STUDENT",

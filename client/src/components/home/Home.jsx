@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import Footer from '../../common/Footer';
 import './home.css';
 
 class Home extends Component {
 
+    // Navigate the user according the path selected
     navigateUser = (value) => {
         const { navigate } = this.props;
         switch (value) {
@@ -23,28 +25,33 @@ class Home extends Component {
         }
     };
 
+    // Sends students object and tutor over to jQuery App
+    // jQuery app will use these info to autofill Google Form Fields
     sendMessageToContentScripts = (students, value) => {
-        // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        //     chrome.tabs.sendMessage(tabs[0].id, { students, value }, function (response) {
-        //         console.log(response.farewell);
-        //     });
-        // });
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, { students, value }, function (response) {
+                console.log(response.farewell);
+            });
+        });
     };
 
+    // Get input values
     handleChange = (event) => {
         const value = event.target.value;
         const { students } = this.props;
         this.sendMessageToContentScripts(students, value);
     };
 
-
-
+    // List all the students in the option
     optionValue = (students) => {
+        console.log('Students Home: ', students)
+        students.sort((a, b) => a.name.localeCompare(b.name))
         return students.map(({ name, email }, index) => (
             <option key={index} value={email}>{name}</option>
         ));
     };
 
+    // Display Tutor title
     displayTutorInfo = (name) => {
         if (name) {
             return (<p className='title'>Hi, {name}</p>);
@@ -55,8 +62,8 @@ class Home extends Component {
 
     render() {
         const { students, tutor_name } = this.props;
+        console.log('State of Students: ', students);
 
-        console.log('Students: ', students);
         return (
             <div className="container">
                 {this.displayTutorInfo(tutor_name)}
@@ -88,6 +95,8 @@ class Home extends Component {
                     <option value='default'>Please select a student</option>
                     {this.optionValue(students)}
                 </select>
+
+                <Footer />
             </div>
         );
     };
