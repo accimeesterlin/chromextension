@@ -138,7 +138,7 @@ class Home extends Component {
                 <input type="text"
                     placeholder="Filter Students.."
                     id="myInput"
-                    onClick={this.showStudents}
+                    onFocus={this.showStudents}
                     onKeyUp={this.filterFunction} />
 
                 <div className="dropdown">
