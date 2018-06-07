@@ -1,6 +1,8 @@
 {
     "globals": {
-        "chrome": true
+        "chrome": true,
+        "$": true,
+        "moment": true
     },
     "extends": "react-app"
 }

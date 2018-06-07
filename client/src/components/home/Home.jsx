@@ -78,8 +78,6 @@ class Home extends Component {
     }
 
     filterFunction = (event) => {
-        const value = event.target.value.toUpperCase();
-
         var input, filter, ul, li, a, i;
         var input = document.getElementById("myInput");
         var filter = input.value.toUpperCase();
@@ -97,8 +95,6 @@ class Home extends Component {
 
     render() {
         const { students, tutor_name } = this.props;
-        console.log('State of Students: ', students);
-
         return (
             <div className="container">
                 {this.displayTutorInfo(tutor_name)}
