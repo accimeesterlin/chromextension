@@ -1,0 +1,22 @@
+{
+    // See http://go.microsoft.com/fwlink/?LinkId=827846
+    // for the documentation about the extensions.json format
+    "recommendations": [
+        // Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+        "eg2.tslint",
+        "ionutvmi.path-autocomplete",
+        "robertohuertasm.vscode-icons",
+        "eamodio.toggle-excluded-files", /* set focus to "explorer" and use ctrl+shift+a on Windows, cmd+shift+a on macOS */
+        "secanis.jenkinsfile-support",
+        "patrys.vscode-code-outline",
+        "msjsdiag.debugger-for-chrome",
+        "MS-vsliveshare.vsliveshare",
+        "Fredy.reactsnippets",
+        "techer.open-in-browser",
+        "robinbentley.sass-indented",
+        "HookyQR.beautify",
+        "dbaeumer.vscode-eslint",
+        "eamodio.gitlens",
+        "hnw.vscode-auto-open-markdown-preview"
+    ]
+}

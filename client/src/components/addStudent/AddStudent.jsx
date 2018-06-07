@@ -5,7 +5,11 @@ class AddStudent extends Component {
 
 
     componentDidMount = () => {
-        this.getStudentInfoFromLocalStorage();
+        try {
+            this.getStudentInfoFromLocalStorage();
+        } catch (error) {
+            // TODO
+        }
     };
 
     getStudentInfoFromLocalStorage = () => {
@@ -16,9 +20,13 @@ class AddStudent extends Component {
     };
 
     storeStudentBasicInfo = (data) => {
-        chrome.storage.sync.set(data, () => {
-            console.log('Student Info has successfully been saved into Local Storage');
-        });
+        try {
+            chrome.storage.sync.set(data, () => {
+                console.log('Student Info has successfully been saved into Local Storage');
+            });
+        } catch (error) {
+            // TODO
+        }
     };
 
     // Store the value from the input in the store
@@ -36,6 +44,19 @@ class AddStudent extends Component {
 
     };
 
+    resetStudentInfoInStorage = () => {
+        try {
+            chrome.storage.sync.set({
+                name: '',
+                email: '',
+                code: '',
+                username: ''
+            });
+        } catch (error) {
+            // TODO
+        }
+    };
+
     submit = (event) => {
         event.preventDefault();
         const { code, email, name, username } = this.props;
@@ -46,13 +67,7 @@ class AddStudent extends Component {
             name,
             username
         });
-
-        chrome.storage.sync.set({
-            name: '',
-            email: '',
-            code: '',
-            username: ''
-        });
+        this.resetStudentInfoInStorage();
     };
 
 
