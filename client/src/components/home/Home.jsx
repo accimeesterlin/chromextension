@@ -40,8 +40,7 @@ class Home extends Component {
     };
 
     // Get input values
-    handleChange = (event) => {
-        const value = event.target.value;
+    handleChange = (value) => {
         const { students } = this.props;
         this.sendMessageToContentScripts(students, value);
     };
@@ -61,7 +60,7 @@ class Home extends Component {
         return students.map(({
             name,
             email
-        }, index) => (<a onClick={this.handleChange} key={index} value={email}>{name}</a>));
+        }, index) => (<a onClick={() => this.handleChange(email)} key={index} value={email}>{name}</a>));
     };
 
     // Display Tutor title

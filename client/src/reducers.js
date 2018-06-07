@@ -71,11 +71,13 @@ const reducers = (state = initialState, action) => {
 
         case 'SAVE_TUTOR_INFO':
             const {
-                tutor_name
+                tutor_name,
+                google_sheet_url
             } = action.data;
             try {
                 chrome.storage.sync.set({
-                    tutor_name
+                    tutor_name,
+                    google_sheet_url
                 }, function () {
                     console.log('Tutor/Sheet has successfully been saved!');
                 });
@@ -88,9 +90,15 @@ const reducers = (state = initialState, action) => {
                 ...action.data,
                 notification: true,
                 error: false,
-                google_sheet_url: '',
                 notificationMessage: 'Your Tutor Name has successfully been saved!'
             };
+
+        case 'LOAD_TUTOR_INIT':
+            return {
+                ...state,
+                ...action.data
+            };
+
         case 'FETCH_GOOGLE_SHEET_STUDENT_PENDING':
             return {
                 ...state,
@@ -103,8 +111,7 @@ const reducers = (state = initialState, action) => {
             return {
                 ...state,
                 status: 'success',
-                error: false,
-                google_sheet_url: ''
+                error: false
             };
 
         case 'FETCH_GOOGLE_SHEET_STUDENT_REJECTED':

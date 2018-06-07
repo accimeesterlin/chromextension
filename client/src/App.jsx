@@ -14,7 +14,8 @@ import {
   handleError,
   fetchGoogleSheetStudent,
   saveGoogleSheetStudents,
-  loadLastStudent
+  loadLastStudent,
+  loadTutorInfo
 } from './actions';
 import syncStorage from './utils/syncStorage';
 
@@ -123,6 +124,7 @@ const mapDispatchToProps = (dispatch) => {
     saveStudents: (data) => dispatch(saveStudents(data)),
     loadLastStudent: (student) => dispatch(loadLastStudent(student)),
     saveTutorInfo: (data) => dispatch(saveTutorInfo(data)),
+    loadTutorInfo: (tutor) => dispatch(loadTutorInfo(tutor)),
     deleteStudent: (email) => dispatch(deleteStudent(email)),
     saveGoogleSheetStudents: (students) => dispatch(saveGoogleSheetStudents(students)),
     handleError: (error) => dispatch(handleError(error)),

@@ -13,6 +13,16 @@ class TutorInfo extends Component {
         this.filterGoogleSheetsStudents(values);
     };
 
+    componentDidMount = () => {
+        try {
+            chrome.storage.sync.get(['tutor_name', 'google_sheet_url'], (data) => {
+                this.props.loadTutorInfo(data);
+            })
+        } catch (error) {
+            // TODO
+        }
+    };
+
 
     // Flatten array of array to array of object
     // Remove duplicate students
@@ -128,7 +138,8 @@ class TutorInfo extends Component {
         event.preventDefault();
         const { tutor_name, google_sheet_url } = this.props;
         this.props.saveTutorInfo({
-            tutor_name
+            tutor_name,
+            google_sheet_url
         });
 
         if (google_sheet_url) {

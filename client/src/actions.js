@@ -56,6 +56,12 @@ export const loadLastStudent = (student) => {
     }
 };
 
+export const loadTutorInfo = (data) => {
+    return {
+        type: 'LOAD_TUTOR_INIT',
+        data
+    }
+};
 
 export const isColumnFiltered = (data) => {
     return {

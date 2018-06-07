@@ -5,6 +5,17 @@ const TUTOR_NAME_WRAPPER = '.freebirdFormviewerViewItemsTextItemWrapper';
 const RADIO_INPUT = 'quantumWizTogglePaperradioEl'; // aria-checked
 const PLACE_HOLDER = 'quantumWizTextinputPaperinputPlaceholder';
 const TEXTAREA_PLACEHOLDER = 'quantumWizTextinputPapertextareaPlaceholder';
+const STUDENT_NAME = 'input[name="entry.1262798942"]';
+const STUDENT_CODE = 'input[name="entry.1626809215"]';
+const STUDENT_EMAIL = 'input[name="entry.1509111758"]';
+const STUDENT_USERNAME = 'input[name="entry.2097580399"]';
+const TODAY_DAY = 'input[name="entry.401287639_day"]';
+const TODAY_MONTH = 'input[name="entry.401287639_month"]';
+const TODAY_YEAR = 'input[name="entry.401287639_year"]';
+const DATE_INPUT = 'input[type="date"]';
+const DATE_DIV_PARENT = '.freebirdThemedInput.freebirdFormviewerViewItemsDateDateInput';
+
+
 
 const removePlaceholder = () => {
     $(`.${PLACE_HOLDER}, .${TEXTAREA_PLACEHOLDER}`).each(function () {
@@ -12,21 +23,17 @@ const removePlaceholder = () => {
     });
 };
 
-const getStudentInput = (student) => {
-    const inputs = document.querySelectorAll('input[type="text"]');
-    autoFillStudentInput(inputs, student);
-};
-
-const autoFillStudentInput = (inputs, student) => {
-    const studentClassCode = inputs[0];
-    const studentName = inputs[1];
-    const studentEmail = inputs[2];
-    const studentGithubUsername = inputs[3];
-
-    studentClassCode.value = student.code;
-    studentName.value = student.name;
-    studentEmail.value = student.email;
-    studentGithubUsername.value = student.username;
+const autoFillStudentInput = (student) => {
+    const {
+        code,
+        name,
+        username,
+        email
+    } = student;
+    $(STUDENT_CODE).val(code); // code
+    $(STUDENT_NAME).val(name); // Name
+    $(STUDENT_USERNAME).val(username); // username
+    $(STUDENT_EMAIL).val(email); // email
 
     removePlaceholder();
 };
@@ -39,8 +46,29 @@ const fillInTutorName = () => {
 };
 
 const fillInSessionDate = () => {
-    var today = moment().format('YYYY-MM-DD');
-    $('input[type="date"]').val(today);
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+
+    const dayFormat = moment().format('YYYY-MM-DD');
+
+    $(DATE_DIV_PARENT).addClass('hasValue');
+    $(DATE_INPUT).val(dayFormat).attr('data-initial-value', dayFormat);
+    $(TODAY_DAY).val(day);
+    $(TODAY_MONTH).val(month);
+    $(TODAY_YEAR).val(year);
+};
+
+// TODO
+// Currently not working
+const fillInNotTA = () => {
+    $('div[data-item-id="124907758"] .freebirdFormviewerViewItemsRadioControl').addClass('isCheckedNext isChecked').attr({
+        'tab-index': 0,
+        'aria-checked': true,
+        'data-value': 'Yes'
+    });
+    $('input[name="entry.790082012"]').val('Yes');
 };
 
 const fillInComments = () => {
@@ -55,6 +83,7 @@ const validateSecondPage = () => {
             fillInTutorName();
             fillInSessionDate();
             fillInComments();
+            // fillInNotTA();
 
             removePlaceholder();
         }
@@ -80,7 +109,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     const students = request.students;
     const value = request.value;
     let current_student = grabSelectedStudent(students, value);
-    getStudentInput(current_student);
+    autoFillStudentInput(current_student);
     sendResponse({
         farewell: 'goodbye'
     })
