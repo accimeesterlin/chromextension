@@ -170,7 +170,7 @@ class TutorInfoUI extends Component {
                         <input
                             type='text' name='tutor_name'
                             onChange={this.handleChange}
-                            placeholder='Enter your tutor name'
+                            placeholder='Enter your tutor name (last, first)'
                             required
                             value={tutor_name} />
                     </div>

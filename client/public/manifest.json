@@ -1,6 +1,6 @@
 {
     "name": "Tutor Chrome Extension",
-    "version": "1.4",
+    "version": "1.5",
     "description": "Build a basic extension",
     "manifest_version": 2,
     "permissions": ["activeTab", "declarativeContent", "storage"],
@@ -10,6 +10,7 @@
     },
     "content_scripts": [{
         "matches": ["http://*/*", "https://*/*"],
-        "js": ["moment.js", "jquery.js", "autoprefill.js"]
+        "js": ["moment.js", "jquery.js", "autoprefill.js"],
+        "run_at": "document_end"
     }]
 }

@@ -1,8 +1,8 @@
-const log = console.log;
+// const log = console.log;
 
 // Constants
 const TUTOR_NAME_WRAPPER = '.freebirdFormviewerViewItemsTextItemWrapper';
-const RADIO_INPUT = 'quantumWizTogglePaperradioEl'; // aria-checked
+// const RADIO_INPUT = 'quantumWizTogglePaperradioEl'; // aria-checked
 const PLACE_HOLDER = 'quantumWizTextinputPaperinputPlaceholder';
 const TEXTAREA_PLACEHOLDER = 'quantumWizTextinputPapertextareaPlaceholder';
 const STUDENT_NAME = 'input[name="entry.1262798942"]';
@@ -114,3 +114,44 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         farewell: 'goodbye'
     })
 });
+
+console.log('Testing and Testing');
+
+const activeURL = window.location.href;
+
+if (activeURL === 'https://workforcenow.adp.com/portal/theme') {
+    var timer = setInterval(function () {
+        console.log('Checking Scripts: ');
+        const element = $('#divActivities table tbody tr');
+
+        if (element) {
+            grabClocks();
+        }
+    }, 111);
+}
+
+function grabClocks() {
+    console.log('Element Found!');
+    let all_date = [];
+    $('#divActivities table tbody tr').each(function () {
+        var clocks = [];
+        $(this).find('td').each(function (index) {
+            let obj = {};
+            const result = $(this).html();
+            obj[index] = result[index];
+            clocks.push(result);
+            clearInterval(timer);
+        });
+
+        console.log('Clocks: ', clocks);
+        const main = clocks.reduce((accu, curr, arr) => {
+            // TODO
+            const key = arr[0];
+            accu[key] = arr;
+            return accu;
+        }, {});
+
+        console.log('Main: ', main);
+        console.log('Clocks: ', clocks);
+    });
+};

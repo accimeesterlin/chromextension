@@ -136,6 +136,7 @@ const reducers = (state = initialState, action) => {
             return {
                 ...state,
                 students: deleteCondition,
+                search_students: deleteCondition
             };
 
         case 'HANDLE_ERROR':
