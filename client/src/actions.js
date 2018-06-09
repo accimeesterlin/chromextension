@@ -33,11 +33,16 @@ export const saveTutorInfo = (data) => {
     }
 };
 
-export const saveGoogleSheetStudents = (list_students, tutor_name) => {
+export const resetStudents = () => {
+    return {
+        type: 'RESET_STUDENTS'
+    };
+};
+
+export const saveGoogleSheetStudents = (list_students) => {
     return {
         type: 'SAVE_GOOGLE_SHEET_STUDENTS',
-        list_students,
-        tutor_name
+        list_students
     };
 };
 
@@ -48,6 +53,13 @@ export const saveStudents = (data) => {
     };
 };
 
+
+export const searchStudents = (students) => {
+    return {
+        type: 'SEARCH_STUDENTS',
+        students
+    };
+};
 
 export const loadLastStudent = (student) => {
     return {

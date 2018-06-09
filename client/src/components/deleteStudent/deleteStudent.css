@@ -6,6 +6,7 @@
     padding: 5px;
     border-radius: 4px;
     margin: 0 auto;
+    margin-bottom: 40px;
     flex-direction: column;
     overflow: scroll;
     /* border: 1px solid #d9ddd9; */

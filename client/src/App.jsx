@@ -10,14 +10,10 @@ import {
   navigate,
   saveStudents,
   deleteStudent,
-  saveTutorInfo,
   handleError,
-  fetchGoogleSheetStudent,
-  saveGoogleSheetStudents,
   loadLastStudent,
-  loadTutorInfo
+  resetStudents
 } from './actions';
-import syncStorage from './utils/syncStorage';
 
 class App extends Component {
 
@@ -36,44 +32,6 @@ class App extends Component {
     }
   };
 
-
-
-  // Get Students from Storage on loads
-  getStudentsFromLocalStorage = () => {
-    const { saveGoogleSheetStudents } = this.props;
-    syncStorage.getLocalStorage('students', function (data) {
-      console.log('Students: ', data.students);
-      const students = data.students;
-      if (students.length > 0) {
-        saveGoogleSheetStudents(students);
-      } else {
-        console.log('Storage is empty');
-      }
-    });
-  };
-
-  // Get Tutor Infor from Local Storage
-  getTutorInfoFromLocalStorage = () => {
-    const { saveTutorInfo } = this.props;
-    const info = ['tutor_name']; // data to get
-    for (let i = 0; i < info.length; i++) {
-      try {
-        chrome.storage.sync.get(info[i], function (data) {
-          const key = info[i];
-          saveTutorInfo({ [key]: data[key] });
-        })
-      } catch (error) {
-        // TODO
-      }
-    }
-
-  };
-
-  // On load, get students object and tutor info from local storage
-  componentDidMount = () => {
-    this.getStudentsFromLocalStorage();
-    this.getTutorInfoFromLocalStorage();
-  };
   // chrome.storage.sync.get(['students'], function(students) {
   //   console.log('Students: ', students);
 
@@ -122,14 +80,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getValue: (data) => dispatch(getValue(data)),
     saveStudents: (data) => dispatch(saveStudents(data)),
+    resetStudents: () => dispatch(resetStudents()),
     loadLastStudent: (student) => dispatch(loadLastStudent(student)),
-    saveTutorInfo: (data) => dispatch(saveTutorInfo(data)),
-    loadTutorInfo: (tutor) => dispatch(loadTutorInfo(tutor)),
     deleteStudent: (email) => dispatch(deleteStudent(email)),
-    saveGoogleSheetStudents: (students) => dispatch(saveGoogleSheetStudents(students)),
     handleError: (error) => dispatch(handleError(error)),
     navigate: (data) => dispatch(navigate(data)),
-    fetchGoogleSheetStudent: (sheet_id) => dispatch(fetchGoogleSheetStudent(sheet_id))
+
 
   }
 };

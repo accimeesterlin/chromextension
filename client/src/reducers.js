@@ -4,6 +4,7 @@ const initialState = {
     url: '/home',
     users: [],
     students: [],
+    search_students: [],
     username: '',
     name: '',
     code: '',
@@ -27,10 +28,8 @@ const removeDuplicate = (students) => {
             ))
         );
         return results;
-    } else {
-        return students;
     }
-
+    return students;
 };
 
 const reducers = (state = initialState, action) => {
@@ -57,18 +56,20 @@ const reducers = (state = initialState, action) => {
             };
 
         case 'SAVE_GOOGLE_SHEET_STUDENTS':
-            const all_students = state.students.concat(action.list_students);
-            const list_students = removeDuplicate(all_students);
-            syncStorage.syncLocalStorage(list_students);
+            const studen_liss = removeDuplicate(action.list_students)
+            syncStorage.syncLocalStorage(studen_liss);
 
             return {
                 ...state,
-                students: [...list_students],
-                tutor_name: action.tutor_name,
+                students: [...studen_liss],
                 notification: true,
                 notificationMessage: 'We have successfully imported all your students'
             };
-
+        case 'SEARCH_STUDENTS':
+            return {
+                ...state,
+                search_students: [...action.students]
+            };
         case 'SAVE_TUTOR_INFO':
             const {
                 tutor_name,
@@ -163,6 +164,12 @@ const reducers = (state = initialState, action) => {
                 students: [...filter_students, action.data],
                 notification: true,
                 notificationMessage: `We have successfully ${action.data.name} into your student list!`
+            };
+
+        case 'RESET_STUDENTS':
+            return {
+                ...state,
+                students: []
             };
 
         default:

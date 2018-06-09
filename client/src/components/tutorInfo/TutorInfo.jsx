@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import Footer from '../../common/Footer';
+import { connect } from 'react-redux';
+
+import {
+    saveTutorInfo,
+    fetchGoogleSheetStudent,
+    saveGoogleSheetStudents,
+    loadTutorInfo,
+} from '../../actions';
 import './tutorInfo.css';
 
-class TutorInfo extends Component {
+class TutorInfoUI extends Component {
 
     // Pull Sheet ID from Google Spreadsheet URL User Input
     // Pull tutor students record from Google Sheets
@@ -43,14 +51,14 @@ class TutorInfo extends Component {
                 // Handle multiple cases of failures
             }
         }
+
         this.checkImportStatus(lists_students);
     };
 
 
     checkImportStatus = (students) => {
-        const { tutor_name } = this.props;
         if (students.length > 0) {
-            this.props.saveGoogleSheetStudents(students, tutor_name || '');
+            this.props.saveGoogleSheetStudents(students);
         } else {
             this.props.handleError({
                 error: true,
@@ -195,4 +203,24 @@ class TutorInfo extends Component {
 };
 
 
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        saveTutorInfo: (data) => dispatch(saveTutorInfo(data)),
+        loadTutorInfo: (tutor) => dispatch(loadTutorInfo(tutor)),
+        saveGoogleSheetStudents: (students) => dispatch(saveGoogleSheetStudents(students)),
+        fetchGoogleSheetStudent: (sheet_id) => dispatch(fetchGoogleSheetStudent(sheet_id))
+    };
+};
+
+const mapStateToProps = () => {
+    return {
+
+    };
+};
+
+const TutorInfo = connect(mapStateToProps, mapDispatchToProps)(TutorInfoUI);
 export default TutorInfo;
+
+

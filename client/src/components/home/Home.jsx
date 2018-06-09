@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Footer from '../../common/Footer';
+import syncStorage from '../../utils/syncStorage';
+
+import {
+    saveTutorInfo,
+    fetchGoogleSheetStudent,
+    saveGoogleSheetStudents,
+    loadTutorInfo,
+    searchStudents
+} from '../../actions';
+
 import './home.css';
 
-class Home extends Component {
-    constructor() {
-        super();
+class HomeUI extends Component {
+    constructor(props) {
+        super(props);
 
         this.state = {
             isShowStudent: false,
-            students: []
+            students: [...props.students],
+            result_status: "success"
         };
     }
-
-    componentDidMount = () => {
-        this.setState({
-            students: this.props.students
-        });
-    };
 
     // Navigate the user according the path selected
     navigateUser = (value) => {
@@ -54,8 +60,9 @@ class Home extends Component {
     };
 
     // Get input values
-    handleChange = (value) => {
+    selectStudent = (value) => {
         const { students } = this.props;
+        console.log('Value: ', value);
         this.sendMessageToContentScripts(students, value);
         this.hideStudents();
     };
@@ -66,7 +73,7 @@ class Home extends Component {
         return students.map(({
             name,
             email
-        }, index) => (<a onClick={() => this.handleChange(email)} key={index} value={email}>{name}</a>));
+        }, index) => (<a onClick={() => this.selectStudent(email)} key={index} value={email}>{name}</a>));
     };
 
     // Display Tutor title
@@ -98,15 +105,73 @@ class Home extends Component {
             return student.name.toLowerCase().includes(value);
         });
 
-        this.setState({
-            students: [...matchStudents]
-        });
+        this.checkForResults(matchStudents);
+        this.props.searchStudents(matchStudents);
     }
 
+    checkForResults = (search_students) => {
+        if (search_students.length === 0) {
+            this.setState({
+                result_status: 'empty'
+            });
+        } else {
+            this.setState({
+                result_status: 'success'
+            });
+        }
+    };
+
+    noResults = () => {
+        const { result_status } = this.state;
+        if (result_status === 'empty') {
+            return (<p>No student found</p>);
+        }
+    };
+
+
+    // Get Students from Storage on loads
+    getStudentsFromLocalStorage = () => {
+        const { saveGoogleSheetStudents, searchStudents } = this.props;
+        syncStorage.getLocalStorage('students', (data) => {
+            const students = data.students;
+            if (students.length > 0) {
+                searchStudents(students);
+                saveGoogleSheetStudents(students);
+            } else {
+                console.log('Storage is empty');
+            }
+        });
+    };
+
+    // Get Tutor Infor from Local Storage
+    getTutorInfoFromLocalStorage = () => {
+        const { saveTutorInfo } = this.props;
+        const info = ['tutor_name', 'google_sheet_url'];
+        for (let i = 0; i < info.length; i++) {
+            try {
+                chrome.storage.sync.get(info[i], function (data) {
+                    const key = info[i];
+                    saveTutorInfo({ [key]: data[key] });
+                })
+            } catch (error) {
+                // TODO
+            }
+        }
+
+    };
+
+
+    // On load, get students object and tutor info from local storage
+    componentWillMount = () => {
+        this.getStudentsFromLocalStorage();
+        this.getTutorInfoFromLocalStorage();
+    };
+
+
     render() {
-        const { tutor_name } = this.props;
-        const { students } = this.state;
-        const classShow = this.state.isShowStudent ? 'show' : '';
+        const { tutor_name, search_students } = this.props;
+        const { isShowStudent } = this.state;
+        const classShow = isShowStudent ? 'show' : '';
 
         return (
             <div className="container">
@@ -143,7 +208,8 @@ class Home extends Component {
 
                 <div className="dropdown">
                     <div id="myDropdown" className={'dropdown-content ' + classShow}>
-                        {this.listValue(students)}
+                        {this.listValue(search_students)}
+                        {this.noResults()}
                     </div>
                 </div>
 
@@ -153,4 +219,21 @@ class Home extends Component {
     };
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        saveTutorInfo: (data) => dispatch(saveTutorInfo(data)),
+        loadTutorInfo: (tutor) => dispatch(loadTutorInfo(tutor)),
+        searchStudents: (students) => dispatch(searchStudents(students)),
+        saveGoogleSheetStudents: (students) => dispatch(saveGoogleSheetStudents(students)),
+        fetchGoogleSheetStudent: (sheet_id) => dispatch(fetchGoogleSheetStudent(sheet_id))
+    };
+};
+
+const mapStateToProps = () => {
+    return {
+
+    };
+};
+
+const Home = connect(mapStateToProps, mapDispatchToProps)(HomeUI);
 export default Home;
