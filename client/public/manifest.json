@@ -1,6 +1,6 @@
 {
     "name": "Tutor Chrome Extension",
-    "version": "1.5",
+    "version": "1.5.0",
     "description": "Build a basic extension",
     "manifest_version": 2,
     "permissions": ["contextMenus", "activeTab", "declarativeContent", "storage"],
