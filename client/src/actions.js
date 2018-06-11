@@ -33,11 +33,6 @@ export const saveTutorInfo = (data) => {
     }
 };
 
-export const resetStudents = () => {
-    return {
-        type: 'RESET_STUDENTS'
-    };
-};
 
 export const saveGoogleSheetStudents = (list_students) => {
     return {

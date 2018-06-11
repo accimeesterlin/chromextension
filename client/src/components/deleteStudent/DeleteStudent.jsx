@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Footer from '../../common/Footer';
+import { connect } from 'react-redux';
+import { deleteStudent, navigate } from '../../actions';
 import './deleteStudent.css';
 
-class DeleteStudent extends Component {
+class DeleteStudentUI extends Component {
 
     // Display all students
     // Delete student once click the delete button
@@ -47,5 +49,21 @@ class DeleteStudent extends Component {
         );
     }
 };
+
+const mapStateToProps = (state) => {
+    return {
+        ...state
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deleteStudent: (email) => dispatch(deleteStudent(email)),
+        navigate: (data) => dispatch(navigate(data)),
+
+    };
+};
+
+const DeleteStudent = connect(mapStateToProps, mapDispatchToProps)(DeleteStudentUI);
 
 export default DeleteStudent;

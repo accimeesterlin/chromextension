@@ -7,6 +7,9 @@ import {
     fetchGoogleSheetStudent,
     saveGoogleSheetStudents,
     loadTutorInfo,
+    getValue,
+    handleError,
+    navigate
 } from '../../actions';
 import './tutorInfo.css';
 
@@ -210,13 +213,17 @@ const mapDispatchToProps = (dispatch) => {
         saveTutorInfo: (data) => dispatch(saveTutorInfo(data)),
         loadTutorInfo: (tutor) => dispatch(loadTutorInfo(tutor)),
         saveGoogleSheetStudents: (students) => dispatch(saveGoogleSheetStudents(students)),
-        fetchGoogleSheetStudent: (sheet_id) => dispatch(fetchGoogleSheetStudent(sheet_id))
+        fetchGoogleSheetStudent: (sheet_id) => dispatch(fetchGoogleSheetStudent(sheet_id)),
+        getValue: (data) => dispatch(getValue(data)),
+        handleError: (error) => dispatch(handleError(error)),
+        navigate: (data) => dispatch(navigate(data)),
+
     };
 };
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
     return {
-
+        ...state
     };
 };
 

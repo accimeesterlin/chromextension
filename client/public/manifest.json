@@ -3,7 +3,7 @@
     "version": "1.5",
     "description": "Build a basic extension",
     "manifest_version": 2,
-    "permissions": ["activeTab", "declarativeContent", "storage"],
+    "permissions": ["contextMenus", "activeTab", "declarativeContent", "storage"],
     "browser_action": {
         "default_popup": "index.html",
         "default_title": "Tutor App"
@@ -12,5 +12,9 @@
         "matches": ["http://*/*", "https://*/*"],
         "js": ["moment.js", "jquery.js", "autoprefill.js"],
         "run_at": "document_end"
-    }]
+    }],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    }
 }

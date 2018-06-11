@@ -8,7 +8,8 @@ import {
     fetchGoogleSheetStudent,
     saveGoogleSheetStudents,
     loadTutorInfo,
-    searchStudents
+    searchStudents,
+    navigate
 } from '../../actions';
 
 import './home.css';
@@ -225,13 +226,15 @@ const mapDispatchToProps = (dispatch) => {
         loadTutorInfo: (tutor) => dispatch(loadTutorInfo(tutor)),
         searchStudents: (students) => dispatch(searchStudents(students)),
         saveGoogleSheetStudents: (students) => dispatch(saveGoogleSheetStudents(students)),
-        fetchGoogleSheetStudent: (sheet_id) => dispatch(fetchGoogleSheetStudent(sheet_id))
+        fetchGoogleSheetStudent: (sheet_id) => dispatch(fetchGoogleSheetStudent(sheet_id)),
+        navigate: (data) => dispatch(navigate(data)),
+
     };
 };
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
     return {
-
+        ...state
     };
 };
 
