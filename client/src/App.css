@@ -4,12 +4,12 @@ body {
     max-height: 581px;
 }
 
-p{
-    font-size:12px;
+p {
+    font-size: 12px;
 }
 
-a:hover{
-    cursor:pointer;
+a:hover {
+    cursor: pointer;
 }
 
 #root {
@@ -29,12 +29,12 @@ a:hover{
     line-height: 25px;
 }
 
-button:hover{
-    cursor:pointer;
+button:hover {
+    cursor: pointer;
 }
 
 .footer p {
-    display:block;
-    position:absolute;
+    display: block;
+    position: absolute;
     bottom: 0;
 }

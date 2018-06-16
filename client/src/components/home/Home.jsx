@@ -19,7 +19,7 @@ class HomeUI extends Component {
         super(props);
 
         this.state = {
-            isShowStudent: false,
+            isShowStudent: true,
             students: [...props.students],
             result_status: "success"
         };
