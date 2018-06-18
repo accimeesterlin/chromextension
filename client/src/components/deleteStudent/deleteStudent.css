@@ -16,12 +16,14 @@
     text-align: center;
     margin-top: 50px;
 }
-
-.delete-students .go-back {
-    position: fixed;
-    width: 80px;
-    margin-top: 10px;
-    margin-left: 10px;
+.go-back {
+    /* position: fixed; */
+    width: 100%;
+    max-width:320px;
+    background: red;
+    padding: 10px 0;
+    color: #fff;
+    border:0;
 }
 
 .delete-students .users {
@@ -52,5 +54,5 @@
 .delete-students .no-more-students {
     margin: 0 auto;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 20px;
 }

@@ -40,11 +40,13 @@ class DeleteStudentUI extends Component {
         const { navigate, students } = this.props;
 
         return (
+            <div>
+            <button className='go-back' onClick={() => navigate({ url: '/home' })}><i class="fas fa-long-arrow-alt-left fa-3x"></i></button>
             <div className='delete-students'>
-                <button className='go-back' onClick={() => navigate({ url: '/home' })}>Go back</button>
                 {this.deleteStudentTitle(students)}
                 {this.displayUsers(students)}
                 <Footer />
+            </div>
             </div>
         );
     }

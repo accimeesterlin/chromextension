@@ -162,7 +162,7 @@ class TutorInfoUI extends Component {
         const { tutor_name, google_sheet_url } = this.props;
         return (
             <div className='form-container tutor_info'>
-                <button className='go-back' onClick={() => this.props.navigate({ url: '/home' })}>Go back</button>
+                <button className='go-back' onClick={() => this.props.navigate({ url: '/home' })}><i class="fas fa-long-arrow-alt-left fa-3x"></i></button>
                 <div className="notify">
                     {this.displayErrorMessage()}
                     {this.props.displayNotification()}

@@ -78,7 +78,7 @@ class AddStudentUI extends Component {
 
         return (
             <div className='add-student form-container'>
-                <button className='go-back' onClick={() => this.props.navigate({ url: '/home' })}>Go back</button>
+                <button className='go-back' onClick={() => this.props.navigate({ url: '/home' })}><i class="fas fa-long-arrow-alt-left fa-3x"></i></button>
 
                 <div className="notify">
                     {this.props.displayNotification()}
