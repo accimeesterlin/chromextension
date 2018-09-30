@@ -1,26 +1,20 @@
 import React, { Component } from 'react';
 import Footer from '../../common/Footer';
-import { connect } from 'react-redux';
+import { Input, Form, Message, Icon } from 'semantic-ui-react';
 
-import {
-    saveTutorInfo,
-    fetchGoogleSheetStudent,
-    saveGoogleSheetStudents,
-    loadTutorInfo,
-    getValue,
-    handleError,
-    navigate
-} from '../../actions';
 import './tutorInfo.css';
 
 class TutorInfoUI extends Component {
+
 
     // Pull Sheet ID from Google Spreadsheet URL User Input
     // Pull tutor students record from Google Sheets
     // Add every object of student into an array
     getGoogleSheetId = async (url) => {
+        const { roster_name, fetchGoogleSheetStudent } = this.props;
         const sheet_id = new RegExp("/spreadsheets/d/([a-zA-Z0-9-_]+)").exec(url)[1];
-        const values = await this.props.fetchGoogleSheetStudent(sheet_id);
+        const validateRosterName = roster_name ? roster_name : 'Roster'; // needs refactoring
+        const values = await fetchGoogleSheetStudent(sheet_id, validateRosterName);
         this.filterGoogleSheetsStudents(values);
     };
 
@@ -81,8 +75,10 @@ class TutorInfoUI extends Component {
         return (
             <div className='error'>
                 <p>{errorMessage}</p>
+                <p>Try the following: </p>
                 <ul>
-                    <li>Change Google Sheet Tab Name to <strong>Roster</strong></li>
+                    <li>Either Change Google Sheet Tab Name to <strong>Roster</strong></li>
+                    <li> Or Add <strong>Student Roster</strong> into the Roster Name Input</li>
                 </ul>
             </div>
         );
@@ -136,10 +132,37 @@ class TutorInfoUI extends Component {
                 return columnError(errorMessage);
             }
 
-            else {
-                return rangeError(errorMessage);
-            }
+            return rangeError(errorMessage);
         }
+    };
+
+    rosterNotification = () => {
+        const {
+            isRosterSuccess,
+            isRosterPending,
+            roster_name
+         } = this.props;
+
+        if (isRosterPending) {
+            return <div>
+                <Icon name='circle notched' loading />
+                <Message.Content>
+                    <Message.Header>Just one second</Message.Header>
+                    We are fetching that content for you.
+                </Message.Content>
+            </div>
+        }
+
+        if (isRosterSuccess) {
+            return <Message
+                success
+                header=''
+                content={`We have successfully uploaded your ${roster_name || 'Roster'} lists`}
+            />
+        }
+
+        return null;
+
     };
 
     // Submit form with tutor name, and google sheet (optional)
@@ -159,39 +182,47 @@ class TutorInfoUI extends Component {
     };
 
     render() {
-        const { tutor_name, google_sheet_url } = this.props;
+        const { tutor_name, google_sheet_url, roster_name } = this.props;
+
         return (
             <div className='form-container tutor_info'>
-                <button className='go-back' onClick={() => this.props.navigate({ url: '/home' })}><i class="fas fa-long-arrow-alt-left fa-3x"></i></button>
-                <div className="notify">
-                    {this.displayErrorMessage()}
-                    {this.props.displayNotification()}
-                </div>
-                <form onSubmit={this.submit}>
-                    <div>
-                        <label htmlFor='tutor_name'>Tutor Name: </label>
-                        <input
-                            type='text' name='tutor_name'
-                            onChange={this.handleChange}
-                            placeholder='Enter your tutor name (last, first)'
-                            required
-                            value={tutor_name} />
-                    </div>
+                <button className='go-back' onClick={() => this.props.navigate({ url: '/home' })}><i className="fas fa-long-arrow-alt-left fa-3x"></i></button>
 
-                    <div>
-                        <label htmlFor='google_sheet_url'>Google Sheet URL:  </label>
-                        <input
-                            type='text' name='google_sheet_url'
-                            onChange={this.handleChange}
-                            onFocus={this.googleSheetInstructions}
-                            value={google_sheet_url}
-                            placeholder='Enter your student google sheet url'
-                        />
-                    </div>
+                <Form onSubmit={this.submit}>
+                    <Form.Field
+                        control={Input}
+                        label='Tutor Name: '
+                        name='tutor_name'
+                        onChange={this.handleChange}
+                        value={tutor_name}
+                        placeholder='Enter your tutor name (last, first)' />
+
+                    <Form.Field
+                        control={Input}
+                        label='Google Sheet URL: '
+                        name='google_sheet_url'
+                        onChange={this.handleChange}
+                        value={google_sheet_url}
+                        placeholder='Enter your student google sheet url' />
+
+
+                    <Form.Field
+                        control={Input}
+                        label='Roster Name: '
+                        name='roster_name'
+                        onChange={this.handleChange}
+                        value={roster_name}
+                        placeholder='Enter your Roster Name' />
+
                     <div className="buttons">
                         <button>Add</button>
                     </div>
-                </form>
+                </Form>
+
+                <div className="notify">
+                    {this.displayErrorMessage()}
+                    {this.rosterNotification()}
+                </div>
 
                 <p>NOTE: To import students from your Google Sheet, follow this example </p>
                 <a
@@ -208,26 +239,5 @@ class TutorInfoUI extends Component {
 
 
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        saveTutorInfo: (data) => dispatch(saveTutorInfo(data)),
-        loadTutorInfo: (tutor) => dispatch(loadTutorInfo(tutor)),
-        saveGoogleSheetStudents: (students) => dispatch(saveGoogleSheetStudents(students)),
-        fetchGoogleSheetStudent: (sheet_id) => dispatch(fetchGoogleSheetStudent(sheet_id)),
-        getValue: (data) => dispatch(getValue(data)),
-        handleError: (error) => dispatch(handleError(error)),
-        navigate: (data) => dispatch(navigate(data)),
-
-    };
-};
-
-const mapStateToProps = (state) => {
-    return {
-        ...state
-    };
-};
-
-const TutorInfo = connect(mapStateToProps, mapDispatchToProps)(TutorInfoUI);
-export default TutorInfo;
-
+export default TutorInfoUI;
 

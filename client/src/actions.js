@@ -83,8 +83,8 @@ export const handleError = (error) => {
     };
 };
 
-export const fetchGoogleSheetStudent = (sheet_id) => {
-    const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${sheet_id}/values/Roster?`;
+export const fetchGoogleSheetStudent = (sheet_id, tab = 'Roster') => {
+    const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${sheet_id}/values/${tab}?`;
     const params = `key=${google_sheet_api_key}`;
 
     return {

@@ -1,7 +1,7 @@
 .add-student {
     /* border: 1px solid #d9ddd9; */
     border-radius: 4px;
-    padding: 10px;
+    padding: 10px;    
 }
 
 .form-container {
@@ -24,14 +24,15 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
 .form-container form div {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin: 10px;
+    width: 100%;
+    /* margin: 10px; */
 }
 
 .form-container form input {
@@ -53,5 +54,5 @@
     background: #5cb85c;
     color: #fff;
     cursor: pointer;
-    margin-top: 15px;
+    /* margin-top: 15px; */
 }

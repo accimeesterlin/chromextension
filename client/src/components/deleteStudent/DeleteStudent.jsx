@@ -41,7 +41,7 @@ class DeleteStudentUI extends Component {
 
         return (
             <div>
-            <button className='go-back' onClick={() => navigate({ url: '/home' })}><i class="fas fa-long-arrow-alt-left fa-3x"></i></button>
+            <button className='go-back' onClick={() => navigate({ url: '/home' })}><i className="fas fa-long-arrow-alt-left fa-3x"></i></button>
             <div className='delete-students'>
                 {this.deleteStudentTitle(students)}
                 {this.displayUsers(students)}

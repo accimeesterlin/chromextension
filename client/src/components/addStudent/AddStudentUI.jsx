@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Footer from '../../common/Footer';
 import { connect } from 'react-redux';
+import { Input, Form, Message, Icon } from 'semantic-ui-react';
 import { getValue, saveStudents, loadLastStudent, navigate } from '../../actions';
 import './addstudent.css';
 class AddStudentUI extends Component {
@@ -78,58 +79,51 @@ class AddStudentUI extends Component {
 
         return (
             <div className='add-student form-container'>
-                <button className='go-back' onClick={() => this.props.navigate({ url: '/home' })}><i class="fas fa-long-arrow-alt-left fa-3x"></i></button>
+                <button className='go-back' onClick={() => this.props.navigate({ url: '/home' })}><i className="fas fa-long-arrow-alt-left fa-3x"></i></button>
 
                 <div className="notify">
                     {this.props.displayNotification()}
                 </div>
-                <form onSubmit={this.submit}>
-                    <div>
-                        <label htmlFor='name'>Student Name: </label>
-                        <input
-                            type='text'
-                            name='name'
-                            placeholder='Your student name'
-                            required
-                            onChange={this.handleChange}
-                            value={name} />
-                    </div>
+                <Form onSubmit={this.submit}>
 
-                    <div>
-                        <label htmlFor='email'>Email: </label>
-                        <input
-                            type="email"
-                            name='email'
-                            placeholder='Your student email'
-                            required
-                            onChange={this.handleChange}
-                            value={email} />
-                    </div>
+                    <Form.Field 
+                        control={Input}
+                        label='Student Name: '
+                        name='name'
+                        onChange={this.handleChange}
+                        value={name}
+                        placeholder='Your student name'
+                    />
 
-                    <div>
-                        <label htmlFor='code'>Class Code: </label>
-                        <input
-                            type='text'
-                            name='code'
-                            placeholder='Your student code'
-                            required
-                            onChange={this.handleChange}
-                            value={code} />
-                    </div>
+                    <Form.Field 
+                        control={Input}
+                        label='Email: '
+                        name='email'
+                        onChange={this.handleChange}
+                        value={email}
+                        placeholder='Your student email'
+                    />
 
-                    <div>
-                        <label htmlFor='username'>Github Username</label>
-                        <input
-                            type='text'
-                            name='username'
-                            placeholder='Your student github username'
-                            required
-                            onChange={this.handleChange}
-                            value={username} />
-                    </div>
+                    <Form.Field 
+                        control={Input}
+                        label='Class Code:'
+                        name='code'
+                        onChange={this.handleChange}
+                        value={code}
+                        placeholder='Your student class code'
+                    />
+
+                    <Form.Field 
+                        control={Input}
+                        label='Github Username: '
+                        name='username'
+                        onChange={this.handleChange}
+                        value={username}
+                        placeholder='Your student github username'
+                    />
 
                     <button>Add a student</button>
-                </form>
+                </Form>
 
                 <Footer />
             </div>

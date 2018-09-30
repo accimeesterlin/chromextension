@@ -1,7 +1,7 @@
 import syncStorage from './utils/syncStorage';
 
 const initialState = {
-    url: '/home',
+    url: '/add',
     users: [],
     students: [],
     search_students: [],
@@ -17,7 +17,13 @@ const initialState = {
     status: '',
     pending: '',
     errorMessage: '',
-    isFiltered: false
+    isFiltered: false,
+    roster_name: '',
+    roster_status: {
+        error: false,
+        errorMessage: '',
+        status: 'idle'
+    }
 };
 
 const removeDuplicate = (students) => {
@@ -52,7 +58,11 @@ const reducers = (state = initialState, action) => {
                 notification: false,
                 notificationMessage: '',
                 errorMessage: '',
-                error: false
+                error: false,
+                roster_status: {
+                    ...state.roster_status,
+                    status: 'idle'
+                }
             };
 
         case 'SAVE_GOOGLE_SHEET_STUDENTS':
@@ -105,14 +115,26 @@ const reducers = (state = initialState, action) => {
                 ...state,
                 notification: false,
                 status: 'pending',
-                notificationMessage: ''
+                notificationMessage: '',
+                roster_status: {
+                    ...state.roster_status,
+                    error: false,
+                    status: 'pending',
+                    errorMessage: ''
+                }
             };
 
         case 'FETCH_GOOGLE_SHEET_STUDENT_FULFILLED':
             return {
                 ...state,
                 status: 'success',
-                error: false
+                error: false,
+                roster_status: {
+                    ...state.roster_status,
+                    error: false,
+                    status: 'success',
+                    errorMessage: ''
+                }
             };
 
         case 'FETCH_GOOGLE_SHEET_STUDENT_REJECTED':
@@ -120,6 +142,12 @@ const reducers = (state = initialState, action) => {
                 ...state,
                 error: true,
                 status: 'rejected',
+                roster_status: {
+                    ...state.roster_status,
+                    error: false,
+                    status: 'rejected',
+                    errorMessage: ''
+                },
                 errorMessage: action.payload.response.data.error.message || 'Error occurs'
             };
 
