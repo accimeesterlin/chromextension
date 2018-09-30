@@ -1,7 +1,7 @@
 import syncStorage from './utils/syncStorage';
 
 const initialState = {
-    url: '/add',
+    url: '/home',
     users: [],
     students: [],
     search_students: [],
@@ -48,7 +48,11 @@ const reducers = (state = initialState, action) => {
                 notificationMessage: '',
                 url: action.url,
                 error: false,
-                errorMessage: ''
+                errorMessage: '',
+                roster_status: {
+                    ...state.roster_status,
+                    status: 'idle'
+                }
             };
 
         case 'GET_VALUE':

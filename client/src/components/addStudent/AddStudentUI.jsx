@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Footer from '../../common/Footer';
 import { connect } from 'react-redux';
-import { Input, Form, Message, Icon } from 'semantic-ui-react';
+import { Input, Form } from 'semantic-ui-react';
 import { getValue, saveStudents, loadLastStudent, navigate } from '../../actions';
 import './addstudent.css';
 class AddStudentUI extends Component {
