@@ -24,6 +24,7 @@
     padding: 10px 0;
     color: #fff;
     border:0;
+    outline: none;
 }
 
 .delete-students .users {
