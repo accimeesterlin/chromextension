@@ -1,0 +1,17 @@
+@import '../../../common/inheritance.scss';
+
+
+.addStudent form {
+    @extend %content-center;
+    flex-direction: column;
+}
+
+.addStudent form > div {
+    margin: 0;
+}
+
+.addStudent form button {
+    padding: 4px 8px;
+    min-height: 20px;
+    margin-top: 20px;
+}

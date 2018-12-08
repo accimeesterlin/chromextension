@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import Nav from '../../common/nav/Nav';
-import Search from '../../molecules/Search';
+import Nav from '../../../common/nav/Nav';
 
-import './home.scss';
 
-export default class Home extends Component {
-
+export default class Info extends Component {
     navigate = (link) => {
 
         console.log('Link: ', link);
@@ -17,7 +14,7 @@ export default class Home extends Component {
         return(
             <div className="home">
                 <Nav navigate = {this.navigate}/>
-                <Search />
+                <h2>I am the Add Info Functionality</h2>
             </div>
         );
     }

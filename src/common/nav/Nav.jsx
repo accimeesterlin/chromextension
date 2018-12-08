@@ -2,15 +2,15 @@ import React from 'react';
 import { Home, CalendarToday, Add, Delete, Info } from '@material-ui/icons';
 import './nav.scss';
 
-const Nav = () => {
+const Nav = ({ navigate }) => {
 
     return(
         <nav className="nav">
-            <Home />
-            <Add />
-            <Delete />
-            <Info />
-            <CalendarToday />
+            <Home onClick = {() => navigate('/')}/>
+            <Add onClick = {() => navigate('/student/add')}/>
+            <Delete onClick = {() => navigate('/student/delete')}/>
+            <Info onClick = {() => navigate('/tutor')}/>
+            <CalendarToday onClick = {() => navigate('/upcoming/session')}/>
         </nav>
     );
 };

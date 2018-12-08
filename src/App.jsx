@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
-import Home from './components/home/Home';
-
+import {
+  Home,
+  AddStudent,
+  DeleteStudent,
+  UpcomingSession,
+  Info
+} from './components';
 
 import "./App.scss";
-
-
-const Student = () => {
-  return (
-    <h2>I am the Student Page</h2>
-  );
-};
-
 
 
 
@@ -23,9 +20,10 @@ export default class App extends Component {
       <div className="app">
 
         <Route exact path='/' component={Home} />
-        <Route path='/student' component={Student} />
-        {/* <Route path='/tutor/info' component={TutorInfo} />
-        <Route path='/upcoming/session' component={UpComingSession} /> */}
+        <Route path='/student/add' component={AddStudent} />
+        <Route path='/student/delete' component={DeleteStudent} />
+        <Route path='/tutor' component={Info} />
+        <Route path='/upcoming/session' component={UpcomingSession} />
       </div>
     );
   }
