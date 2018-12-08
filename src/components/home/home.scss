@@ -1,9 +1,32 @@
 @import '../../common/inheritance.scss';
 
-
+.home {
+    position: relative;
+}
 .home .search {
     margin-top: 70px;
-    // border: 1px solid lightgrey;
     @extend %content-center;
     flex-direction: column;
+}
+
+.home .displayStudents {
+    overflow: scroll;
+    position: relative;
+    margin-top: 10px;
+    margin: 5px 27px;
+    min-height: 50px;
+    max-height: 131px;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+.home .displayStudents p {
+    margin-bottom: 10px;
+    border-bottom: 1px solid lightgrey;
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.home .displayStudents p:last-child {
+    border-bottom: none;
 }

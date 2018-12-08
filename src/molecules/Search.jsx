@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 
-const Search = ({ handleChange, value }) => {
+const Search = ({ handleChange, value, handleFocus, handleBlur }) => {
     return (
         <div className="search">
             <TextField
@@ -9,6 +9,7 @@ const Search = ({ handleChange, value }) => {
                 label="Search student"
                 type="search"
                 margin="normal"
+                onFocus={handleFocus}
                 onChange={handleChange}
                 value={value}
             />
