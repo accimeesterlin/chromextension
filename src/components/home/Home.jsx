@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import Nav from '../../common/nav/Nav';
+import Search from '../../molecules/Search';
+
+import './home.scss';
 
 export default class Home extends Component {
 
@@ -9,6 +12,7 @@ export default class Home extends Component {
         return(
             <div className="home">
                 <Nav />
+                <Search />
             </div>
         );
     }

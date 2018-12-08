@@ -1,0 +1,9 @@
+@import '../../common/inheritance.scss';
+
+
+.home .search {
+    margin-top: 70px;
+    // border: 1px solid lightgrey;
+    @extend %content-center;
+    flex-direction: column;
+}
