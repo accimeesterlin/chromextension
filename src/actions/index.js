@@ -19,3 +19,11 @@ export function deleteStudent(student) {
         students
     });
 }
+
+
+export function saveTutorInfo(info) {
+
+    this.setState({
+        ...info
+    });
+}

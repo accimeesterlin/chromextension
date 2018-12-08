@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Nav from '../../../common/nav/Nav';
 import Form from './Form';
+import { connectWithStore } from '../../../store/index';
+
 
 import './info.scss';
-
-export default class Info extends Component {
+class InfoUI extends Component {
     constructor() {
         super();
 
@@ -22,19 +23,46 @@ export default class Info extends Component {
     handleChange = ({ target }) => {
         const name = target.name;
         const value = target.value;
-        
+
         this.setState({
             [name]: value
         });
     };
 
+    handleSubmit = (event) => {
+        event.preventDefault();
+
+        const tutorName = this.state.tutorName;
+        const googleSheetUrl = this.state.googleSheetUrl;
+
+        this.props.saveTutorInfo({
+            tutorName,
+            googleSheetUrl
+        });
+
+        this.setState({
+            tutorName: '',
+            googleSheetUrl: ''
+        });
+
+        console.log('State: ', this.state);
+    };
+
 
     render() {
-        return(
+        return (
             <div className="info">
-                <Nav navigate = {this.navigate}/>
-                <Form handleChange={this.handleChange} {...this.state}/>
+                <Nav navigate={this.navigate} />
+                <Form
+                    handleSubmit={this.handleSubmit}
+                    handleChange={this.handleChange}
+                    {...this.state} />
             </div>
         );
     }
 }
+
+const Info = connectWithStore(InfoUI);
+
+
+export default Info;
