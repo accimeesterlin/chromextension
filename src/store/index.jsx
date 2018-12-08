@@ -38,7 +38,6 @@ export function connectWithStore(Container) {
     return class extends Component {
 
         render() {
-            console.log('PROPS: ', this.props);
             return <Context.Consumer>
                 {(context) => <Container {...context } {...this.props}/>}
             </Context.Consumer>

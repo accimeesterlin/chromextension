@@ -29,6 +29,8 @@ class HomeUI extends Component {
 
 
     render() {
+
+        console.log('Students: ', this.props.students);
         const students = [
             { name: 'Accime Esterling'},
             { name: 'Patrick Simon'},
@@ -43,7 +45,7 @@ class HomeUI extends Component {
                 <Search
                     handleFocus={this.handleFocus}
                 />
-                {this.state.isFocus ? <DisplayStudents selectStudent = {this.selectStudent} students={students}/> : null}
+                {this.state.isFocus ? <DisplayStudents selectStudent = {this.selectStudent} students={this.props.students}/> : null}
             </div>
         );
     }
