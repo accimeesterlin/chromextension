@@ -46,5 +46,4 @@ class DeleteStudentUI extends Component {
 
 
 const DeleteStudent = connectWithStore(DeleteStudentUI);
-
 export default DeleteStudent;

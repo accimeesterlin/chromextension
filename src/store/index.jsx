@@ -7,7 +7,8 @@ export class Provider extends Component {
     state = {
         students: [],
         tutorName: '',
-        googleSheetUrl: ''
+        googleSheetUrl: '',
+        events: []
     };
 
     attachMethods = () => {

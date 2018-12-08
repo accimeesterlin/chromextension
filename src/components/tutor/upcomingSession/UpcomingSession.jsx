@@ -1,21 +1,32 @@
 import React, { Component } from 'react';
 import Nav from '../../../common/nav/Nav';
+import Calendar from './Calendar';
+import { connectWithStore } from '../../../store/index';
+import './upcomingsession.scss';
 
-
-export default class UpcomingSession extends Component {
+class UpcomingSessionUI extends Component {
     navigate = (link) => {
-
-        console.log('Link: ', link);
         return this.props.history.push(link);
     }
 
 
     render() {
-        return(
-            <div className="home">
-                <Nav navigate = {this.navigate}/>
-                <h2>I am the Add Upcoming Session Functionality</h2>
+
+        // Dummy Data
+        const events = [
+            { description: '', startTime: '', endTime: '', month: '' },
+            { description: '', startTime: '', endTime: '', month: '' },
+            { description: '', startTime: '', endTime: '', month: '' },
+            { description: '', startTime: '', endTime: '', month: '' },
+        ]
+        return (
+            <div className="upcomingsession">
+                <Nav navigate={this.navigate} />
+                <Calendar events={events}/>
             </div>
         );
     }
 }
+
+const UpcomingSession = connectWithStore(UpcomingSessionUI);
+export default UpcomingSession;
