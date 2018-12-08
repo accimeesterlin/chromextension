@@ -5,3 +5,17 @@ export function addStudents(student) {
         students: [...students, student]
     });
 };
+
+
+
+export function deleteStudent(student) {
+    const students = this.state.students.filter((el) => {
+        if (el.email !== student.email) {
+            return el;
+        }
+    });
+
+    this.setState({
+        students
+    });
+}
