@@ -1,21 +1,57 @@
 import React, { Component } from 'react';
 import Nav from '../../../common/nav/Nav';
 import Form from './Form';
+import axios from 'axios';
+
 import { connectWithStore } from '../../../store/index';
 
-
 import './info.scss';
+
+
 class InfoUI extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             googleSheetUrl: props.googleSheetUrl || '',
-            tutorName: props.tutorName || ''
+            tutorName: props.tutorName || '',
+            rosterName: props.rosterName || ''
         };
     }
-    navigate = (link) => {
 
+    fetchGoogleSheet = async () => {
+        const { googleSheetUrl, rosterName } = this.state;
+        const sheetId = new RegExp("/spreadsheets/d/([a-zA-Z0-9-_]+)").exec(googleSheetUrl)[1];
+        const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${rosterName}?`;
+        const params = `key=AIzaSyCqo2Ufn8KUXDBUxHUc7MBXoXv8wdBOfK0`;
+
+        const values = await axios({ url: `${endpoint}${params}`, method: 'GET' });
+        const data = values.data && values.data.values ? values.data.values : [];
+        this.addStudentToStore(data);
+    };
+
+    addStudentToStore = (data) => {
+        for (let i = 0; i < data.length; i++) {
+            try {
+                const email = data[i][3];
+                if (email.includes('@')) {
+                    this.props.addStudents({
+                        name: data[i][2],
+                        githubUsername: data[i][4],
+                        email,
+                        studentCode: data[i][0]
+                    });
+                }
+            } catch (error) {
+                console.log('Error is displaying');
+                // TODO
+                // Handle multiple cases of failures
+            }
+        }
+    };
+
+
+    navigate = (link) => {
         console.log('Link: ', link);
         return this.props.history.push(link);
     }
@@ -32,18 +68,15 @@ class InfoUI extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        const tutorName = this.state.tutorName;
-        const googleSheetUrl = this.state.googleSheetUrl;
+        const { tutorName, googleSheetUrl, rosterName } = this.state;
 
         this.props.saveTutorInfo({
             tutorName,
-            googleSheetUrl
+            googleSheetUrl,
+            rosterName
         });
 
-        this.setState({
-            tutorName: '',
-            googleSheetUrl: ''
-        });
+        this.fetchGoogleSheet();
 
         console.log('State: ', this.state);
     };

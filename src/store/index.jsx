@@ -8,7 +8,8 @@ export class Provider extends Component {
         students: [],
         tutorName: '',
         googleSheetUrl: '',
-        events: []
+        events: [],
+        rosterName: ''
     };
 
     attachMethods = () => {

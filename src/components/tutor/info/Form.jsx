@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField, Button } from '@material-ui/core/';
 
-const Form = ({ handleChange, handleSubmit, tutorName, googleSheetUrl }) => {
+const Form = ({ handleChange, handleSubmit, tutorName, googleSheetUrl, rosterName }) => {
     return (
         <form onSubmit={handleSubmit}>  
             <TextField
@@ -15,6 +15,16 @@ const Form = ({ handleChange, handleSubmit, tutorName, googleSheetUrl }) => {
             />
 
 
+            <TextField
+                id="standard-search"
+                label="Roster Name"
+                type="search"
+                name="rosterName"
+                margin="normal"
+                onChange={handleChange}
+                value={rosterName}
+            />
+            
             <TextField
                 id="standard-search"
                 label="Google Sheet URL"
