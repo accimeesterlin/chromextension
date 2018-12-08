@@ -3,6 +3,7 @@
     margin: 5px;
     max-height: 295px;
     overflow: scroll;
+    
 }
 
 .upcomingsession .calendar div {
@@ -12,4 +13,8 @@
 
 .upcomingsession .calendar p {
     margin: 5px;
+}
+
+.upcomingsession .calendar b {
+    font-weight: bold;
 }

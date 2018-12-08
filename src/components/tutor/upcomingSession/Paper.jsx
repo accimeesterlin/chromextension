@@ -4,7 +4,7 @@ import { Paper } from '@material-ui/core';
 
 const PaperComponent = () => {
     return (
-        <Paper className="">
+        <Paper>
             <p><b>Description:</b> kfkfkskkfsf</p>
             <p><b>Start Time:</b> fshfhshfs</p>
             <p><b>End Time:</b> jfsfhshfhfhsf</p>

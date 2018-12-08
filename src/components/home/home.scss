@@ -2,9 +2,15 @@
 
 .home {
     position: relative;
+
+    &-name {
+        text-align: center;
+        margin-top: 30px;
+    }
 }
+
 .home .search {
-    margin-top: 70px;
+    margin-top: 40px;
     @extend %content-center;
     flex-direction: column;
 }

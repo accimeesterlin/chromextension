@@ -6,12 +6,12 @@ import { connectWithStore } from '../../../store/index';
 
 import './info.scss';
 class InfoUI extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
-            googleSheetUrl: '',
-            tutorName: ''
+            googleSheetUrl: props.googleSheetUrl || '',
+            tutorName: props.tutorName || ''
         };
     }
     navigate = (link) => {

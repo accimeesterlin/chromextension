@@ -28,11 +28,10 @@ class HomeUI extends Component {
     };
 
     handleChange = ({ target }) => {
-        console.log('Checking in HandleChange');
-        const value = target.value;
+        const value = target.value.toLowerCase();
 
-        const students = this.state.students.filter((el, i) => {
-            if (el.name.includes(value)) {
+        const students = this.state.students.filter((el) => {
+            if (el.name.toLowerCase().includes(value)) {
                 return el;
             }
         });
@@ -54,10 +53,12 @@ class HomeUI extends Component {
     render() {
 
         console.log('Students: ', this.props.students);
+        const tutorName = this.props.tutorName ? `Welcome ${this.props.tutorName}` : null;
 
         return (
             <div className="home">
                 <Nav navigate={this.navigate} />
+                <p className="home-name"> {tutorName} </p>
                 <Search
                     handleChange={this.handleChange}
                     handleFocus={this.handleFocus}
