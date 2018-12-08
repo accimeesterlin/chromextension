@@ -1,0 +1,17 @@
+@import '../inheritance.scss';
+
+.nav {
+    border: 1px solid lightgrey;
+    padding: 10px;
+    @extend %content-center;
+}
+
+.nav svg {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.nav svg:hover {
+    background: red;
+    color: blue;
+}
