@@ -5,7 +5,7 @@ const Context = React.createContext();
 
 export class Provider extends Component {
     state = {
-        
+        students: []
     };
 
     attachMethods = () => {
@@ -19,7 +19,7 @@ export class Provider extends Component {
     };
 
     render() {
-
+        console.log('Store: ', this.state);
         return (
             <Context.Provider value={{
                 ...this.state,

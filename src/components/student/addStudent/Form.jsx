@@ -1,34 +1,37 @@
 import React from 'react';
 import { TextField, Button } from '@material-ui/core/';
 
-const Form = ({ handleChange, value }) => {
+const Form = ({ handleChange, handleSubmit, name, githubUsername, email, studentCode }) => {
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <TextField
                 id="standard-search"
                 label="Name"
                 type="search"
+                name="name"
                 margin="normal"
                 onChange={handleChange}
-                value={value}
+                value={name}
             />
 
             <TextField
                 id="standard-search"
                 label="Email"
-                type="search"
+                name="email"
+                type="email"
                 margin="normal"
                 onChange={handleChange}
-                value={value}
+                value={email}
             />
 
             <TextField
                 id="standard-search"
                 label="Student Code"
                 type="search"
+                name="studentCode"
                 margin="normal"
                 onChange={handleChange}
-                value={value}
+                value={studentCode}
             />
 
 
@@ -36,22 +39,15 @@ const Form = ({ handleChange, value }) => {
                 id="standard-search"
                 label="Github Username"
                 type="search"
+                name="githubUsername"
                 margin="normal"
                 onChange={handleChange}
-                value={value}
-            />
-
-            <TextField
-                id="standard-search"
-                label="Search student"
-                type="search"
-                margin="normal"
-                onChange={handleChange}
-                value={value}
+                value={githubUsername}
             />
 
             <Button
                 variant="contained"
+                onClick={handleSubmit}
                 color="primary">
                 Add Student
             </Button>
