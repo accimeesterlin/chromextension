@@ -1,0 +1,10 @@
+@import '../../../common/inheritance.scss';
+
+.info form {
+    @extend %content-center;
+    flex-direction: column;
+}
+
+.info form button {
+    margin-top: 20px;
+}

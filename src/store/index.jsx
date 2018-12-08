@@ -5,7 +5,9 @@ const Context = React.createContext();
 
 export class Provider extends Component {
     state = {
-        students: []
+        students: [],
+        tutorName: '',
+        googleSheetUrl: ''
     };
 
     attachMethods = () => {

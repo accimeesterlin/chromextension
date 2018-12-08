@@ -1,12 +1,13 @@
 import React from 'react';
 import { List, ListItem, IconButton, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
+import _ from 'lodash';
 
 
 const ListComponent = ({ students, deleteStudent }) => {
     return (
         <List dense={false}>
-            {students.map((student, i) => (
+            {_.isEmpty(students) ? <p>No students</p> : students.map((student, i) => (
                 <ListItem key = {i}>
                     <ListItemText
                         primary={student.name}
