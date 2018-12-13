@@ -1,5 +1,12 @@
 @import '../../../common/inheritance.scss';
 
+
+.info {
+    width: 100%;
+    position: relative;
+}
+
+
 .info form {
     @extend %content-center;
     flex-direction: column;
@@ -7,4 +14,22 @@
 
 .info form button {
     margin-top: 20px;
+}
+
+.info .snackbar {
+    display: block;
+    width: 100%;
+    position: absolute;
+    max-width: 220px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.info .snackbar > div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    min-width: 100px;
+    padding: 0;
 }

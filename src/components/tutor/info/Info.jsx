@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Nav from '../../../common/nav/Nav';
 import Form from './Form';
 import axios from 'axios';
-
+import Snackbar from '../../../molecules/SnackBar';
 import { connectWithStore } from '../../../store/index';
+
 
 import './info.scss';
 
@@ -15,9 +16,20 @@ class InfoUI extends Component {
         this.state = {
             googleSheetUrl: props.googleSheetUrl || '',
             tutorName: props.tutorName || '',
-            rosterName: props.rosterName || ''
+            rosterName: props.rosterName || '',
+            open: false,
+            status: 'success',
+            message: ''
         };
     }
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({ open: false });
+    };
 
     fetchGoogleSheet = async () => {
         const { googleSheetUrl, rosterName } = this.state;
@@ -48,6 +60,11 @@ class InfoUI extends Component {
                 // Handle multiple cases of failures
             }
         }
+
+        this.setState({
+            open: true,
+            message: 'successfully'
+        });
     };
 
 
@@ -90,6 +107,12 @@ class InfoUI extends Component {
                     handleSubmit={this.handleSubmit}
                     handleChange={this.handleChange}
                     {...this.state} />
+                <Snackbar
+                    open={this.state.open}
+                    handleClick={this.handleClick}
+                    handleClose={this.handleClose}
+                    status={this.state.status}
+                    message={this.state.message} />
             </div>
         );
     }
