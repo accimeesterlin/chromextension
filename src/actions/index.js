@@ -1,19 +1,19 @@
+import _ from 'lodash';
+
 export function addStudents(student) {
     const students = this.state.students;
+    const removeDuplicateStudents = _.uniqBy([...students, student], 'email');
+    const sortStudentsByName = _.sortBy(removeDuplicateStudents, ['name'], ['acs']);
 
     this.setState({
-        students: [...students, student]
+        students:  sortStudentsByName 
     });
 };
 
 
 
 export function deleteStudent(student) {
-    const students = this.state.students.filter((el) => {
-        if (el.email !== student.email) {
-            return el;
-        }
-    });
+    const students = this.state.students.filter((el) => el.email !== student.email);
 
     this.setState({
         students

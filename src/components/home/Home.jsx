@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Nav from '../../common/nav/Nav';
 import Search from '../../molecules/Search';
+import _ from 'lodash';
 import { connectWithStore } from '../../store/index';
 import './home.scss';
 import DisplayStudents from './DisplayStudent';

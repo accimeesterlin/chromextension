@@ -33,13 +33,17 @@ class InfoUI extends Component {
 
     fetchGoogleSheet = async () => {
         const { googleSheetUrl, rosterName } = this.state;
-        const sheetId = new RegExp("/spreadsheets/d/([a-zA-Z0-9-_]+)").exec(googleSheetUrl)[1];
-        const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${rosterName}?`;
-        const params = `key=AIzaSyCqo2Ufn8KUXDBUxHUc7MBXoXv8wdBOfK0`;
 
-        const values = await axios({ url: `${endpoint}${params}`, method: 'GET' });
-        const data = values.data && values.data.values ? values.data.values : [];
-        this.addStudentToStore(data);
+        if (googleSheetUrl && rosterName) {
+            const sheetId = new RegExp("/spreadsheets/d/([a-zA-Z0-9-_]+)").exec(googleSheetUrl)[1];
+            const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${rosterName}?`;
+            const params = `key=AIzaSyCqo2Ufn8KUXDBUxHUc7MBXoXv8wdBOfK0`;
+
+            const values = await axios({ url: `${endpoint}${params}`, method: 'GET' });
+            const data = values.data && values.data.values ? values.data.values : [];
+            this.addStudentToStore(data);
+        }
+
     };
 
     addStudentToStore = (data) => {

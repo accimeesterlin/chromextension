@@ -27,12 +27,14 @@ class DeleteStudentUI extends Component {
 
     render() {
 
-        const students = [
-            { name: 'Peter', email: 'John' },
-            { name: 'Sadrack', email: 'email' },
-            { name: 'Lucson', email: 'you' },
-            { name: 'Patrick', email: 'moving' }
-        ];
+        // const students = [
+        //     { name: 'Peter', email: 'John' },
+        //     { name: 'Sadrack', email: 'email' },
+        //     { name: 'Lucson', email: 'you' },
+        //     { name: 'Patrick', email: 'moving' }
+        // ];
+
+
         return(
             <div className="deleteStudent">
                 <Nav navigate = {this.navigate}/>
