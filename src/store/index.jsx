@@ -9,8 +9,19 @@ export class Provider extends Component {
         tutorName: '',
         googleSheetUrl: '',
         events: [],
-        rosterName: ''
+        rosterName: '',
+        isInitial: true
     };
+
+    componentDidMount = () => {
+        const isInitial = this.state.isInitial;
+        if (isInitial) {
+            const data = JSON.parse(window.localStorage.getItem('state'));
+            console.log('Data: ', data);
+            this.setState({ ...data, isInitial: false });
+        }
+        
+    }
 
     attachMethods = () => {
         let mainActions = {};
@@ -20,6 +31,14 @@ export class Provider extends Component {
         }
 
         return mainActions
+    };
+
+    componentDidUpdate = () => {
+        const isInitial = this.state.isInitial;
+        if (!isInitial) {
+            window.localStorage.setItem('state', JSON.stringify(this.state));
+        }
+        
     };
 
     render() {
