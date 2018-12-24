@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Nav from '../../../common/nav/Nav';
 import Form from './Form';
 import axios from 'axios';
-import Snackbar from '../../../molecules/SnackBar';
+import * as tutorUtils from '../../../utils/tutorUtils';
+// import Snackbar from '../../../molecules/SnackBar';
 import { connectWithStore } from '../../../store/index';
 
 
@@ -18,10 +19,22 @@ class InfoUI extends Component {
             tutorName: props.tutorName || '',
             rosterName: props.rosterName || '',
             open: false,
-            status: 'success',
+            status: null,
             message: ''
         };
     }
+
+
+    startCounter = () => {
+        this.counter++;
+        console.log('Counter: ', this.counter);
+
+        if (this.counter >= 5) {
+            clearInterval(this.timerID);
+            this.setState({ status: '' });
+
+        }
+    };
 
     handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -35,15 +48,29 @@ class InfoUI extends Component {
         const { googleSheetUrl, rosterName } = this.state;
 
         if (googleSheetUrl && rosterName) {
-            const sheetId = new RegExp("/spreadsheets/d/([a-zA-Z0-9-_]+)").exec(googleSheetUrl)[1];
-            const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${rosterName}?`;
-            const params = `key=AIzaSyCqo2Ufn8KUXDBUxHUc7MBXoXv8wdBOfK0`;
-
-            const values = await axios({ url: `${endpoint}${params}`, method: 'GET' });
-            const data = values.data && values.data.values ? values.data.values : [];
-            this.addStudentToStore(data);
+            this.setState({ status: 'pending' }); // loading data
+            const url = tutorUtils.generateSheetUrl(googleSheetUrl, rosterName);
+            axios(url)
+                .then(this.handleSuccessfulResult)
+                .catch(this.handleError);
         }
+    };
 
+    handleError = () => {
+        this.setState({ status: 'error' });
+    };
+
+    handleSuccessfulResult = ({ data }) => {
+        // Start timer to remove status message
+        this.counter = 0;
+        this.timerID = setInterval(this.startCounter, 1000);
+
+        // Filter results and add students to the store
+        const results = data && data.values ? data.values : [];
+        this.addStudentToStore(results);
+
+        // Set status to success
+        this.setState({ status: 'success' });
     };
 
     addStudentToStore = (data) => {
@@ -64,11 +91,6 @@ class InfoUI extends Component {
                 // Handle multiple cases of failures
             }
         }
-
-        this.setState({
-            open: true,
-            message: 'successfully'
-        });
     };
 
 
@@ -81,13 +103,13 @@ class InfoUI extends Component {
         const name = target.name;
         const value = target.value;
 
-        this.setState({
-            [name]: value
-        });
+        this.setState({ [name]: value});
     };
 
     handleSubmit = (event) => {
         event.preventDefault();
+        clearInterval(this.timerID);
+
 
         const { tutorName, googleSheetUrl, rosterName } = this.state;
 
@@ -98,25 +120,32 @@ class InfoUI extends Component {
         });
 
         this.fetchGoogleSheet();
-
-        console.log('State: ', this.state);
     };
 
 
     render() {
+        const { status } = this.state;
+
+        //TODO: refactor this code
+        const isPending = status === 'pending' ? <i className="fa fa-spinner fa-spin"></i> : null;
+        const isSuccess = status === 'success' ? <p className="success"> <i className="fa fa-check"></i> successfully</p> : null;
+        const isError = status === 'error' ? <p className="error"><i class="fas fa-times"></i> view more</p> : null;
+
+
+        
+        console.log('State: ', this.state);
         return (
             <div className="info">
                 <Nav navigate={this.navigate} />
+                {isSuccess}
+
                 <Form
                     handleSubmit={this.handleSubmit}
                     handleChange={this.handleChange}
-                    {...this.state} />
-                <Snackbar
-                    open={this.state.open}
-                    handleClick={this.handleClick}
-                    handleClose={this.handleClose}
-                    status={this.state.status}
-                    message={this.state.message} />
+                    {...this.state}>
+
+                    {isPending}
+                </Form>
             </div>
         );
     }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Nav from '../../common/nav/Nav';
 import Search from '../../molecules/Search';
-import _ from 'lodash';
 import { connectWithStore } from '../../store/index';
 import './home.scss';
 import DisplayStudents from './DisplayStudent';
@@ -54,6 +53,7 @@ class HomeUI extends Component {
     render() {
 
         console.log('Students: ', this.props.students);
+        
         const tutorName = this.props.tutorName ? `Welcome ${this.props.tutorName}` : null;
 
         return (

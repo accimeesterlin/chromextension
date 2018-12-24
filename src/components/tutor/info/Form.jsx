@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField, Button } from '@material-ui/core/';
 
-const Form = ({ handleChange, handleSubmit, tutorName, googleSheetUrl, rosterName }) => {
+const Form = ({ handleChange, handleSubmit, tutorName, googleSheetUrl, rosterName, children }) => {
     return (
         <form onSubmit={handleSubmit}>  
             <TextField
@@ -40,6 +40,9 @@ const Form = ({ handleChange, handleSubmit, tutorName, googleSheetUrl, rosterNam
                 onClick={handleSubmit}
                 color="primary">
                 Submit
+
+                {children}
+
             </Button>
         </form>
     );
