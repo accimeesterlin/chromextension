@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 import React, { Component } from 'react';
 import Nav from '../../common/nav/Nav';
 import Search from '../../molecules/Search';
@@ -19,6 +21,19 @@ class HomeUI extends Component {
         console.log('Link: ', link);
         return this.props.history.push(link);
     }
+
+    sendMessageToContentScripts = (student, value) => {
+        try {
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, { student }, function (response) {
+                    console.log(response.farewell);
+                });
+            });
+        } catch (error) {
+            // TODO
+        }
+    };
+
 
     handleFocus = () => {
         this.setState({
@@ -45,7 +60,7 @@ class HomeUI extends Component {
 
 
     selectStudent = (student) => {
-        console.log('Student: ', student);
+        this.sendMessageToContentScripts(student);
         this.setState({ isFocus: false });
     };
 
