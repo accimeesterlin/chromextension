@@ -10,14 +10,14 @@ export class Provider extends Component {
         googleSheetUrl: '',
         events: [],
         rosterName: '',
-        isInitial: true
+        isInitial: true,
+        message: 'Not able to fetch data'
     };
 
     componentDidMount = () => {
         const isInitial = this.state.isInitial;
         if (isInitial) {
             const data = JSON.parse(window.localStorage.getItem('state'));
-            console.log('Data: ', data);
             this.setState({ ...data, isInitial: false });
         }
         

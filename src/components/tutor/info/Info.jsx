@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Nav from '../../../common/nav/Nav';
+import { Link } from 'react-router-dom';
 import Form from './Form';
 import axios from 'axios';
 import * as tutorUtils from '../../../utils/tutorUtils';
@@ -20,7 +21,7 @@ class InfoUI extends Component {
             rosterName: props.rosterName || '',
             open: false,
             status: null,
-            message: ''
+            message: 'Not able to fetch data'
         };
     }
 
@@ -56,8 +57,13 @@ class InfoUI extends Component {
         }
     };
 
-    handleError = () => {
-        this.setState({ status: 'error' });
+    handleError = (error) => {
+        this.counter = 0;
+        this.timerID = setInterval(this.startCounter, 1000);
+
+        const { message, code } = error.response.data.error;
+
+        this.setState({ status: 'error', message, code });
     };
 
     handleSuccessfulResult = ({ data }) => {
@@ -67,16 +73,28 @@ class InfoUI extends Component {
 
         // Filter results and add students to the store
         const results = data && data.values ? data.values : [];
-        this.addStudentToStore(results);
 
-        // Set status to success
-        this.setState({ status: 'success' });
+        this.addStudentToStore(results);
+    };
+
+
+    validateCorrectColum = (isValid) => {
+        if (isValid) {
+            this.setState({ status: 'success', message: 'Successfully' });
+
+        } else {
+            this.setState({ status: 'error', message: 'Columns Error' });
+        }
+
     };
 
     addStudentToStore = (data) => {
+        let isValid = false;
+
         for (let i = 0; i < data.length; i++) {
             try {
                 const email = data[i][3];
+                console.log('Email: ', email);
                 if (email.includes('@')) {
                     this.props.addStudents({
                         name: data[i][2],
@@ -84,6 +102,7 @@ class InfoUI extends Component {
                         email,
                         studentCode: data[i][0]
                     });
+                    isValid = true;
                 }
             } catch (error) {
                 console.log('Error is displaying');
@@ -91,6 +110,7 @@ class InfoUI extends Component {
                 // Handle multiple cases of failures
             }
         }
+        this.validateCorrectColum(isValid);
     };
 
 
@@ -103,7 +123,7 @@ class InfoUI extends Component {
         const name = target.name;
         const value = target.value;
 
-        this.setState({ [name]: value});
+        this.setState({ [name]: value });
     };
 
     handleSubmit = (event) => {
@@ -123,25 +143,34 @@ class InfoUI extends Component {
     };
 
 
+    displayMessage = () => {
+        const { status, message } = this.state;
+
+        if (status === 'success') {
+            return <p className="success"> <i className="fa fa-check"></i> Successfully</p>;
+        } else if (status === 'error') {
+            return <p className="error">
+                <Link to={"/error"}><i className="fa fa-info-circle"></i></Link>
+                {message}
+            </p>
+        }
+        return null;
+    };
+
+
     render() {
         const { status } = this.state;
 
-        //TODO: refactor this code
         const isPending = status === 'pending' ? <i className="fa fa-spinner fa-spin"></i> : null;
-        const isSuccess = status === 'success' ? <p className="success"> <i className="fa fa-check"></i> successfully</p> : null;
-        const isError = status === 'error' ? <p className="error"><i class="fas fa-times"></i> view more</p> : null;
 
-
-        
-        console.log('State: ', this.state);
         return (
             <div className="info">
                 <Nav navigate={this.navigate} />
-                {isSuccess}
-
+                {this.displayMessage()}
                 <Form
                     handleSubmit={this.handleSubmit}
                     handleChange={this.handleChange}
+                    status={status}
                     {...this.state}>
 
                     {isPending}
