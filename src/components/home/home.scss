@@ -31,6 +31,9 @@
     width: 100%;
     padding: 10px;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    line-height: 2rem;
 }
 
 .home .displayStudents p:last-child {
