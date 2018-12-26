@@ -86,8 +86,8 @@ class DialogSelect extends React.Component {
                                     input={<Input id="age-native-simple" />}
                                 >
                                     <option value="" />
-                                    <option value={'N'}>No</option>
-                                    <option value={'Y'}>Yes</option>
+                                    <option value={'N0'}>No</option>
+                                    <option value={'Yes'}>Yes</option>
                                 </Select>
                             </FormControl>
                             <FormControl className={classes.formControl}>
