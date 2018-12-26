@@ -33,3 +33,8 @@ export function addToStore(data) {
     this.setState({ ...data });
 }
 
+
+
+export function addEvents(events) {
+    this.setState({ events: [...events] });
+}
