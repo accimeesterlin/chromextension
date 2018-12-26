@@ -6,7 +6,7 @@ export function addStudents(student) {
     const sortStudentsByName = _.sortBy(removeDuplicateStudents, ['name'], ['acs']);
 
     this.setState({
-        students:  sortStudentsByName 
+        students: sortStudentsByName
     });
 };
 
@@ -26,4 +26,15 @@ export function saveTutorInfo(info) {
     this.setState({
         ...info
     });
+}
+
+
+export function addToStore(data) {
+    this.setState({ ...data });
+}
+
+
+
+export function addEvents(events) {
+    this.setState({ events: [...events] });
 }

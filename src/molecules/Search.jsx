@@ -14,6 +14,7 @@ const Search = ({ handleChange, value, handleFocus }) => {
                 onChange={handleChange}
                 value={value}
             />
+
         </div>
     );
 };

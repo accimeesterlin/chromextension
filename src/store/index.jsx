@@ -10,17 +10,17 @@ export class Provider extends Component {
         googleSheetUrl: '',
         events: [],
         rosterName: '',
-        isInitial: true
+        isInitial: true,
+        message: 'Not able to fetch data'
     };
 
     componentDidMount = () => {
         const isInitial = this.state.isInitial;
         if (isInitial) {
             const data = JSON.parse(window.localStorage.getItem('state'));
-            console.log('Data: ', data);
             this.setState({ ...data, isInitial: false });
         }
-        
+
     }
 
     attachMethods = () => {
@@ -38,7 +38,7 @@ export class Provider extends Component {
         if (!isInitial) {
             window.localStorage.setItem('state', JSON.stringify(this.state));
         }
-        
+
     };
 
     render() {
@@ -62,7 +62,7 @@ export function connectWithStore(Container) {
 
         render() {
             return <Context.Consumer>
-                {(context) => <Container {...context } {...this.props}/>}
+                {(context) => <Container {...context} {...this.props} />}
             </Context.Consumer>
         }
     }

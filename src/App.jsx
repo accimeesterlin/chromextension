@@ -6,7 +6,8 @@ import {
   AddStudent,
   DeleteStudent,
   UpcomingSession,
-  Info
+  Info,
+  ErrorComponent
 } from './components';
 
 import "./App.scss";
@@ -24,6 +25,7 @@ export default class App extends Component {
         <Route path='/student/delete' component={DeleteStudent} />
         <Route path='/tutor' component={Info} />
         <Route path='/upcoming/session' component={UpcomingSession} />
+        <Route path='/error' component={ErrorComponent} />
       </div>
     );
   }

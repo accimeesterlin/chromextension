@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField, Button } from '@material-ui/core/';
 
-const Form = ({ handleChange, handleSubmit, tutorName, googleSheetUrl, rosterName }) => {
+const Form = ({ handleChange, handleSubmit, tutorName, googleSheetUrl, rosterName, children, status }) => {
     return (
         <form onSubmit={handleSubmit}>  
             <TextField
@@ -38,8 +38,12 @@ const Form = ({ handleChange, handleSubmit, tutorName, googleSheetUrl, rosterNam
             <Button
                 variant="contained"
                 onClick={handleSubmit}
+                disabled={status === 'pending'}
                 color="primary">
                 Submit
+
+                {children}
+
             </Button>
         </form>
     );

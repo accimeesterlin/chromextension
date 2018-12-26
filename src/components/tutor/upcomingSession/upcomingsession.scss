@@ -1,4 +1,10 @@
 
+
+.upcomingsession button {
+    margin: 5px;
+}
+
+
 .upcomingsession .calendar {
     margin: 5px;
     max-height: 295px;
@@ -17,4 +23,26 @@
 
 .upcomingsession .calendar b {
     font-weight: bold;
+}
+
+.upcomingsession .event-box {
+    padding: 3px;
+    border: 1px solid lightgrey;
+    margin: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.upcomingsession .event-box p {
+    margin-top: 10px;
+}
+
+.upcomingsession .events-container {
+    position: relative;
+    overflow: scroll;
+    max-height: 255px;
+}
+
+.upcomingsession .no-events {
+    text-align: center;
 }
