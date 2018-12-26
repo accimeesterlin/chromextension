@@ -33,6 +33,12 @@
     justify-content: space-between;
 }
 
+.displayStudents > p {
+    display: flex;
+    justify-content: center;
+    padding: 9px;
+}
+
 
 .home .displayStudents p:last-child {
     border-bottom: none;

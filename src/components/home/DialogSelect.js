@@ -27,8 +27,8 @@ class DialogSelect extends React.Component {
     state = {
         open: false,
         age: '',
-        back2Back: null,
-        noShow: null
+        back2Back: '',
+        noShow: ''
     };
 
     handleChange = name => event => {
@@ -43,10 +43,10 @@ class DialogSelect extends React.Component {
 
         this.setState({ open: false });
         navigator.clipboard.writeText(`
-        1.${this.props.classCode}
-        2.${this.props.studentName}
+        1.Class Code: ${this.props.classCode}
+        2.Student Name: ${this.props.studentName}
         3.B2B-${this.state.back2Back}
-        4.${this.state.noShow}
+        4.No-Show: ${this.state.noShow}
 
         `).then(() => {
 
@@ -70,10 +70,10 @@ class DialogSelect extends React.Component {
                 >
                     <DialogTitle>ADP Notes</DialogTitle>
                     <DialogContent>
-                        <p>1.{this.props.classCode}</p>
-                        <p>2.{this.props.studentName}</p>
+                        <p>1.Class Code: {this.props.classCode}</p>
+                        <p>2.Student Name: {this.props.studentName}</p>
                         <p>3.B2B-{this.state.back2Back}</p>
-                        <p>4.{this.state.noShow}</p>
+                        <p>4.No-Show: {this.state.noShow}</p>
                     </DialogContent>
                     <DialogContent>
                         <form className={classes.container}>
@@ -86,7 +86,7 @@ class DialogSelect extends React.Component {
                                     input={<Input id="age-native-simple" />}
                                 >
                                     <option value="" />
-                                    <option value={'N0'}>No</option>
+                                    <option value={'No'}>No</option>
                                     <option value={'Yes'}>Yes</option>
                                 </Select>
                             </FormControl>
@@ -100,8 +100,8 @@ class DialogSelect extends React.Component {
                                     <MenuItem value="">
                                         <em>None</em>
                                     </MenuItem>
-                                    <MenuItem value={'NO'}>No</MenuItem>
-                                    <MenuItem value={'YES'}>Yes</MenuItem>
+                                    <MenuItem value={'No'}>No</MenuItem>
+                                    <MenuItem value={'Yes'}>Yes</MenuItem>
                                 </Select>
                             </FormControl>
                         </form>
