@@ -64,4 +64,6 @@ class AddStudentUI extends Component {
 
 
 const AddStudent = connectWithStore(AddStudentUI);
+
+AddStudent.displayName = 'AddStudent';
 export default AddStudent;

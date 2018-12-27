@@ -138,4 +138,6 @@ class UpcomingSessionUI extends Component {
 }
 
 const UpcomingSession = connectWithStore(UpcomingSessionUI);
+UpcomingSession.displayName = 'UpcommingSession';
+
 export default UpcomingSession;

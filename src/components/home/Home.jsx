@@ -87,4 +87,5 @@ class HomeUI extends Component {
 }
 
 const Home = connectWithStore(HomeUI);
+Home.displayName = 'HOME';
 export default Home;

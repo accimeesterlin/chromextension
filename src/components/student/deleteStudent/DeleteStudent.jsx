@@ -48,4 +48,6 @@ class DeleteStudentUI extends Component {
 
 
 const DeleteStudent = connectWithStore(DeleteStudentUI);
+DeleteStudent.displayName = 'DeleteStudent';
+
 export default DeleteStudent;

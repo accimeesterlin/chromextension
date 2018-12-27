@@ -1,5 +1,7 @@
 import React from 'react';
 import { TextField, Button } from '@material-ui/core/';
+import PropTypes from 'prop-types';
+
 
 const Form = ({ handleChange, handleSubmit, tutorName, googleSheetUrl, rosterName, children, status }) => {
     return (
@@ -48,5 +50,13 @@ const Form = ({ handleChange, handleSubmit, tutorName, googleSheetUrl, rosterNam
         </form>
     );
 };
+
+
+Form.PropTypes = {
+    handleChange : PropTypes.func,
+    handleSubmit : PropTypes.func,
+    tutorName : PropTypes.string
+}
+
 
 export default Form;

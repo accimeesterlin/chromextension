@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import Form from './Form';
 import axios from 'axios';
 import * as tutorUtils from '../../../utils/tutorUtils';
-// import Snackbar from '../../../molecules/SnackBar';
 import { connectWithStore } from '../../../store/index';
+
+
 
 
 import './info.scss';
@@ -181,6 +182,7 @@ class InfoUI extends Component {
 }
 
 const Info = connectWithStore(InfoUI);
-
+Info.displayName = 'Info'
 
 export default Info;
+
