@@ -63,6 +63,7 @@ class DialogSelect extends React.Component {
             <div>
                 <FileCopy className="fileCopy" onClick={this.handleClickOpen} />
                 <Dialog
+                    fullScreen
                     disableBackdropClick
                     disableEscapeKeyDown
                     open={this.state.open}
