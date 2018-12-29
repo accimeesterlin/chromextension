@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export function generateSheetUrl(url, rosterName) {
     const sheetId = new RegExp("/spreadsheets/d/([a-zA-Z0-9-_]+)").exec(url)[1];
     const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${rosterName}?`;
@@ -36,8 +38,29 @@ export function isTutoringSession(event) {
         if (summary.includes(key) || description.includes(key) || location.includes(key)) {
             isTutoring = true;
             break;
-        }   
+        }
     }
 
     return isTutoring;
-}   
+}
+
+
+export function validateInputs(student) {
+
+    let options = {
+        message: '',
+        isError: false
+    };
+    
+    for (let key in student) {
+        if (_.isEmpty(student[key])) {
+            options.message = `${key} is empty`;
+            options.isError = true
+            break;
+        }
+
+        options.isError = false;
+    }
+
+    return options;
+};

@@ -1,9 +1,13 @@
 @import '../../../common/inheritance.scss';
 
+.addStudent {
+    position: relative;
+}
 
 .addStudent form {
     @extend %content-center;
     flex-direction: column;
+    margin-top: 40px;
 }
 
 .addStudent form > div {
@@ -14,4 +18,37 @@
     padding: 4px 8px;
     min-height: 20px;
     margin-top: 20px;
+}
+
+
+.addStudent {
+
+    .success,
+    .error,
+    .pending {
+        text-align: center;
+        width: 100%;
+        padding: 3px;
+        position: absolute;
+        color: #fff;
+
+        i {
+            margin-right: 10px;
+        }
+        
+    }
+
+    .fa {
+        color: #fff;
+    }
+
+    .success {
+        background: #43a047;
+    }
+
+    .error {
+        background: red;
+        
+    }
+
 }
