@@ -57,6 +57,7 @@ class InfoUI extends Component {
         }
     };
 
+
     handleError = (error) => {
         this.counter = 0;
         this.timerID = setInterval(this.startCounter, 1000);

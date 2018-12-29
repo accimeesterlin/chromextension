@@ -21,7 +21,7 @@ import * as tutorUtils from '../../../utils/tutorUtils';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import './upcomingsession.scss';
-
+import events from './events';
 
 class UpcomingSessionUI extends Component {
     constructor(props) {

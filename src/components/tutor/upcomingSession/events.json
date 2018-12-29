@@ -1,187 +1,516 @@
-[
-    {
-      "kind": "calendar#event",
-      "etag": "\"3084853355284000\"",
-      "id": "_6tlnaqrle5p6cpb4dhmj4phpegs6eobge1imeqj1dkq78qr8dorn6t9pc8s6mcr7ekr32e33cgq76pphegqj6qbkdos3ichge1qmqr33dsr6e",
-      "status": "confirmed",
-      "htmlLink": "https://www.google.com/calendar/event?eid=XzZ0bG5hcXJsZTVwNmNwYjRkaG1qNHBocGVnczZlb2JnZTFpbWVxajFka3E3OHFyOGRvcm42dDlwYzhzNm1jcjdla3IzMmUzM2NncTc2cHBoZWdxajZxYmtkb3MzaWNoZ2UxcW1xcjMzZHNyNmUgZXN0ZXJsaW5hY2NpbWVAbQ",
-      "created": "2018-11-17T03:51:17.000Z",
-      "updated": "2018-11-17T03:51:17.761Z",
-      "summary": "Flight to Atlanta (DL 2970)",
-      "description": "To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar\n\nThis event was created from an email you received in Gmail. https://mail.google.com/mail?extsrc=cal&plid=ACUX6DO98RvQ-yfgHyO5J25bCHaAOUpKrXxDvd0\n",
-      "location": "Portland PDX",
-      "creator": {
-        "email": "esterlinaccime@gmail.com",
-        "displayName": "Esterling Accime",
-        "self": true
-      },
-      "organizer": {
-        "email": "unknownorganizer@calendar.google.com"
-      },
-      "start": {
-        "dateTime": "2019-01-01T12:00:00-05:00"
-      },
-      "end": {
-        "dateTime": "2019-01-01T16:40:00-05:00"
-      },
-      "transparency": "transparent",
-      "visibility": "private",
-      "iCalUID": "7kukuqrfedlm2f9t8gappegjam4tkhn7su9b8k3gu618cd4sg1t53itn8920pumlco6g",
-      "sequence": 0,
-      "attendees": [
-        {
-          "email": "esterlinaccime@gmail.com",
-          "displayName": "Esterling Accime",
-          "self": true,
-          "responseStatus": "accepted"
-        }
-      ],
-      "guestsCanInviteOthers": false,
-      "privateCopy": true,
-      "reminders": {
-        "useDefault": false
-      },
-      "source": {
-        "url": "https://mail.google.com/mail?extsrc=cal&plid=ACUX6DO98RvQ-yfgHyO5J25bCHaAOUpKrXxDvd0",
-        "title": ""
-      }
+[{
+    "kind": "calendar#event",
+    "etag": "\"3089110976196000\"",
+    "id": "_6tlnaqrle5p6cpb4dhmj4phpegpmoobh70s36cr6c5ij8rjk6lqmccrje9qmcdb6dkpmacrb70ojeq9mdtimgt1n6lmmuqre6dq38praepgj0",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=XzZ0bG5hcXJsZTVwNmNwYjRkaG1qNHBocGVncG1vb2JoNzBzMzZjcjZjNWlqOHJqazZscW1jY3JqZTlxbWNkYjZka3BtYWNyYjcwb2plcTltZHRpbWd0MW42bG1tdXFyZTZkcTM4cHJhZXBnajAgbHVpcy50aGUuY29kZXJAbQ",
+    "created": "2018-12-11T19:11:28.000Z",
+    "updated": "2018-12-11T19:11:28.150Z",
+    "summary": "Flight to Chicago (UA 671)",
+    "description": "To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar\n\nThis event was created from an email you received in Gmail. https://mail.google.com/mail?extsrc=cal&plid=ACUX6DO0yzvqX0J6tNbgr4t7-rbg06QH6t_thRU\n",
+    "location": "San Juan SJU",
+    "creator": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
     },
-    {
-      "kind": "calendar#event",
-      "etag": "\"3091707897771000\"",
-      "id": "1hgijr6aau25mhbhp1fm7r9rc9",
-      "status": "confirmed",
-      "htmlLink": "https://www.google.com/calendar/event?eid=MWhnaWpyNmFhdTI1bWhiaHAxZm03cjlyYzkgZXN0ZXJsaW5hY2NpbWVAbQ",
-      "created": "2018-12-26T19:52:28.000Z",
-      "updated": "2018-12-26T19:52:28.948Z",
-      "summary": "Tutoring Session - Enock",
-      "creator": {
-        "email": "esterlinaccime@gmail.com",
-        "displayName": "Esterling Accime",
-        "self": true
-      },
-      "organizer": {
-        "email": "esterlinaccime@gmail.com",
-        "displayName": "Esterling Accime",
-        "self": true
-      },
-      "start": {
-        "dateTime": "2019-01-02T10:00:00-05:00"
-      },
-      "end": {
-        "dateTime": "2019-01-02T10:30:00-05:00"
-      },
-      "iCalUID": "1hgijr6aau25mhbhp1fm7r9rc9@google.com",
-      "sequence": 0,
-      "extendedProperties": {
-        "private": {
-          "everyoneDeclinedDismissed": "-1"
-        }
-      },
-      "reminders": {
-        "useDefault": false,
-        "overrides": [
-          {
-            "method": "email",
-            "minutes": 30
-          },
-          {
-            "method": "popup",
-            "minutes": 30
-          }
-        ]
-      }
+    "organizer": {
+      "email": "unknownorganizer@calendar.google.com"
     },
-    {
-      "kind": "calendar#event",
-      "etag": "\"3092043607870000\"",
-      "id": "1kik1nkcf3ialfc7h090subq4j",
-      "status": "confirmed",
-      "htmlLink": "https://www.google.com/calendar/event?eid=MWtpazFua2NmM2lhbGZjN2gwOTBzdWJxNGogZXN0ZXJsaW5hY2NpbWVAbQ",
-      "created": "2018-12-28T18:07:47.000Z",
-      "updated": "2018-12-28T18:52:19.974Z",
-      "summary": "Enock: Schedule a Tutoring Session now",
-      "creator": {
-        "email": "esterlinaccime@gmail.com",
-        "displayName": "Esterling Accime",
-        "self": true
-      },
-      "organizer": {
-        "email": "esterlinaccime@gmail.com",
-        "displayName": "Esterling Accime",
-        "self": true
-      },
-      "start": {
-        "dateTime": "2019-01-03T10:00:00-05:00"
-      },
-      "end": {
-        "dateTime": "2019-01-03T10:30:00-05:00"
-      },
-      "iCalUID": "1kik1nkcf3ialfc7h090subq4j@google.com",
-      "sequence": 0,
-      "extendedProperties": {
-        "private": {
-          "everyoneDeclinedDismissed": "-1"
-        }
-      },
-      "reminders": {
-        "useDefault": false,
-        "overrides": [
-          {
-            "method": "email",
-            "minutes": 30
-          },
-          {
-            "method": "popup",
-            "minutes": 30
-          }
-        ]
-      }
+    "start": {
+      "dateTime": "2019-02-17T04:05:00-06:00"
     },
-    {
-      "kind": "calendar#event",
-      "etag": "\"3092050941109000\"",
-      "id": "323fo2et8mf67nrqpul1ahm58l",
-      "status": "confirmed",
-      "htmlLink": "https://www.google.com/calendar/event?eid=MzIzZm8yZXQ4bWY2N25ycXB1bDFhaG01OGwgZXN0ZXJsaW5hY2NpbWVAbQ",
-      "created": "2018-12-28T19:31:10.000Z",
-      "updated": "2018-12-28T19:31:10.609Z",
-      "summary": "Peter: Schedule a tutoring session now",
-      "creator": {
-        "email": "esterlinaccime@gmail.com",
-        "displayName": "Esterling Accime",
-        "self": true
-      },
-      "organizer": {
-        "email": "esterlinaccime@gmail.com",
-        "displayName": "Esterling Accime",
-        "self": true
-      },
-      "start": {
-        "dateTime": "2018-12-28T23:00:00-05:00"
-      },
-      "end": {
-        "dateTime": "2018-12-28T23:30:00-05:00"
-      },
-      "iCalUID": "323fo2et8mf67nrqpul1ahm58l@google.com",
-      "sequence": 0,
-      "extendedProperties": {
-        "private": {
-          "everyoneDeclinedDismissed": "-1"
-        }
-      },
-      "reminders": {
-        "useDefault": false,
-        "overrides": [
-          {
-            "method": "email",
-            "minutes": 30
-          },
-          {
-            "method": "popup",
-            "minutes": 30
-          }
-        ]
-      }
+    "end": {
+      "dateTime": "2019-02-17T09:15:00-06:00"
+    },
+    "transparency": "transparent",
+    "visibility": "private",
+    "iCalUID": "7kukuqrfedlm2f9t3laq8833fae4nt5uf3sruf5fm3e3k817i6oeht75mokn3t4gjva0",
+    "sequence": 0,
+    "attendees": [{
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true,
+      "responseStatus": "accepted"
+    }],
+    "guestsCanInviteOthers": false,
+    "privateCopy": true,
+    "reminders": {
+      "useDefault": false
+    },
+    "source": {
+      "url": "https://mail.google.com/mail?extsrc=cal&plid=ACUX6DO0yzvqX0J6tNbgr4t7-rbg06QH6t_thRU",
+      "title": ""
     }
-  ]
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3089110976196000\"",
+    "id": "_6tlnaqrle5p6cpb4dhmj4phpegr62spmdppmgdpjdhhjcdj5ddmn0eblclh6odb46lm66q9hchl74t3edcrncpbh6spj8c3a68pjgojc6th30",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=XzZ0bG5hcXJsZTVwNmNwYjRkaG1qNHBocGVncjYyc3BtZHBwbWdkcGpkaGhqY2RqNWRkbW4wZWJsY2xoNm9kYjQ2bG02NnE5aGNobDc0dDNlZGNybmNwYmg2c3BqOGMzYTY4cGpnb2pjNnRoMzAgbHVpcy50aGUuY29kZXJAbQ",
+    "created": "2018-12-11T19:11:28.000Z",
+    "updated": "2018-12-11T19:11:28.150Z",
+    "summary": "Flight to Springfield (UA 4825)",
+    "description": "To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar\n\nThis event was created from an email you received in Gmail. https://mail.google.com/mail?extsrc=cal&plid=ACUX6DO0yzvqX0J6tNbgr4t7-rbg06QH6t_thRU\n",
+    "location": "Chicago ORD",
+    "creator": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "organizer": {
+      "email": "unknownorganizer@calendar.google.com"
+    },
+    "start": {
+      "dateTime": "2019-02-17T15:55:00-06:00"
+    },
+    "end": {
+      "dateTime": "2019-02-17T17:44:00-06:00"
+    },
+    "transparency": "transparent",
+    "visibility": "private",
+    "iCalUID": "7kukuqrfedlm2f9t6as6nsh73lc66ekmp9uebl5d5lci1djrtnk7veq7340j238bl7b0",
+    "sequence": 0,
+    "attendees": [{
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true,
+      "responseStatus": "accepted"
+    }],
+    "guestsCanInviteOthers": false,
+    "privateCopy": true,
+    "reminders": {
+      "useDefault": false
+    },
+    "source": {
+      "url": "https://mail.google.com/mail?extsrc=cal&plid=ACUX6DO0yzvqX0J6tNbgr4t7-rbg06QH6t_thRU",
+      "title": ""
+    }
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3089110976196000\"",
+    "id": "_6tlnaqrle5p6cpb4dhmj4phpehh3eq1m71n7athpdor6ac9gcdkj8e1ocgq6ie33epl6opjad1o74cr9elm7ce9ge4pnarpp6pj7adrhccr6e",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=XzZ0bG5hcXJsZTVwNmNwYjRkaG1qNHBocGVoaDNlcTFtNzFuN2F0aHBkb3I2YWM5Z2Nka2o4ZTFvY2dxNmllMzNlcGw2b3BqYWQxbzc0Y3I5ZWxtN2NlOWdlNHBuYXJwcDZwajdhZHJoY2NyNmUgbHVpcy50aGUuY29kZXJAbQ",
+    "created": "2018-12-11T19:11:28.000Z",
+    "updated": "2018-12-11T19:11:28.150Z",
+    "summary": "Flight to Chicago (UA 4737)",
+    "description": "To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar\n\nThis event was created from an email you received in Gmail. https://mail.google.com/mail?extsrc=cal&plid=ACUX6DO0yzvqX0J6tNbgr4t7-rbg06QH6t_thRU\n",
+    "location": "Springfield SGF",
+    "creator": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "organizer": {
+      "email": "unknownorganizer@calendar.google.com"
+    },
+    "start": {
+      "dateTime": "2019-02-07T06:20:00-06:00"
+    },
+    "end": {
+      "dateTime": "2019-02-07T08:14:00-06:00"
+    },
+    "transparency": "transparent",
+    "visibility": "private",
+    "iCalUID": "7kukuqrfedlm2f9tb7h68nuv9n6e10ci488d4i8cvjlfjhpr3iulv90q3uo96fu7qc6g",
+    "sequence": 0,
+    "attendees": [{
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true,
+      "responseStatus": "accepted"
+    }],
+    "guestsCanInviteOthers": false,
+    "privateCopy": true,
+    "reminders": {
+      "useDefault": false
+    },
+    "source": {
+      "url": "https://mail.google.com/mail?extsrc=cal&plid=ACUX6DO0yzvqX0J6tNbgr4t7-rbg06QH6t_thRU",
+      "title": ""
+    }
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3089110976196000\"",
+    "id": "_6tlnaqrle5p6cpb4dhmj4phpehhmsd9kdtlmgpbi6dh36rhp74q6irj9ehj6aqrlcgr32cjm6lr62rrbehj6aob971m7ad3ceks6ue1kctnme",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=XzZ0bG5hcXJsZTVwNmNwYjRkaG1qNHBocGVoaG1zZDlrZHRsbWdwYmk2ZGgzNnJocDc0cTZpcmo5ZWhqNmFxcmxjZ3IzMmNqbTZscjYycnJiZWhqNmFvYjk3MW03YWQzY2VrczZ1ZTFrY3RubWUgbHVpcy50aGUuY29kZXJAbQ",
+    "created": "2018-12-11T19:11:28.000Z",
+    "updated": "2018-12-11T19:11:28.150Z",
+    "summary": "Flight to Newark (UA 2193)",
+    "description": "To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar\n\nThis event was created from an email you received in Gmail. https://mail.google.com/mail?extsrc=cal&plid=ACUX6DO0yzvqX0J6tNbgr4t7-rbg06QH6t_thRU\n",
+    "location": "Chicago ORD",
+    "creator": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "organizer": {
+      "email": "unknownorganizer@calendar.google.com"
+    },
+    "start": {
+      "dateTime": "2019-02-07T09:08:00-06:00"
+    },
+    "end": {
+      "dateTime": "2019-02-07T11:13:00-06:00"
+    },
+    "transparency": "transparent",
+    "visibility": "private",
+    "iCalUID": "7kukuqrfedlm2f9tcn54okher3b3n994initfekud612v5vaoktfeai8lu4lu8o84gog",
+    "sequence": 0,
+    "attendees": [{
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true,
+      "responseStatus": "accepted"
+    }],
+    "guestsCanInviteOthers": false,
+    "privateCopy": true,
+    "reminders": {
+      "useDefault": false
+    },
+    "source": {
+      "url": "https://mail.google.com/mail?extsrc=cal&plid=ACUX6DO0yzvqX0J6tNbgr4t7-rbg06QH6t_thRU",
+      "title": ""
+    }
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3089110976196000\"",
+    "id": "_6tlnaqrle5p6cpb4dhmj4phpehp6msjke8pn4qrhdpmmks386dincq3565p74tj4ekr78tb4e5lmasbgdhr3gpr8dtlj8e356pjjis1mcgr30",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=XzZ0bG5hcXJsZTVwNmNwYjRkaG1qNHBocGVocDZtc2prZThwbjRxcmhkcG1ta3MzODZkaW5jcTM1NjVwNzR0ajRla3I3OHRiNGU1bG1hc2JnZGhyM2dwcjhkdGxqOGUzNTZwamppczFtY2dyMzAgbHVpcy50aGUuY29kZXJAbQ",
+    "created": "2018-12-11T19:11:28.000Z",
+    "updated": "2018-12-11T19:11:28.150Z",
+    "summary": "Flight to San Juan (UA 1523)",
+    "description": "To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar\n\nThis event was created from an email you received in Gmail. https://mail.google.com/mail?extsrc=cal&plid=ACUX6DO0yzvqX0J6tNbgr4t7-rbg06QH6t_thRU\n",
+    "location": "Newark EWR",
+    "creator": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "organizer": {
+      "email": "unknownorganizer@calendar.google.com"
+    },
+    "start": {
+      "dateTime": "2019-02-10T07:30:00-06:00"
+    },
+    "end": {
+      "dateTime": "2019-02-10T11:22:00-06:00"
+    },
+    "transparency": "transparent",
+    "visibility": "private",
+    "iCalUID": "7kukuqrfedlm2f9trkrtr3rkqnmjph3evhe1rrvdu6tudqkeqplv8ghok48e6g9p6d60",
+    "sequence": 0,
+    "attendees": [{
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true,
+      "responseStatus": "accepted"
+    }],
+    "guestsCanInviteOthers": false,
+    "privateCopy": true,
+    "reminders": {
+      "useDefault": false
+    },
+    "source": {
+      "url": "https://mail.google.com/mail?extsrc=cal&plid=ACUX6DO0yzvqX0J6tNbgr4t7-rbg06QH6t_thRU",
+      "title": ""
+    }
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3090517285034000\"",
+    "id": "32qmo69525h8k42l0rvh8fdtve",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MzJxbW82OTUyNWg4azQybDBydmg4ZmR0dmUgbHVpcy50aGUuY29kZXJAbQ",
+    "created": "2018-12-19T22:30:42.000Z",
+    "updated": "2018-12-19T22:30:42.517Z",
+    "summary": "Session With Sheima",
+    "creator": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "organizer": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2019-01-02T16:00:00-06:00"
+    },
+    "end": {
+      "dateTime": "2019-01-02T17:00:00-06:00"
+    },
+    "iCalUID": "32qmo69525h8k42l0rvh8fdtve@google.com",
+    "sequence": 0,
+    "extendedProperties": {
+      "private": {
+        "everyoneDeclinedDismissed": "-1"
+      }
+    },
+    "reminders": {
+      "useDefault": true
+    }
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3090519278186000\"",
+    "id": "t71dqk04510lrv0dd8kn9uvc1o",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=dDcxZHFrMDQ1MTBscnYwZGQ4a245dXZjMW8gbHVpcy50aGUuY29kZXJAbQ",
+    "created": "2018-12-15T21:11:48.000Z",
+    "updated": "2018-12-19T22:47:19.093Z",
+    "summary": "Canceled: Sheima Gholami and Luis Rodriguez",
+    "description": "Event Name: Tutorial Session\n\nBoot Camp Tutorial Session\n\nLocation: The day before the session, I will email the link to you.\n\nCancellation Reason: session limit reached this week\n\nPowered by Calendly.com\n",
+    "location": "The day before the session, I will email the link to you. ",
+    "creator": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "organizer": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2018-12-29T10:00:00-06:00"
+    },
+    "end": {
+      "dateTime": "2018-12-29T11:00:00-06:00"
+    },
+    "transparency": "transparent",
+    "iCalUID": "t71dqk04510lrv0dd8kn9uvc1o@google.com",
+    "sequence": 0,
+    "attendees": [{
+        "email": "info@sheima.com",
+        "responseStatus": "accepted"
+      },
+      {
+        "email": "luis.the.coder@gmail.com",
+        "displayName": "Luis Rodriguez",
+        "organizer": true,
+        "self": true,
+        "responseStatus": "declined"
+      }
+    ],
+    "reminders": {
+      "useDefault": true
+    }
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3090831138080000\"",
+    "id": "5b23sanh7h0sl6fo3ipevrrmk8",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NWIyM3Nhbmg3aDBzbDZmbzNpcGV2cnJtazggbHVpcy50aGUuY29kZXJAbQ",
+    "created": "2018-12-21T18:06:09.000Z",
+    "updated": "2018-12-21T18:06:09.040Z",
+    "summary": "Hack 4 Good - Quarterly Hack Night",
+    "description": "For full details, including the address, and to RSVP see: https://www.meetup.com/hack4goodsgf/events/256475087\n\nOur Hack Night events give project team leaders an opportunity to coordinate efforts with designers ...",
+    "location": "The eFactory (Robert W Plaster Free Enterprise Center) - 405 N Jefferson Ave - Springfield, MO, us",
+    "creator": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "organizer": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2019-01-17T18:00:00-06:00"
+    },
+    "end": {
+      "dateTime": "2019-01-17T21:00:00-06:00"
+    },
+    "iCalUID": "5b23sanh7h0sl6fo3ipevrrmk8@google.com",
+    "sequence": 0,
+    "extendedProperties": {
+      "private": {
+        "everyoneDeclinedDismissed": "-1"
+      }
+    },
+    "reminders": {
+      "useDefault": true
+    }
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3090831230176000\"",
+    "id": "4th14n11rgi2bee7fr279bpbq1",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NHRoMTRuMTFyZ2kyYmVlN2ZyMjc5YnBicTEgbHVpcy50aGUuY29kZXJAbQ",
+    "created": "2018-12-21T18:06:55.000Z",
+    "updated": "2018-12-21T18:06:55.088Z",
+    "summary": "TechSpringfield Meet your Springfield area peers, networking, beer, wine, pizza",
+    "description": "For full details, including the address, and to RSVP see: https://www.meetup.com/TechSpringfield/events/256729464\n\n• What we'll do\nFREEEEE! This meeting will introduce the TechToronto format to Springfield.\nMEET NEW...",
+    "location": "The eFactory - 405 N. Jefferson Ave. - Springfield, MO, us",
+    "creator": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "organizer": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2019-01-21T18:00:00-06:00"
+    },
+    "end": {
+      "dateTime": "2019-01-21T20:00:00-06:00"
+    },
+    "iCalUID": "4th14n11rgi2bee7fr279bpbq1@google.com",
+    "sequence": 0,
+    "extendedProperties": {
+      "private": {
+        "everyoneDeclinedDismissed": "-1"
+      }
+    },
+    "reminders": {
+      "useDefault": true
+    }
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3091166567630000\"",
+    "id": "4ugjqe6rif0tl0baqp2oaq3orl",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NHVnanFlNnJpZjB0bDBiYXFwMm9hcTNvcmwgbHVpcy50aGUuY29kZXJAbQ",
+    "created": "2018-12-23T16:41:23.000Z",
+    "updated": "2018-12-23T16:41:23.815Z",
+    "summary": "Vue !SPA",
+    "description": "For full details, including the address, and to RSVP see: https://www.meetup.com/SGF-Web-Devs/events/257140383\n\nThe frontend landscape has been exploding with new tools, libraries, and approaches to building webs...",
+    "location": "The eFactory - 405 N. Jefferson Ave. - Springfield, MO, us",
+    "creator": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "organizer": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2019-01-02T18:00:00-06:00"
+    },
+    "end": {
+      "dateTime": "2019-01-02T21:00:00-06:00"
+    },
+    "iCalUID": "4ugjqe6rif0tl0baqp2oaq3orl@google.com",
+    "sequence": 0,
+    "extendedProperties": {
+      "private": {
+        "everyoneDeclinedDismissed": "-1"
+      }
+    },
+    "reminders": {
+      "useDefault": true
+    }
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3091166677072000\"",
+    "id": "7jnr75d3kullu56nhsr21dtjv3",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=N2pucjc1ZDNrdWxsdTU2bmhzcjIxZHRqdjMgbHVpcy50aGUuY29kZXJAbQ",
+    "created": "2018-12-23T16:42:18.000Z",
+    "updated": "2018-12-23T16:42:18.536Z",
+    "summary": "Daniel Sires and Luis Rodriguez",
+    "location": "The day before the session, I will email the link to you. ",
+    "creator": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "organizer": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2019-01-03T20:00:00-06:00"
+    },
+    "end": {
+      "dateTime": "2019-01-03T21:00:00-06:00"
+    },
+    "iCalUID": "7jnr75d3kullu56nhsr21dtjv3@google.com",
+    "sequence": 0,
+    "attendees": [{
+        "email": "dsires13@mac.com",
+        "responseStatus": "needsAction"
+      },
+      {
+        "email": "luis.the.coder@gmail.com",
+        "displayName": "Luis Rodriguez",
+        "organizer": true,
+        "self": true,
+        "responseStatus": "accepted"
+      }
+    ],
+    "extendedProperties": {
+      "private": {
+        "everyoneDeclinedDismissed": "-1"
+      }
+    },
+    "reminders": {
+      "useDefault": true
+    }
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3091723862350000\"",
+    "id": "teupci6uehhi7m583sqfu1u70s",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=dGV1cGNpNnVlaGhpN201ODNzcWZ1MXU3MHMgbHVpcy50aGUuY29kZXJAbQ",
+    "created": "2018-12-26T22:05:31.000Z",
+    "updated": "2018-12-26T22:05:31.175Z",
+    "summary": "Taylor Gomez and Luis Rodriguez",
+    "description": "Event Name: Tutorial Session\n\nBoot Camp Tutorial Session\n\nLocation: The day before the session, I will email the link to you.\n\nWhat would you like to discuss during our meeting? Be as specific and detailed as possible.: I'm thoroughly confused by Javascript. I would like to review it, specifically syntax and functions\n\nNeed to make changes to this event?\nCancel: https://calendly.com/cancellations/ADDQ4HZC245FTOOZ\nReschedule: https://calendly.com/reschedulings/ADDQ4HZC245FTOOZ\n\nPowered by Calendly.com\n",
+    "location": "The day before the session, I will email the link to you. ",
+    "creator": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "organizer": {
+      "email": "luis.the.coder@gmail.com",
+      "displayName": "Luis Rodriguez",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2018-12-30T12:00:00-06:00"
+    },
+    "end": {
+      "dateTime": "2018-12-30T13:00:00-06:00"
+    },
+    "iCalUID": "teupci6uehhi7m583sqfu1u70s@google.com",
+    "sequence": 0,
+    "attendees": [{
+        "email": "luis.the.coder@gmail.com",
+        "displayName": "Luis Rodriguez",
+        "organizer": true,
+        "self": true,
+        "responseStatus": "accepted"
+      },
+      {
+        "email": "taylorfgomez@gmail.com",
+        "responseStatus": "accepted"
+      }
+    ],
+    "reminders": {
+      "useDefault": true
+    }
+  }
+]
