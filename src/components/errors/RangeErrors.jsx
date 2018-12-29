@@ -27,8 +27,9 @@ const RangeErrors = ({ message }) => {
                     <li>Either Change Google Sheet Tab Name to <strong>Roster</strong></li>
                     <li> Or Add <strong>Student Roster</strong> into the Roster Name Input</li>
                 </ul>
-
-                <img src={require('./PermissionError.gif')} alt="loading..." />
+                <a href="https://s3.us-east-2.amazonaws.com/tab-nabbers/Range+Errors.mp4" target='_blank'>
+                    <img src={require('./RangeErrors.gif')} alt="loading..." />
+                </a>
 
             </div>
         </div>
