@@ -1,7 +1,5 @@
 /*eslint-disable */
 
-// const log = console.log;
-
 // Constants
 const TUTOR_NAME_WRAPPER = '.freebirdFormviewerViewItemsTextItemWrapper';
 // const RADIO_INPUT = 'quantumWizTogglePaperradioEl'; // aria-checked
@@ -16,7 +14,6 @@ const TODAY_MONTH = 'input[name="entry.401287639_month"]';
 const TODAY_YEAR = 'input[name="entry.401287639_year"]';
 const DATE_INPUT = 'input[type="date"]';
 const DATE_DIV_PARENT = '.freebirdThemedInput.freebirdFormviewerViewItemsDateDateInput';
-
 
 
 const removePlaceholder = () => {
@@ -41,10 +38,8 @@ const autoFillStudentInput = (student) => {
 };
 
 const fillInTutorName = () => {
-    chrome.storage.sync.get('tutor_name', function (data) {
-        const name = data.tutor_name;
-        $(`${TUTOR_NAME_WRAPPER} input[type="text"]`).val(name);
-    });
+    const tutorName = localStorage.getItem('tutorName');
+    $(`${TUTOR_NAME_WRAPPER} input[type="text"]`).val(tutorName);
 };
 
 const fillInSessionDate = () => {
@@ -96,50 +91,15 @@ validateSecondPage();
 
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    const student = request.student;
+    const {
+        student,
+        tutorName
+    } = request;
+
+    localStorage.setItem('tutorName', tutorName);
     autoFillStudentInput(student);
     sendResponse({
         farewell: 'goodbye'
     })
 });
 
-console.log('Testing and Testing');
-
-const activeURL = window.location.href;
-
-if (activeURL === 'https://workforcenow.adp.com/portal/theme') {
-    var timer = setInterval(function () {
-        console.log('Checking Scripts: ');
-        const element = $('#divActivities table tbody tr');
-
-        if (element) {
-            grabClocks();
-        }
-    }, 111);
-}
-
-function grabClocks() {
-    console.log('Element Found!');
-    let all_date = [];
-    $('#divActivities table tbody tr').each(function () {
-        var clocks = [];
-        $(this).find('td').each(function (index) {
-            let obj = {};
-            const result = $(this).html();
-            obj[index] = result[index];
-            clocks.push(result);
-            clearInterval(timer);
-        });
-
-        console.log('Clocks: ', clocks);
-        const main = clocks.reduce((accu, curr, arr) => {
-            // TODO
-            const key = arr[0];
-            accu[key] = arr;
-            return accu;
-        }, {});
-
-        console.log('Main: ', main);
-        console.log('Clocks: ', clocks);
-    });
-};
