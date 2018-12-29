@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Nav from '../../common/nav/Nav';
 import { connectWithStore } from '../../store/index';
 import RangeErrors from './RangeErrors';
@@ -18,8 +18,8 @@ class ErrorComponentUI extends Component {
         if (message.includes('import')) {
             return <ColumnErrors message={message} />;
         }
-
         return <RangeErrors message={message} />;
+        
     };
 
     navigate = (link) => {
