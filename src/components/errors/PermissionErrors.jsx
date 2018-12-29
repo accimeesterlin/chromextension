@@ -1,5 +1,5 @@
 import React from 'react';
-import './rangeErrors.scss';
+import './error.scss';
 
 const PermissionErrors = ({ message }) => {
     return (
@@ -20,7 +20,7 @@ const PermissionErrors = ({ message }) => {
             </div>
             <div className='errorInstructions'>
                 <p>
-                Make sure that your Google Sheet Permission is either Public or people with link (no signin required)
+                    Make sure that your Google Sheet Permission is either Public or people with link (no signin required)
                 </p>
                 <h2>To Change access: </h2>
                 <ul>
@@ -29,13 +29,19 @@ const PermissionErrors = ({ message }) => {
                     <li> On bottom of prompt window, click advanced</li>
                     <li> Change permission to public or people with link (no signin required)</li>
                 </ul>
-                <a href="https://s3.us-east-2.amazonaws.com/tab-nabbers/Column+Error+-+Original.mp4" target='_blank'>
-                    <img src={require('./PermissionError.gif')} alt="loading..." />
+
+                <p>Click on the video below to view instructions on a new tab</p>
+
+                <a
+                    href="https://s3.us-east-2.amazonaws.com/tab-nabbers/Column+Error+-+Original.mp4"
+                    rel="noopener noreferrer"
+                    target='_blank'>
+                    <img src={require('./gifs/PermissionError.gif')} alt="loading..." />
                 </a>
             </div>
-         </div>
+        </div>
     )
 }
-            
-            
+
+
 export default PermissionErrors;

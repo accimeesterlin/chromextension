@@ -1,5 +1,5 @@
 import React from 'react';
-import './rangeErrors.scss';
+import './error.scss';
 
 
 const RangeErrors = ({ message }) => {
@@ -27,8 +27,14 @@ const RangeErrors = ({ message }) => {
                     <li>Either Change Google Sheet Tab Name to <strong>Roster</strong></li>
                     <li> Or Add <strong>Student Roster</strong> into the Roster Name Input</li>
                 </ul>
-                <a href="https://s3.us-east-2.amazonaws.com/tab-nabbers/Range+Errors.mp4" target='_blank'>
-                    <img src={require('./RangeErrors.gif')} alt="loading..." />
+
+                
+                <p>Click on the video below to view instructions on a new tab</p>
+                <a
+                    href="https://s3.us-east-2.amazonaws.com/tab-nabbers/Range+Errors.mp4"
+                    rel="noopener noreferrer"
+                    target='_blank'>
+                    <img src={require('./gifs/RangeErrors.gif')} alt="loading..." />
                 </a>
 
             </div>

@@ -1,22 +1,21 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Nav from '../../common/nav/Nav';
 import { connectWithStore } from '../../store/index';
 import RangeErrors from './RangeErrors';
 import PermissionErrors from './PermissionErrors';
 import ColumnErrors from './ColumnErrors';
-import querySearch from "stringquery";
 
 class ErrorComponentUI extends Component {
 
 
     generateErrors = () => {
-        const message = this.props.match.params.message;
+        const message = this.props.match.params.message.toLowerCase();
 
         if (message.includes('permission')) {
             return <PermissionErrors message={message} />
         }
 
-        if (message.includes('import')) {
+        if (message.includes('column')) {
             return <ColumnErrors message={message} />;
         }
         return <RangeErrors message={message} />;

@@ -1,15 +1,13 @@
 import React from 'react';
-import './rangeErrors.scss';
+import './error.scss';
 
 
 
 const ColumnErrors = ({ message }) => {
     return (
 
-        <div className='rangeErrors'>
+        <div className='columnErrors'>
             <div className='errorBox'>
-
-
                 <div className='iconContainer'>
                     <svg className="icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
                         <path fill="none" d="M0 0h24v24H0z"></path>
@@ -19,14 +17,12 @@ const ColumnErrors = ({ message }) => {
                     Error Found
                 </div>
                 <div>
-
                     <p>{message}</p>
                 </div>
             </div>
             <div className='errorInstructions'>
                 <p>You need to have at least 5 columns in your spreadsheet</p>
-                <p>Follow this format</p>
-                <h2>Try the following: </h2>
+                <h2>Follow this format: </h2>
                 <ul>
                     <li>Class Code </li>
                     <li>University (Can be blank)</li>
@@ -35,14 +31,17 @@ const ColumnErrors = ({ message }) => {
                     <li>Github Username</li>
                 </ul>
 
-                <p>NOTE: To import students from your Google Sheet, follow this example </p>
+                <p><b>NOTE:</b> To import students from your Google Sheet, follow this example </p>
                 <a
                     href="https://docs.google.com/spreadsheets/d/1LSGuoaYRKOpkF50r8S-lpMzbNIJ9jMKCIvudNt-3Bj0/edit#gid=0"
                     target='_blank'
-                    rel="noopener noreferrer"> Tutor’s Tracking Spreadsheet EXAMPLE </a>
+                    rel="noopener noreferrer"> Tracking Spreadsheet Example </a>
 
-                <a href="https://s3.us-east-2.amazonaws.com/tab-nabbers/Column+Error+-+Original.mp4" target='_blank'>
-                    <img src={require('./ColumnErrors.gif')} alt="loading..." />
+                <a
+                    href="https://s3.us-east-2.amazonaws.com/tab-nabbers/Column+Error+-+Original.mp4"
+                    rel="noopener noreferrer"
+                    target='_blank'>
+                    <img src={require('./gifs/ColumnErrors.gif')} alt="loading..." />
                 </a>
 
             </div>
