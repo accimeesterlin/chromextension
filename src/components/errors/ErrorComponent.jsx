@@ -4,12 +4,13 @@ import { connectWithStore } from '../../store/index';
 import RangeErrors from './RangeErrors';
 import PermissionErrors from './PermissionErrors';
 import ColumnErrors from './ColumnErrors';
-
+import querySearch from "stringquery";
 
 class ErrorComponentUI extends Component {
 
+
     generateErrors = () => {
-        const message = this.props.message;
+        const message = this.props.match.params.message;
 
         if (message.includes('permission')) {
             return <PermissionErrors message={message} />

@@ -151,7 +151,7 @@ class InfoUI extends Component {
             return <p className="success"> <i className="fa fa-check"></i> Successfully</p>;
         } else if (status === 'error') {
             return <p className="error">
-                <Link to={"/error"}><i className="fa fa-info-circle"></i></Link>
+                <Link to={"/error/" + message}><i className="fa fa-info-circle"></i></Link>
                 {message}
             </p>
         }
