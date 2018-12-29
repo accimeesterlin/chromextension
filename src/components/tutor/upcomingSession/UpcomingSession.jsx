@@ -3,8 +3,9 @@
 
 import React, { Component } from 'react';
 import Nav from '../../../common/nav/Nav';
-import { Button } from '@material-ui/core/';
+import { Button, TextField } from '@material-ui/core/';
 import _ from 'lodash';
+import moment from 'moment';
 import axios from 'axios';
 import EventBox from './EventBox';
 import { connectWithStore } from '../../../store/index';
@@ -16,7 +17,9 @@ import {
     getMonth,
     remainingTime
 } from '../../../selectors/eventSelectors';
-
+import * as tutorUtils from '../../../utils/tutorUtils';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import './upcomingsession.scss';
 
 
@@ -26,9 +29,23 @@ class UpcomingSessionUI extends Component {
 
         this.state = {
             retry: true,
-            events: props.events
+            // events: props.events.length > 0 ? props.evnets : events, // temporary
+            events: props.events,
+            isTutoring: false,
+            isToken: true
         };
     }
+
+
+    componentDidMount = () => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            return this.fetchCalendar(token);
+        }
+        this.setState({ isToken: false });
+
+    };
 
 
     navigate = (link) => {
@@ -44,15 +61,13 @@ class UpcomingSessionUI extends Component {
                 options.interactive = true;
             }
             const self = this;
-            console.log('Options: ', options);
             chrome.identity.getAuthToken(options, function (token) {
-                console.log('Token: ', token);
                 self.fetchCalendar(token);
+                self.setState({ isToken: true, retry: true });
                 localStorage.setItem('isTokenAuthorized', true);
+                localStorage.setItem('token', token);
             });
         }
-
-
     };
 
 
@@ -73,24 +88,25 @@ class UpcomingSessionUI extends Component {
 
     handleSuccessCalendar = (response) => {
         const events = response.data.items;
-        this.setState({ events });
+        this.setState({ events, isToken: true, retry: true });
         this.props.addEvents(events);
-
-        console.log('Response Data: ', response.data);
     };
 
     handleCalendarErrors = (response) => {
-        const errorMessage = 'Invalid Credentials';
         console.log('Errors: ', response.data);
-        if (response.status === 403 && response.data.error.message === errorMessage) {
-            // return this.getTokenAccessIdentity();
-            console.log('Credentials: ', errorMessage);
+        if (response.status === 401) {
+            this.setState({ isToken: false });
+            return
         }
 
-        if (response.status === 401 && this.state.retry) {
-            this.setState({ retry: false });
-            this.getToken();
+        if (this.state.retry && this.state.isToken) {
+            const token = localStorage.getItem('token');
+            chrome.identity.removeCachedAuthToken({ token }, this.getToken);
         }
+
+        this.setState({ retry: false, isToken: false });
+
+        console.log('No able to fetch events!!!');
 
     };
 
@@ -98,36 +114,77 @@ class UpcomingSessionUI extends Component {
         if (_.isEmpty(events)) {
             return <p className="no-events">No Events Found!!</p>
         }
-        return events.map((event, i) => <EventBox
-            key={i}
-            title={getTitle(event)}
-            description={getDescription(event)}
-            startTime={getStartTime(event)}
-            endTime={getEndTime(event)}
-            month={getMonth(event)}
-            remainingTime={remainingTime(event)}
-        />);
+        return events.map((event, key) => {
+            const title = getTitle(event);
+            if (event.status === 'confirmed' && !title.includes('Canceled')) {
+                return <EventBox
+                    key={key}
+                    title={title}
+                    description={getDescription(event)}
+                    startTime={getStartTime(event)}
+                    endTime={getEndTime(event)}
+                    month={getMonth(event)}
+                    remainingTime={remainingTime(event)}
+                />
+            }
+        });
+    };
+
+    handleChange = name => event => {
+        this.setState({ [name]: event.target.checked });
+    };
+
+
+    // Sorting events by Date or Only Tutoring
+    sortEventsByDate = (events) => {
+        let results = [];
+        if (events.length > 0) {
+            results = events
+                .sort((a, b) => moment(a.start.dateTime).unix() - moment(b.start.dateTime).unix());
+        }
+
+        if (this.state.isTutoring) {
+            return results
+                .filter((event) => tutorUtils.isTutoringSession(event));
+        }
+
+        return results;
+    };
+
+
+    displayFilter = () => {
+
+        if (this.state.events.length > 0) {
+            return <div className="events-main">
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={this.state.checkedB}
+                            onChange={this.handleChange('isTutoring')}
+                            value="checkedB"
+                            color="primary"
+                        />
+                    }
+                    label="Only tutoring"
+                />
+            </div>
+        }
     };
 
 
     render() {
         console.log('State: ', this.state);
 
-        const events = this.state.events;
-        // Dummy Data
-        // const events = [
-        //     { description: '', startTime: '', endTime: '', month: '' },
-        //     { description: '', startTime: '', endTime: '', month: '' },
-        //     { description: '', startTime: '', endTime: '', month: '' },
-        //     { description: '', startTime: '', endTime: '', month: '' },
-        // ]
+        const events = this.sortEventsByDate(this.state.events);
         return (
             <div className="upcomingsession">
                 <Nav navigate={this.navigate} />
 
-                <Button variant="contained" color="primary" onClick={this.getToken}>
+                {!this.state.isToken ? <Button variant="contained" color="primary" onClick={this.getToken}>
                     Upcoming Sesssion
-                </Button>
+                </Button> : null}
+
+                {this.displayFilter()}
 
                 <div className="events-container">
                     {this.displayEvents(events)}
