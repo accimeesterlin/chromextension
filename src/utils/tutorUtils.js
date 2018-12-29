@@ -7,13 +7,37 @@ export function generateSheetUrl(url, rosterName) {
 }
 
 
+// Key to identify sessions or tutorings
+const sessionNames = [
+    'session',
+    'tutoring',
+    'tutorial',
+    'student'
+];
+
+
+/*
+
+    Check the following for tutorings
+        - Sumary
+        - Description
+        - Location
+    If one of them includes one of the above word in the array, then Bingo!!!
+*/
 export function isTutoringSession(event) {
+    const summary = event.summary.toLowerCase();
+    const description = event.description ? event.description.toLowerCase() : '';
+    const location = event.location ? event.location : '';
 
+    let isTutoring = false;
 
-    const name = event.summary.toLowerCase();
+    for (let i = 0; i < sessionNames.length; i++) {
+        const key = sessionNames[i];
+        if (summary.includes(key) || description.includes(key) || location.includes(key)) {
+            isTutoring = true;
+            break;
+        }   
+    }
 
-    return name.includes('session') ||
-        name.includes('tutoring') ||
-        name.includes('tutorial') ||
-        name.includes('student');
+    return isTutoring;
 }   
