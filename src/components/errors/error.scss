@@ -1,0 +1,76 @@
+.rangeErrors,
+.columnErrors {
+    padding: .25rem;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    margin-bottom: .5rem;
+    height: 296px;
+    overflow: auto;
+
+    p, li {
+        line-height: 25px;
+    }
+
+    & img {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    & p {
+        padding: .5rem;
+        line-height: 25px;
+    }
+
+    & h2 {
+        padding: .5rem;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    & ul {
+        padding: 0 0 0 40px;
+    }
+    & ul li {
+        margin: 10px;
+    }
+
+    b {
+        font-weight: bold;
+    }
+}
+
+.errorBox {
+    padding: .75rem;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    margin-bottom: .5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+.iconContainer {
+    display: flex;
+    line-height: 1.25rem;
+}
+
+.errorBox {
+    background-color: #d32f2e;
+    color: white;
+
+    & svg.icon {
+        height: 1.25rem;
+        fill: white;
+        margin-right: 1rem;
+    }
+}
+
+.errorInstructions {
+    padding: .25rem;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    margin-bottom: .5rem;
+}
+
+

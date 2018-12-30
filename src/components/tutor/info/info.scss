@@ -1,0 +1,74 @@
+@import '../../../common/inheritance.scss';
+
+
+.info {
+    width: 100%;
+    position: relative;
+}
+
+
+.info form {
+    @extend %content-center;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.info form button {
+    margin-top: 20px;
+    padding: 12px 16px;
+
+    i {
+        margin-left: 10px;
+    }
+}
+
+.info .snackbar {
+    display: block;
+    width: 100%;
+    position: absolute;
+    max-width: 220px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.info .snackbar>div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    min-width: 100px;
+    padding: 0;
+}
+
+
+.info {
+
+    .success,
+    .error,
+    .pending {
+        text-align: center;
+        width: 100%;
+        padding: 3px;
+        position: absolute;
+        color: #fff;
+
+        i {
+            margin-right: 10px;
+        }
+        
+    }
+
+    .fa {
+        color: #fff;
+    }
+
+    .success {
+        background: #43a047;
+    }
+
+    .error {
+        background: red;
+        
+    }
+
+}
