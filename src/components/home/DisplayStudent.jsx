@@ -20,9 +20,9 @@ class DisplayStudent extends Component {
 
         return (
             <div className="displayStudents">
-                {_.isEmpty(this.state.students) ? <p>No students found</p> : this.state.students.map((student, i) => (
+                {_.isEmpty(this.props.students) ? <p>No students found</p> : this.props.students.map((student, i) => (
                     <div key={i} className='student-list'>
-                    <p onClick={() => this.state.selectStudent(student)}> {student.name}</p>
+                    <p onClick={() => this.props.selectStudent(student)}> {student.name}</p>
                     <DialogSelect  classCode={student.studentCode}
                                   studentName={student.name}/>
                     </div>

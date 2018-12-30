@@ -44,16 +44,7 @@ class HomeUI extends Component {
 
     handleChange = ({ target }) => {
         const value = target.value.toLowerCase();
-
-        const students = this.state.students.filter((el) => {
-            if (el.name.toLowerCase().includes(value)) {
-                return el;
-            }
-        });
-
-        if (value === '') {
-            return this.setState({ students: this.props.students, value });
-        }
+        const students = this.props.students.filter((el) => el.name.toLowerCase().includes(value));
         this.setState({ students, value });
     };
 
@@ -67,8 +58,6 @@ class HomeUI extends Component {
 
     render() {
 
-        console.log('Students: ', this.props.students);
-        
         const tutorName = this.props.tutorName ? `Welcome ${this.props.tutorName}` : null;
 
         return (
