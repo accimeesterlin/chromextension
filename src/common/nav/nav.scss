@@ -6,6 +6,10 @@
     @extend %content-center;
 }
 
+.nav {
+    border-top: none;
+}
+
 .nav svg {
     margin: 0 10px;
     cursor: pointer;

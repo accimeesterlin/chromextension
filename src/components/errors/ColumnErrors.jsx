@@ -41,7 +41,7 @@ const ColumnErrors = ({ message }) => {
                     href="https://s3.us-east-2.amazonaws.com/tab-nabbers/Column+Error+-+Original.mp4"
                     rel="noopener noreferrer"
                     target='_blank'>
-                    <img src={require('./gifs/ColumnErrors.gif')} alt="loading..." />
+                    <img src="https://s3.us-east-2.amazonaws.com/tab-nabbers/ColumnErrors.gif" alt="loading..." />
                 </a>
 
             </div>

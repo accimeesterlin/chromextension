@@ -1,6 +1,6 @@
 {
   "name": "Tutor Chrome Extension",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Build a basic extension",
   "manifest_version": 2,
   "permissions": [

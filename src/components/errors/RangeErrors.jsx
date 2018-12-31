@@ -34,7 +34,7 @@ const RangeErrors = ({ message }) => {
                     href="https://s3.us-east-2.amazonaws.com/tab-nabbers/Range+Errors.mp4"
                     rel="noopener noreferrer"
                     target='_blank'>
-                    <img src={require('./gifs/RangeErrors.gif')} alt="loading..." />
+                    <img src="https://s3.us-east-2.amazonaws.com/tab-nabbers/RangeErrors.gif" alt="loading..." />
                 </a>
 
             </div>
