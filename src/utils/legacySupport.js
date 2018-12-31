@@ -21,7 +21,7 @@ export const getLegacyStudents = function (results) {
         return;
     }
 
-    this.seState({ isLegacyStudentComplete: true });
+    this.setState({ isLegacyStudentComplete: true });
 };
 
 export const getLegacyTutorInfo = function (data) {

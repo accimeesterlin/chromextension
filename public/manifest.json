@@ -1,6 +1,6 @@
 {
   "name": "Tutor Chrome Extension",
-  "version": "1.5.3",
+  "version": "2.0.2",
   "description": "Build a basic extension",
   "manifest_version": 2,
   "permissions": [
@@ -39,5 +39,6 @@
       "https://www.googleapis.com/auth/calendar.readonly"
     ]
   },
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiQKnVtdb1HcwYBOw6k4uRoaGHAUjGkmXTngeeHjBptoE7yRyo3lC+GcKzt7veSy2LJemxVMdQINhZOa27qsp1NWM2ANZ4WM4jK59C9X0JDfpXu+yH3dxGa0YDr+CDSSvM+waYVio4mvNu8EXl7vi4vTa5IeX/IxluLsuaoqOJqjtS6M1SJuQzAgLOtA8b+wETEFKF4yLK5EXCFhTBK+FYzXPcmAxGUBYJvSO/zblUIFeT+keT0ndynq6CVK2nyOQNsVY9dW2Y2PMjEJqwjz6ZfJPyc1my99w26NPPjhXKGzNgsgysXqcunIAL4M89J38lRw3cbmjS9EGpwqUUMygDQIDAQAB"
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiQKnVtdb1HcwYBOw6k4uRoaGHAUjGkmXTngeeHjBptoE7yRyo3lC+GcKzt7veSy2LJemxVMdQINhZOa27qsp1NWM2ANZ4WM4jK59C9X0JDfpXu+yH3dxGa0YDr+CDSSvM+waYVio4mvNu8EXl7vi4vTa5IeX/IxluLsuaoqOJqjtS6M1SJuQzAgLOtA8b+wETEFKF4yLK5EXCFhTBK+FYzXPcmAxGUBYJvSO/zblUIFeT+keT0ndynq6CVK2nyOQNsVY9dW2Y2PMjEJqwjz6ZfJPyc1my99w26NPPjhXKGzNgsgysXqcunIAL4M89J38lRw3cbmjS9EGpwqUUMygDQIDAQAB",
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'"
 }
