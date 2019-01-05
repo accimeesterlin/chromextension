@@ -1,9 +1,9 @@
-@import '../../common/inheritance.scss';
+@import '../../../common/inheritance.scss';
 
 .home {
     position: relative;
 
-    &-name {
+    &-name {   
         text-align: center;
         margin-top: 30px;
     }

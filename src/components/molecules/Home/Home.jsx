@@ -1,9 +1,8 @@
 /*eslint-disable */
 
 import React, { Component } from 'react';
-import Nav from '../../common/nav/Nav';
-import Search from '../../molecules/Search';
-import { connectWithStore } from '../../store/index';
+import Search from '../../atoms/Search';
+import { connectWithStore } from '../../../store/index';
 import './home.scss';
 import DisplayStudents from './DisplayStudent';
 
@@ -15,11 +14,6 @@ class HomeUI extends Component {
             students: props.students,
             value: ''
         };
-    }
-
-    navigate = (link) => {
-        console.log('Link: ', link);
-        return this.props.history.push(link);
     }
 
     sendMessageToContentScripts = (student, tutorName) => {
@@ -62,7 +56,6 @@ class HomeUI extends Component {
 
         return (
             <div className="home">
-                <Nav navigate={this.navigate} />
                 <p className="home-name"> {tutorName} </p>
                 <Search
                     handleChange={this.handleChange}

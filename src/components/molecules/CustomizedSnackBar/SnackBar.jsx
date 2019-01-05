@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Snackbar } from '@material-ui/core';
-import SnackBarContent from './SnackContent';
+import SnackBarContent from '../atoms/SnackContent';
 
 export default class CustomizedSnackbars extends Component {
 

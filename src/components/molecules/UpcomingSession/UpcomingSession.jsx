@@ -2,7 +2,6 @@
 /*eslint-disable */
 
 import React, { Component } from 'react';
-import Nav from '../../../common/nav/Nav';
 import { Button, TextField } from '@material-ui/core/';
 import _ from 'lodash';
 import moment from 'moment';
@@ -46,10 +45,6 @@ class UpcomingSessionUI extends Component {
 
     };
 
-
-    navigate = (link) => {
-        return this.props.history.push(link);
-    }
 
     getToken = () => {
         const isTokenAuthorized = JSON.parse(localStorage.getItem('isTokenAuthorized')) || false;
@@ -176,8 +171,7 @@ class UpcomingSessionUI extends Component {
 
         const events = this.sortEventsByDate(this.state.events);
         return (
-            <div className="upcomingsession">
-                <Nav navigate={this.navigate} />
+            <div>
 
                 {!this.state.isToken ? <Button variant="contained" color="primary" onClick={this.getToken}>
                     Upcoming Sesssion

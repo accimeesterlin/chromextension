@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Nav from '../../../common/nav/Nav';
 import Form from './Form';
 import { connectWithStore } from '../../../store/index';
 import * as tutorUtils from '../../../utils/tutorUtils';
@@ -30,10 +29,6 @@ class AddStudentUI extends Component {
         }
     };
 
-    navigate = (link) => {
-        console.log('Link: ', link);
-        return this.props.history.push(link);
-    }
 
     handleChange = ({ target }) => {
         const name = target.name;
@@ -91,8 +86,7 @@ class AddStudentUI extends Component {
 
     render() {
         return (
-            <div className="addStudent">
-                <Nav navigate={this.navigate} />
+            <div >
                 {this.displayMessage()}
                 <Form
                     handleSubmit={this.handleSubmit}
