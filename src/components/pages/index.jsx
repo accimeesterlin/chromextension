@@ -1,10 +1,10 @@
-import Home from './molecules/Home';
-import AddStudent from './molecules/AddStudent';
-import DeleteStudent from './molecules/DeleteStudent';
-import UpcomingSession from './molecules/UpcomingSession';
-import Info from './molecules/Info';
-import ErrorComponent from './errors/ErrorComponent';
-import withNav from './HOC/withNav';
+import Home from '../molecules/Home';
+import AddStudent from '../molecules/AddStudent';
+import DeleteStudent from '../molecules/DeleteStudent';
+import UpcomingSession from '../molecules/UpcomingSession';
+import Info from '../molecules/Info';
+import ErrorComponent from '../errors/ErrorComponent';
+import withNav from '../HOC/withNav';
 
 const HomeWithNav = withNav(Home, 'home');
 const AddStudentWithNav = withNav(AddStudent, 'addStudent');

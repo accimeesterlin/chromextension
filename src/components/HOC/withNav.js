@@ -16,7 +16,8 @@ export default function withNav(WrappedComponent, containerClass) {
             return (
                 <div className={containerClass}>
                     <Nav navigate={this.navigate} />
-                    <WrappedComponent/>
+                    
+                    <WrappedComponent {...this.props}/>
                 </div>
             )
         }

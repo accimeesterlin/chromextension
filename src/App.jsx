@@ -8,7 +8,7 @@ import {
   UpcomingSessionWithNav,
   InfoWithNav,
   ErrorComponentWithNav
-} from './components';
+} from './components/pages/index.jsx';
 
 import "./App.scss";
 
