@@ -42,9 +42,8 @@ class HomeUI extends Component {
             });
         }
 
-        console.log('Not running inside the Chrome Extension yet!!!');
+        console.error('not running inside chrome cxtension');
     };
-
 
     handleFocus = () => {
         this.setState({
@@ -63,7 +62,6 @@ class HomeUI extends Component {
         this.sendMessageToContentScripts(student, this.props.tutorName);
         this.setState({ isFocus: false });
     };
-
 
     render() {
         const {classes} = this.props;
