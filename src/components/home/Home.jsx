@@ -1,12 +1,22 @@
-/*eslint-disable */
-
+/*eslint-disable*/
 import React, { Component } from 'react';
 import Nav from '../../common/nav/Nav';
 import Search from '../../molecules/Search';
 import { connectWithStore } from '../../store/index';
 import './home.scss';
 import DisplayStudents from './DisplayStudent';
+import { Typography, withStyles } from '@material-ui/core'
 
+export const styles = (theme) => {
+    return (
+        {
+            homeName: {
+                textAlign: 'left',
+                margin: '10px'
+            }
+        }
+    )
+}
 class HomeUI extends Component {
     constructor(props) {
         super(props);
@@ -16,6 +26,7 @@ class HomeUI extends Component {
             value: ''
         };
     }
+
 
     navigate = (link) => {
         console.log('Link: ', link);
@@ -57,13 +68,14 @@ class HomeUI extends Component {
 
 
     render() {
+        const {classes} = this.props;
 
-        const tutorName = this.props.tutorName ? `Welcome ${this.props.tutorName}` : null;
+        const tutorName = this.props.tutorName ? `Welcome, ${this.props.tutorName}` : null;
 
         return (
             <div className="home">
                 <Nav navigate={this.navigate} />
-                <p className="home-name"> {tutorName} </p>
+                <Typography className={classes.homeName}>{tutorName}</Typography>
                 <Search
                     handleChange={this.handleChange}
                     handleFocus={this.handleFocus}
@@ -76,4 +88,5 @@ class HomeUI extends Component {
 }
 
 const Home = connectWithStore(HomeUI);
-export default Home;
+const stylizedHome = withStyles(styles)(Home)
+export default stylizedHome;
