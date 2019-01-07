@@ -59,8 +59,6 @@ class HomeUI extends Component {
         this.setState({ students, value });
     };
 
-
-
     selectStudent = (student) => {
         this.sendMessageToContentScripts(student, this.props.tutorName);
         this.setState({ isFocus: false });
@@ -88,5 +86,5 @@ class HomeUI extends Component {
 }
 
 const Home = connectWithStore(HomeUI);
-const stylizedHome = withStyles(styles)(Home)
+const stylizedHome = withStyles(styles)(Home);
 export default stylizedHome;
