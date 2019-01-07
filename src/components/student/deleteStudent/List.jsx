@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, ListItem, IconButton, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
+import { List, ListItem, IconButton, ListItemSecondaryAction, ListItemText, Typography } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import _ from 'lodash';
 
@@ -7,7 +7,7 @@ import _ from 'lodash';
 const ListComponent = ({ students, deleteStudent }) => {
     return (
         <List dense={false}>
-            {_.isEmpty(students) ? <p>No students</p> : students.map((student, i) => (
+            {_.isEmpty(students) ? <Typography>No students</Typography> : students.map((student, i) => (
                 <ListItem key = {i}>
                     <ListItemText
                         primary={student.name}
