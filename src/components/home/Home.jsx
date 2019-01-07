@@ -17,7 +17,7 @@ export const styles = (theme) => {
         }
     )
 }
-class HomeUI extends Component {
+export class HomeUI extends Component {
     constructor(props) {
         super(props);
 
@@ -26,7 +26,6 @@ class HomeUI extends Component {
             value: ''
         };
     }
-
 
     navigate = (link) => {
         console.log('Link: ', link);
@@ -82,6 +81,6 @@ class HomeUI extends Component {
     }
 }
 
-const Home = connectWithStore(HomeUI);
-const stylizedHome = withStyles(styles)(Home);
-export default stylizedHome;
+export const Home = connectWithStore(HomeUI);
+export const StylizedHome = withStyles(styles)(Home);
+export default StylizedHome;
