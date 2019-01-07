@@ -37,12 +37,11 @@ class HomeUI extends Component {
         if (chrome) {
             chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                 chrome.tabs.sendMessage(tabs[0].id, { student, tutorName }, function (response) {
-                    console.log('Successfully sent data to Content Script');
+                    console.log('successfully sent data to content script');
                 });
             });
         }
-
-        console.error('not running inside chrome cxtension');
+        console.error('not running inside chrome extension');
     };
 
     handleFocus = () => {
