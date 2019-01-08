@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
 import {
-  Home,
-  AddStudent,
-  DeleteStudent,
-  UpcomingSession,
-  Info,
-  ErrorComponent
-} from './components';
+  HomeWithNav,
+  AddStudentWithNav,
+  DeleteStudentWithNav,
+  UpcomingSessionWithNav,
+  InfoWithNav,
+  ErrorComponentWithNav
+} from './components/pages/index.jsx';
 
 import "./App.scss";
 
@@ -20,12 +20,12 @@ export default class App extends Component {
     return (
       <div className="app">
 
-        <Route exact path='/' component={Home} />
-        <Route path='/student/add' component={AddStudent} />
-        <Route path='/student/delete' component={DeleteStudent} />
-        <Route path='/tutor' component={Info} />
-        <Route path='/upcoming/session' component={UpcomingSession} />
-        <Route path='/error/:message' component={ErrorComponent} />
+        <Route exact path='/' component={HomeWithNav} />
+        <Route path='/student/add' component={AddStudentWithNav} />
+        <Route path='/student/delete' component={DeleteStudentWithNav} />
+        <Route path='/tutor' component={InfoWithNav} />
+        <Route path='/upcoming/session' component={UpcomingSessionWithNav} />
+        <Route path='/error/:message' component={ErrorComponentWithNav} />
       </div>
     );
   }

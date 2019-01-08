@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Nav from '../../../common/nav/Nav';
 import { connectWithStore } from '../../../store/index';
 import List from './List';
 import './deleteStudent.scss';
@@ -11,11 +10,6 @@ class DeleteStudentUI extends Component {
         this.state = {
             students: props.students
         };
-    }
-
-    navigate = (link) => {
-        console.log('Link: ', link);
-        return this.props.history.push(link);
     }
 
     deleteStudent = (student) => {
@@ -36,9 +30,8 @@ class DeleteStudentUI extends Component {
 
 
         return(
-            <div className="deleteStudent">
-                <Nav navigate = {this.navigate}/>
-                <div className="students">
+            <div>
+                <div className='students'>
                     <List students = {this.props.students} deleteStudent={this.deleteStudent}/>
                 </div>
             </div>

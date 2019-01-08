@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Nav from '../../../common/nav/Nav';
 import { Link } from 'react-router-dom';
 import Form from './Form';
 import axios from 'axios';
@@ -114,12 +113,6 @@ class InfoUI extends Component {
         this.validateCorrectColum(isValid);
     };
 
-
-    navigate = (link) => {
-        console.log('Link: ', link);
-        return this.props.history.push(link);
-    }
-
     handleChange = ({ target }) => {
         const name = target.name;
         const value = target.value;
@@ -165,8 +158,7 @@ class InfoUI extends Component {
         const isPending = status === 'pending' ? <i className="fa fa-spinner fa-spin"></i> : null;
 
         return (
-            <div className="info">
-                <Nav navigate={this.navigate} />
+            <div className="">
                 {this.displayMessage()}
                 <Form
                     handleSubmit={this.handleSubmit}

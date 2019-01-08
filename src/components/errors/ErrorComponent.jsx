@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Nav from '../../common/nav/Nav';
 import { connectWithStore } from '../../store/index';
 import RangeErrors from './RangeErrors';
 import PermissionErrors from './PermissionErrors';
@@ -22,17 +21,9 @@ class ErrorComponentUI extends Component {
         
     };
 
-    navigate = (link) => {
-        console.log('Link: ', link);
-        return this.props.history.push(link);
-    }
-
-
     render() {
         return (
-            <div className="errors">
-                <Nav navigate={this.navigate} />
-
+            <div>
                 {this.generateErrors()}
             </div>
         );
