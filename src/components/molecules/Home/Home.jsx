@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import Search from '../../atoms/Search';
 import { connectWithStore } from '../../../store/index';
+import UseFullLinks from './UseFullLinks';
 import './home.scss';
 import DisplayStudents from './DisplayStudent';
 
@@ -59,12 +60,13 @@ class HomeUI extends Component {
 
 
     render() {
-
-        const tutorName = this.props.tutorName ? `Welcome ${this.props.tutorName}` : null;
+        const { tutorName, googleSheetUrl } = this.props;
+        const tutorFullName = tutorName ? `Welcome ${tutorName}` : null;
 
         return (
             <div className="home">
-                <p className="home-name"> {tutorName} </p>
+                <p className="home-name"> {tutorFullName} </p>
+                <UseFullLinks googleSheetUrl={googleSheetUrl}/>
                 <Search
                     handleChange={this.handleChange}
                     handleFocus={this.handleFocus}

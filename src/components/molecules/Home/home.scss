@@ -5,12 +5,11 @@
 
     &-name {   
         text-align: center;
-        margin-top: 30px;
+        margin-top: 15px;
     }
 }
 
 .home .search {
-    margin-top: 40px;
     @extend %content-center;
     flex-direction: column;
 }
@@ -44,3 +43,15 @@
     border-bottom: none;
 }
 
+
+.home .useful-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.home .useful-links a {
+    margin: 0px 15px;
+    color: #000;
+}
