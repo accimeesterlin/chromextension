@@ -1,0 +1,21 @@
+@import '../../../common/inheritance.scss';
+
+.nav {
+    border: 1px solid lightgrey;
+    padding: 10px;
+    @extend %content-center;
+}
+
+.nav {
+    border-top: none;
+}
+
+.nav svg {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.nav svg:hover {
+    background: lightgrey;
+    color: #000;
+}

@@ -1,5 +1,9 @@
+/*eslint-disable */
+
 import React, { Component } from 'react';
 import * as actions from '../actions/index';
+
+import { getLegacyStudents, getLegacyTutorInfo, clearLegacyStorage } from '../utils/legacySupport';
 
 const Context = React.createContext();
 
@@ -11,17 +15,34 @@ export class Provider extends Component {
         events: [],
         rosterName: '',
         isInitial: true,
-        message: 'Not able to fetch data'
+        message: 'Not able to fetch data',
+        isLegacyTutorComplete: false,
+        isLegacyStudentComplete: false
     };
 
     componentDidMount = () => {
-        const isInitial = this.state.isInitial;
+        const { isInitial, isLegacyStudentComplete, isLegacyTutorComplete } = this.state;
+
         if (isInitial) {
-            const data = JSON.parse(window.localStorage.getItem('state'));
+            const data = localStorage.getItem('state') ? JSON.parse(localStorage.getItem('state')) : {};
             this.setState({ ...data, isInitial: false });
         }
 
+        // Adding support for legacy app
+        try {
+
+            if (isLegacyStudentComplete && isLegacyTutorComplete) {
+                clearLegacyStorage();
+            }
+            
+            chrome.storage.sync.get(['students'], getLegacyStudents.bind(this));
+            chrome.storage.sync.get(['tutor_name', 'google_sheet_url'], getLegacyTutorInfo.bind(this));
+        } catch (error) {
+            console.log('Development Environment!');
+        }
     }
+
+
 
     attachMethods = () => {
         let mainActions = {};
