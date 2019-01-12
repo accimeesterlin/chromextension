@@ -9,16 +9,25 @@ const UseFullLinks = ({ googleSheetUrl }) => {
     return (
         <div className="useful-links">
             <Tooltip title='ADP URL'>
-                <a href="https://workforcenow.adp.com" target="_blank"><AlarmAdd /> </a>
+                <a
+                    rel="noopener noreferrer"
+                    href="https://workforcenow.adp.com"
+                    target="_blank"><AlarmAdd /> </a>
             </Tooltip>
 
             {googleSheetUrl ? <Tooltip title='Google Sheet URL'>
-                <a href={googleSheetUrl} target="_blank"><InsertDriveFile /> </a>
+                <a
+                    rel="noopener noreferrer"
+                    href={googleSheetUrl}
+                    target="_blank"><InsertDriveFile /> </a>
             </Tooltip> : null}
 
 
             <Tooltip title='Tutor Form Sheet'>
-                <a href={tutorFormSheetUrl} target="_blank"><Assignment /> </a>
+                <a
+                    rel="noopener noreferrer"
+                    href={tutorFormSheetUrl}
+                    target="_blank"><Assignment /> </a>
             </Tooltip>
         </div>
     );
