@@ -12,6 +12,14 @@ class DeleteStudentUI extends Component {
         };
     }
 
+    componentDidMount = () => {
+        window.ga('send', {
+            hitType: 'pageview',
+            page: '/student/delete',
+            title: 'Delete Student'
+        });
+    }
+
     deleteStudent = (student) => {
         console.log('Student: ', student);
 

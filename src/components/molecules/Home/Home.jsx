@@ -16,6 +16,14 @@ class HomeUI extends Component {
         };
     }
 
+    componentDidMount = () => {
+        window.ga('send', {
+            hitType: 'pageview',
+            page: '/',
+            title: 'Home'
+        });
+    }
+
     sendMessageToContentScripts = (student, tutorName) => {
         if (chrome) {
             chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {

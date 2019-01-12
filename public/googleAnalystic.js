@@ -13,4 +13,3 @@
 ga('create', 'UA-131529515-1', 'auto');
 ga('set', 'checkProtocolTask', function () {});
 ga('require', 'displayfeatures');
-ga('send', 'pageview', '/index.html');

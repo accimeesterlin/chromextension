@@ -21,17 +21,33 @@ export const endObj = (event) => {
 
 
 export const getMonth = (event) => {
-    const time = startObj(event).dateTime;
+    let time;
+    if (startObj(event).dateTime) {
+        time = startObj(event).dateTime;
+    } else {
+        time = startObj(event).date;
+    }
     return moment(time).format('MMM Do');
 };
 
 export const getStartTime = (event) => {
-    const time = startObj(event).dateTime;
+    let time;
+    if (startObj(event).dateTime) {
+        time = startObj(event).dateTime;
+    } else {
+        time = startObj(event).date;
+    }
     return moment(time).format('hh:mm a');
 };
 
 export const getEndTime = (event) => {
-    const time = endObj(event).dateTime;
+    let time;
+
+    if (endObj(event).dateTime) {
+        time = endObj(event).dateTime;
+    } else {
+        time = endObj(event).date
+    }
     return moment(time).format('hh:mm a');
 };
 
@@ -53,6 +69,11 @@ export const getEmail = (event) => {
 
 
 export function remainingTime(event) {
-    let start = startObj(event).dateTime;
-    return  moment(start).fromNow(true)
+    let time;
+    if (startObj(event).dateTime) {
+        time = startObj(event).dateTime;
+    } else {
+        time = startObj(event).date;
+    }
+    return  moment(time).fromNow(true)
 }
