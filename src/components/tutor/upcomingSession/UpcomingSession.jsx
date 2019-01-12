@@ -47,6 +47,10 @@ class UpcomingSessionUI extends Component {
         }
         this.setState({ isToken: false });
 
+        window.ga('config', 'UA-131529515-1', {
+            'page_title': 'Upcoming Session',
+            'page_path': '/upcoming/session'
+        });
     };
 
 

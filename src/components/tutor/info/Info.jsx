@@ -26,6 +26,12 @@ class InfoUI extends Component {
         };
     }
 
+    componentDidMount = () => {
+        window.ga('config', 'UA-131529515-1', {
+            'page_title': 'Tutor Info',
+            'page_path': '/tutor'
+        });
+    }
 
     startCounter = () => {
         this.counter++;

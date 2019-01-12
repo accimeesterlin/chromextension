@@ -13,6 +13,13 @@ class DeleteStudentUI extends Component {
         };
     }
 
+    componentDidMount = () => {
+        window.ga('config', 'UA-131529515-1', {
+            'page_title': 'Delete Student',
+            'page_path': '/student/delete'
+        });
+    }
+
     navigate = (link) => {
         console.log('Link: ', link);
         return this.props.history.push(link);

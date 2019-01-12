@@ -17,6 +17,13 @@ class HomeUI extends Component {
         };
     }
 
+    componentDidMount = () => {
+        window.ga('config', 'UA-131529515-1', {
+            'page_title': 'Home',
+            'page_path': '/'
+        });
+    }
+
     navigate = (link) => {
         console.log('Link: ', link);
         return this.props.history.push(link);
