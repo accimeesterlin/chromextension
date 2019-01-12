@@ -30,7 +30,7 @@
     border: 1px solid lightgrey;
     margin: 5px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .upcomingsession .event-box p {
@@ -45,4 +45,8 @@
 
 .upcomingsession .no-events {
     text-align: center;
+}
+
+.upcomingsession .events-main {
+    padding: 0px 10px;
 }
