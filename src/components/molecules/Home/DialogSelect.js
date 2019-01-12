@@ -37,6 +37,12 @@ class DialogSelect extends React.Component {
 
     handleClickOpen = () => {
         this.setState({ open: true });
+
+        window.ga('send', {
+            hitType: 'pageview',
+            page: '/adp/notes/copy',
+            title: 'ADP Copy Notes'
+        });
     };
 
     handleClose = () => {
