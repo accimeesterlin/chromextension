@@ -39,6 +39,7 @@ class UpcomingSessionUI extends Component {
         const token = localStorage.getItem('token');
 
         if (token) {
+            this.setState({ isToken: true });
             return this.fetchCalendar(token);
         }
         this.setState({ isToken: false });
@@ -77,9 +78,11 @@ class UpcomingSessionUI extends Component {
 
 
     fetchCalendar = (token) => {
-        const params = `calendarId=primary&timeMin=${(new Date()).toISOString()}`; // upcoming events
+        const timeMax = new Date(moment().add(3, 'M')).toISOString();
+        const params = `calendarId=primary&timeMin=${(new Date()).toISOString()}&orderBy=startTime&singleEvents=true&timeMax=${timeMax}`; // upcoming events
         const url = `https://www.googleapis.com/calendar/v3/calendars/primary/events?${params}`;
 
+        this.setState({ isPending: false });
         axios({
             url,
             method: 'GET',
@@ -93,7 +96,7 @@ class UpcomingSessionUI extends Component {
 
     handleSuccessCalendar = (response) => {
         const events = response.data.items;
-        this.setState({ events, isToken: true, retry: true });
+        this.setState({ events, isToken: true, retry: true, isPending: false });
         this.props.addEvents(events);
     };
 
@@ -109,7 +112,7 @@ class UpcomingSessionUI extends Component {
             chrome.identity.removeCachedAuthToken({ token }, this.getToken);
         }
 
-        this.setState({ retry: false, isToken: false });
+        this.setState({ retry: false, isToken: false, isPending: false });
 
         console.log('No able to fetch events!!!');
 
@@ -144,11 +147,7 @@ class UpcomingSessionUI extends Component {
 
     // Sorting events by Date or Only Tutoring
     sortEventsByDate = (events) => {
-        let results = [];
-        if (events.length > 0) {
-            results = events
-                .sort((a, b) => moment(a.start.dateTime).unix() - moment(b.start.dateTime).unix());
-        }
+        let results = events || [];
 
         if (this.state.isTutoring) {
             return results
@@ -180,20 +179,21 @@ class UpcomingSessionUI extends Component {
 
 
     render() {
-        console.log('State: ', this.state);
+        const { events, isToken, isPending } = this.state;
 
-        const events = this.sortEventsByDate(this.state.events);
+        const filterEvents = this.sortEventsByDate(events);
+
         return (
             <div>
-
-                {!this.state.isToken ? <Button variant="contained" color="primary" onClick={this.getToken}>
+                {isPending && _.isEmpty(events) ? <p>Fetching events...</p> : null}
+                {!isToken ? <Button variant="contained" color="primary" onClick={this.getToken}>
                     Upcoming Sesssion
                 </Button> : null}
 
                 {this.displayFilter()}
 
                 <div className="events-container">
-                    {this.displayEvents(events)}
+                    {this.displayEvents(filterEvents)}
                 </div>
             </div>
         );
