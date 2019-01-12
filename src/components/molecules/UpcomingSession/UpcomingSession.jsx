@@ -43,8 +43,19 @@ class UpcomingSessionUI extends Component {
         }
         this.setState({ isToken: false });
 
+        window.ga('send', {
+            hitType: 'pageview',
+            page: '/upcoming/session',
+            title: 'Upcoming Session'
+        });
+
+
     };
 
+
+    viewEventDetails = (htmlLink) => {
+        window.open(htmlLink, '_blank');
+    }
 
     getToken = () => {
         const isTokenAuthorized = JSON.parse(localStorage.getItem('isTokenAuthorized')) || false;
@@ -119,6 +130,8 @@ class UpcomingSessionUI extends Component {
                     endTime={getEndTime(event)}
                     month={getMonth(event)}
                     remainingTime={remainingTime(event)}
+                    htmlLink={event.htmlLink}
+                    viewEventDetails={this.viewEventDetails}
                 />
             }
         });

@@ -24,6 +24,14 @@ class InfoUI extends Component {
         };
     }
 
+    componentDidMount = () => {
+        window.ga('send', {
+            hitType: 'pageview',
+            page: '/tutor',
+            title: 'Tutor Info'
+        });
+    }
+
 
     startCounter = () => {
         this.counter++;

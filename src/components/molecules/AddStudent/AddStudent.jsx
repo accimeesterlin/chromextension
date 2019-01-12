@@ -16,6 +16,14 @@ class AddStudentUI extends Component {
         message: 'Not able to fetch data'
     };
 
+    componentDidMount = () => {
+        window.ga('send', {
+            hitType: 'pageview',
+            page: '/student/add',
+            title: 'Add Student'
+        });
+    }
+
     counter = 0;
 
     startCounter = () => {
