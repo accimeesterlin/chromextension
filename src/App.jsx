@@ -3,12 +3,7 @@ import { Route } from "react-router-dom";
 
 
 import {
-  Tutor,
   Home,
-  Student,
-  Profile,
-  Calendar,
-  Email
 } from "./main/components";
 
 import {
@@ -35,13 +30,7 @@ export default class App extends Component {
         <Route path="/error/:message" component={ErrorComponentWithNav} />
 
         { /* New Design for the Chrome Web Page */ }
-        { /* TODO: Refactor this to map into a parent root */ }
-        <Route path="/new/home" component={Home} />
-        <Route path="/new/calendar" component={Calendar} />
-        <Route path="/new/student" component={Student} />
-        <Route path="/new/email" component={Email} />
-        <Route path="/new/profile" component={Profile} />
-        <Route path="/new/tutor" component={Tutor} />
+        <Route path="/new/:content" component={Home} />
       </div>
     );
   }

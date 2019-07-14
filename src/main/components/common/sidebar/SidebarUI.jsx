@@ -1,33 +1,44 @@
-import React, { Component } from 'react';
+import React from "react";
 
-import './sidebar.scss';
+import "./sidebar.scss";
 
-export default class SidebarUI extends Component {
+// TODO:
+// Make it more dynamic
 
+const SidebarUI = props => {
+  const { navigateToContent } = props;
+  // JSX
+  return (
+    <div className="sidebar">
+      <div className="sidebar-box">
+        <p data-name="email" onClick={navigateToContent}>
+          Email
+        </p>
+      </div>
+      <div className="sidebar-box">
+        <p data-name="student" onClick={navigateToContent}>
+          Student
+        </p>
+      </div>
+      <div className="sidebar-box">
+        <p data-name="tutor" onClick={navigateToContent}>
+          Tutor
+        </p>
+      </div>
 
-    render() {
+      <div className="sidebar-box">
+        <p data-name="calendar" onClick={navigateToContent}>
+          Calendar
+        </p>
+      </div>
 
-        // JSX
-        return(
-            <div className="sidebar">
-                <div className="sidebar-box">
-                    <p>Email</p>
-                </div>
-                <div className="sidebar-box">
-                    <p>Student</p>
-                </div>
-                <div className="sidebar-box">
-                    <p>Tutor</p>
-                </div>
+      <div className="sidebar-box">
+        <p data-name="email-templates" onClick={navigateToContent}>
+          Email Templates
+        </p>
+      </div>
+    </div>
+  );
+};
 
-                <div className="sidebar-box">
-                    <p>Calendar</p>
-                </div>
-
-                <div className="sidebar-box">
-                    <p>Email Templates</p>
-                </div>
-            </div>
-        );
-    }
-}
+export default SidebarUI;

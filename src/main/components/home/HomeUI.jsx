@@ -1,36 +1,55 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import './home.scss';
+import "./home.scss";
 
-import Header from '../common/header/Header';
-import Footer from '../common/footer/Footer';
-import Sidebar from '../common/sidebar/Sidebar';
+import Header from "../common/header/Header";
+import Footer from "../common/footer/Footer";
+import Sidebar from "../common/sidebar/Sidebar";
+
+// Components
+import { Tutor, Student, Profile, Calendar, Email } from "../";
 
 export default class HomeUI extends Component {
+  componentDidMount() {
+    console.log("PROPS: ", this.props);
+  }
+  loadMainContent() {
+    const { match } = this.props;
+    const name = match.params.content;
 
+    const componentsToRender = {
+        tutor: <Tutor />,
+        student: <Student />,
+        profile: <Profile />,
+        calendar: <Calendar />,
+        email: <Email />,
+    };
 
-    render() {
-
-        // JSX
-        return(
-            <div className="home">
-                <Header />
-
-                <div className="home-content">
-                    <Sidebar />
-                    <MainContent />
-                </div>
-
-                <Footer />
-            </div>
-        );
+    if (componentsToRender.hasOwnProperty(name)) {
+        return componentsToRender[name];
     }
-}
 
-const MainContent = () => {
+    return 'No content found!!!';
+  }
+
+  navigateToContent = (event) => {
+    const name = event.target.getAttribute('data-name');
+    this.props.history.push(`/new/${name}`);
+  }
+
+  render() {
+    // JSX
     return (
-        <div className="home-content_main">
-            <h2>I am the Main Content</h2>
+      <div className="home">
+        <Header />
+
+        <div className="home-content">
+          <Sidebar navigateToContent={this.navigateToContent}/>
+          <div className="home-content_main">{this.loadMainContent()}</div>
         </div>
+
+        <Footer />
+      </div>
     );
-};
+  }
+}
