@@ -1,0 +1,17 @@
+.home {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100vh;
+}
+
+
+.home-content {
+    display: flex;
+    border: 1px solid lightgrey;
+    justify-content: flex-start;
+    padding-right: 20px;
+
+    &_main {
+        margin-left: 10px;
+    }
+}

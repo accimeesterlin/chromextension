@@ -27,6 +27,9 @@
     ],
     "run_at": "document_end"
   }],
+  "web_accessible_resources": [
+    "index.html"
+  ],
   "background": {
     "scripts": [
       "background.js"

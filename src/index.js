@@ -1,18 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from './store/index';
-import { HashRouter } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import store from "./main/store/reduxStore";
+import { HashRouter } from "react-router-dom";
 
-import './common/reset.scss';
-import './index.scss';
-import App from './App';
-
+// import "./common/reset.scss";
+import "./index.scss";
+import App from "./App";
 
 ReactDOM.render(
-    <Provider>
-        <HashRouter>
-            <App />
-        </HashRouter>
-    </Provider>
-    , document.getElementById('root'));
-
+  <Provider store={store}>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </Provider>,
+  document.getElementById("root")
+);

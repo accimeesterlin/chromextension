@@ -1,0 +1,23 @@
+.sidebar {
+    height: auto;
+    min-height: 760px;
+    border: 1px solid lightgrey;
+    border-top: none;
+    width: 150px;
+
+    &-box {
+        padding: 5px;
+        width: 100%;
+        border: 1px solid lightgrey;
+        text-align: center;
+        margin-bottom: 10px;
+        cursor: pointer;
+        border-right: none;
+        border-left: none;
+    }
+
+    &-box:hover {
+        background-color: grey;
+        color: #fff;
+    }
+}
