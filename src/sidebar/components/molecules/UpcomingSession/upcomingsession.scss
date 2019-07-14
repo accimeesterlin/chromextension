@@ -1,4 +1,8 @@
+@import '../../../common/inheritance.scss';
 
+.upcomingsession {
+    @extend %main-content-width;
+}
 
 .upcomingsession button {
     margin: 5px;

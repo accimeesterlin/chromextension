@@ -15,4 +15,3 @@ const Nav = ({ navigate }) => {
     );
 };
 export default Nav;
-

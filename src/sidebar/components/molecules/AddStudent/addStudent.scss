@@ -2,6 +2,7 @@
 
 .addStudent {
     position: relative;
+    @extend %main-content-width;
 }
 
 .addStudent form {

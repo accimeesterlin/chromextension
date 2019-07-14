@@ -1,3 +1,9 @@
+@import '../../../common/inheritance.scss';
+
+.deleteStudent {
+    @extend %main-content-width;
+}
+
 
 .deleteStudent .students {
     overflow: scroll;

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Form from './Form';
-import { connectWithStore } from '../../../store/index';
+import { connect } from 'react-redux';
 import * as tutorUtils from '../../../utils/tutorUtils';
+import { addStudent } from '../../../../actions/actionCreators';
 
 import './addStudent.scss';
 
 
-class AddStudentUI extends Component {
+export class AddStudentUI extends Component {
     state = {
         name: '',
         githubUsername: '',
@@ -17,19 +18,19 @@ class AddStudentUI extends Component {
     };
 
     componentDidMount = () => {
-        window.ga('send', {
-            hitType: 'pageview',
-            page: '/student/add',
-            title: 'Add Student'
-        });
+        if (window.ga) {
+            window.ga('send', {
+                hitType: 'pageview',
+                page: '/student/add',
+                title: 'Add Student'
+            });
+        }
     }
 
     counter = 0;
 
     startCounter = () => {
         this.counter++;
-        console.log('Counter: ', this.counter);
-
         if (this.counter >= 5) {
             clearInterval(this.timerID);
             this.counter = 0;
@@ -61,8 +62,7 @@ class AddStudentUI extends Component {
             return;
         }
 
-
-        this.props.addStudents(student);
+        this.props.addStudent(student);
 
         // Empty input values
         this.setState({
@@ -75,7 +75,6 @@ class AddStudentUI extends Component {
 
         // this.counter = 0;
         this.timerID = setInterval(this.startCounter, 1000);
-        console.log('State: ', this.state);
     };
 
     displayMessage = () => {
@@ -107,5 +106,23 @@ class AddStudentUI extends Component {
 }
 
 
-const AddStudent = connectWithStore(AddStudentUI);
+const mapStateToProps = (state) => {
+    const students = state.students;
+
+    return {
+        students
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addStudent: (student) => dispatch(addStudent(student))
+    };
+};
+
+
+const AddStudent = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AddStudentUI);
 export default AddStudent;

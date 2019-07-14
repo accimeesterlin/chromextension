@@ -5,9 +5,7 @@ export default function withNav(WrappedComponent, containerClass) {
 
     return class extends Component {
 
-
         navigate = (link) => {
-            console.log('Link: ', link);
             return this.props.history.push(link);
         }
 
@@ -21,14 +19,6 @@ export default function withNav(WrappedComponent, containerClass) {
                 </div>
             )
         }
-
-
-
-
-
-
-
-
     }
  
 }

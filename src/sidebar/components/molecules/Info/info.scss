@@ -1,9 +1,9 @@
 @import '../../../common/inheritance.scss';
 
-
 .info {
     width: 100%;
     position: relative;
+    @extend %main-content-width;
 }
 
 

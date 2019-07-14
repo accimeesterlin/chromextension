@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom';
 import Form from './Form';
 import axios from 'axios';
 import * as tutorUtils from '../../../utils/tutorUtils';
-// import Snackbar from '../../../molecules/SnackBar';
-import { connectWithStore } from '../../../store/index';
+import { connect } from 'react-redux';
+import { saveTutorName, saveTutorGoogleSheetUrl, saveTutorRoster, addStudent } from '../../../../actions/actionCreators';
+
 
 
 import './info.scss';
 
 
-class InfoUI extends Component {
+export class InfoUI extends Component {
     constructor(props) {
         super(props);
 
@@ -25,11 +26,13 @@ class InfoUI extends Component {
     }
 
     componentDidMount = () => {
-        window.ga('send', {
-            hitType: 'pageview',
-            page: '/tutor',
-            title: 'Tutor Info'
-        });
+        if (window.ga) {
+            window.ga('send', {
+                hitType: 'pageview',
+                page: '/tutor',
+                title: 'Tutor Info'
+            });
+        }
     }
 
 
@@ -102,9 +105,8 @@ class InfoUI extends Component {
         for (let i = 0; i < data.length; i++) {
             try {
                 const email = data[i][3];
-                console.log('Email: ', email);
                 if (email.includes('@')) {
-                    this.props.addStudents({
+                    this.props.addStudent({
                         name: data[i][2],
                         githubUsername: data[i][4],
                         email,
@@ -132,15 +134,18 @@ class InfoUI extends Component {
         event.preventDefault();
         clearInterval(this.timerID);
 
-
         const { tutorName, googleSheetUrl, rosterName } = this.state;
+        if (tutorName) {
+            this.props.saveTutorName(tutorName);
+        }
 
-        this.props.saveTutorInfo({
-            tutorName,
-            googleSheetUrl,
-            rosterName
-        });
+        if (googleSheetUrl) {
+            this.props.saveTutorGoogleSheetUrl(googleSheetUrl);
+        }
 
+        if (rosterName) {
+            this.props.saveTutorRoster(rosterName);
+        }
         this.fetchGoogleSheet();
     };
 
@@ -181,7 +186,31 @@ class InfoUI extends Component {
     }
 }
 
-const Info = connectWithStore(InfoUI);
+const mapStateToProps = (state) => {
+    const students = state.students;
+    const { tutorName, googleSheetUrl, rosterName } = state.tutor;
+    return {
+        students,
+        tutorName,
+        googleSheetUrl,
+        rosterName
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        saveTutorName: (name) => dispatch(saveTutorName(name)),
+        saveTutorGoogleSheetUrl: (url) => dispatch(saveTutorGoogleSheetUrl(url)),
+        saveTutorRoster: (roster) => dispatch(saveTutorRoster(roster)),
+        addStudent: (student) => dispatch(addStudent(student)),
+    };
+};
+
+
+const Info = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(InfoUI);
 
 
 export default Info;

@@ -1,7 +1,9 @@
 @import '../../../common/inheritance.scss';
 
-.home {
+
+.home-sidebar {
     position: relative;
+    @extend %main-content-width;
 
     &-name {   
         text-align: center;
@@ -9,12 +11,12 @@
     }
 }
 
-.home .search {
+.home-sidebar .search {
     @extend %content-center;
     flex-direction: column;
 }
 
-.home .displayStudents {
+.home-sidebar .displayStudents {
     overflow: scroll;
     position: relative;
     margin-top: 10px;
@@ -23,7 +25,7 @@
     max-height: 131px;
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.3);
 }
-.home .displayStudents .student-list {
+.home-sidebar .displayStudents .student-list {
     border-bottom: 1px solid black;
     line-height: 2rem;
     padding: 3px;
@@ -39,19 +41,19 @@
 }
 
 
-.home .displayStudents p:last-child {
+.home-sidebar .displayStudents p:last-child {
     border-bottom: none;
 }
 
 
-.home .useful-links {
+.home-sidebar .useful-links {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 25px;
 }
 
-.home .useful-links a {
+.home-sidebar .useful-links a {
     margin: 0px 15px;
     color: #000;
 }

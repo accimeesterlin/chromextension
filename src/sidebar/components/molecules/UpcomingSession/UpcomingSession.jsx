@@ -7,7 +7,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import axios from 'axios';
 import EventBox from './EventBox';
-import { connectWithStore } from '../../../store/index';
+import { connect } from 'react-redux';
 import {
     getDescription,
     getEndTime,
@@ -16,6 +16,8 @@ import {
     getMonth,
     remainingTime
 } from '../../../selectors/eventSelectors';
+import { addEvent, loadEvents } from '../../../../actions/actionCreators';
+
 import * as tutorUtils from '../../../utils/tutorUtils';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
@@ -44,11 +46,13 @@ class UpcomingSessionUI extends Component {
         }
         this.setState({ isToken: false });
 
-        window.ga('send', {
-            hitType: 'pageview',
-            page: '/upcoming/session',
-            title: 'Upcoming Session'
-        });
+        if (window.ga) {
+            window.ga('send', {
+                hitType: 'pageview',
+                page: '/upcoming/session',
+                title: 'Upcoming Session'
+            });
+        }
 
 
     };
@@ -97,7 +101,7 @@ class UpcomingSessionUI extends Component {
     handleSuccessCalendar = (response) => {
         const events = response.data.items;
         this.setState({ events, isToken: true, retry: true, isPending: false });
-        this.props.addEvents(events);
+        this.props.loadEvents(events);
     };
 
     handleCalendarErrors = (response) => {
@@ -200,5 +204,23 @@ class UpcomingSessionUI extends Component {
     }
 }
 
-const UpcomingSession = connectWithStore(UpcomingSessionUI);
+const mapStateToProps = (state) => {
+    const events = state.events;
+
+    return {
+        events
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addEvent: (event) => dispatch(addEvent(event)),
+        loadEvents: (events) => dispatch(loadEvents(events))
+    };
+};
+
+const UpcomingSession = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(UpcomingSessionUI);
 export default UpcomingSession;

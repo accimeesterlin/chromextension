@@ -6,7 +6,10 @@ import Info from '../molecules/Info';
 import ErrorComponent from '../errors/ErrorComponent';
 import withNav from '../HOC/withNav';
 
-const HomeWithNav = withNav(Home, 'home');
+
+import './pages.scss';
+
+const HomeWithNav = withNav(Home, 'home-sidebar');
 const AddStudentWithNav = withNav(AddStudent, 'addStudent');
 const DeleteStudentWithNav = withNav(DeleteStudent, 'deleteStudent');
 const UpcomingSessionWithNav = withNav(UpcomingSession, 'upcomingsession');

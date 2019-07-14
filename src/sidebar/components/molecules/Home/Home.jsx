@@ -2,12 +2,12 @@
 
 import React, { Component } from 'react';
 import Search from '../../atoms/Search';
-import { connectWithStore } from '../../../store/index';
+import { connect } from 'react-redux';
 import UseFullLinks from './UseFullLinks';
 import './home.scss';
 import DisplayStudents from './DisplayStudent';
 
-class HomeUI extends Component {
+export class HomeUI extends Component {
     constructor(props) {
         super(props);
 
@@ -18,23 +18,26 @@ class HomeUI extends Component {
     }
 
     componentDidMount = () => {
-        window.ga('send', {
-            hitType: 'pageview',
-            page: '/',
-            title: 'Home'
-        });
+        if (window.ga) {
+            window.ga('send', {
+                hitType: 'pageview',
+                page: '/',
+                title: 'Home'
+            });
+        }
     }
 
     sendMessageToContentScripts = (student, tutorName) => {
-        if (chrome) {
+        const log = console.log;
+        if (chrome && chrome.tabs) {
             chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, { student, tutorName }, function (response) {
-                    console.log('Successfully sent data to Content Script');
+                chrome.tabs.sendMessage(tabs[0].id, { student, tutorName }, function () {
+                    log('Successfully sent data to Content Script');
                 });
             });
         }
 
-        console.log('Not running inside the Chrome Extension yet!!!');
+        log('Not running inside the Chrome Extension yet!!!');
     };
 
 
@@ -64,8 +67,8 @@ class HomeUI extends Component {
         const tutorFullName = tutorName ? `Welcome ${tutorName}` : null;
 
         return (
-            <div className="home">
-                <p className="home-name"> {tutorFullName} </p>
+            <div className="home-sidebar">
+                <p className="home-sidebar-name"> {tutorFullName} </p>
                 <UseFullLinks googleSheetUrl={googleSheetUrl}/>
                 <Search
                     handleChange={this.handleChange}
@@ -73,10 +76,31 @@ class HomeUI extends Component {
                     value={this.state.value}
                 />
                 {this.state.isFocus ? <DisplayStudents selectStudent={this.selectStudent} students={this.state.students} /> : null}
+                {/* <a href="chrome-extension://fdodjjknhlahjbifipiknkoojnieeaha/index.html/#/new/home" target="_blank">View full Page</a> */}
             </div>
         );
     }
 }
 
-const Home = connectWithStore(HomeUI);
+const mapStateToProps = (state) => {
+    const students = state.students;
+    const { tutorName, googleSheetUrl } = state.tutor;
+    return {
+        students,
+        tutorName,
+        googleSheetUrl
+    };
+};
+
+const mapDispatchToProps = () => {
+    return {
+        
+    };
+};
+
+
+const Home = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(HomeUI);
 export default Home;
