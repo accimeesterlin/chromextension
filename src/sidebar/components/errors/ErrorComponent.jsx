@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connectWithStore } from '../../store/index';
+import { connect } from 'react-redux';
 import RangeErrors from './RangeErrors';
 import PermissionErrors from './PermissionErrors';
 import ColumnErrors from './ColumnErrors';
@@ -30,5 +30,19 @@ class ErrorComponentUI extends Component {
     }
 }
 
-const ErrorComponent = connectWithStore(ErrorComponentUI);
+const mapStateToProps = () => {
+
+    return {
+
+    };
+};
+
+
+const mapDispatchToProps = () => {
+
+    return {
+
+    };
+};
+const ErrorComponent = connect(mapStateToProps, mapDispatchToProps)(ErrorComponentUI);
 export default ErrorComponent;

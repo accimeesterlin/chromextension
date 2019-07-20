@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { loadToken } from '../../../utils/authUtils';
 import "./home.scss";
 
 import Header from "../common/header/Header";
@@ -11,7 +11,7 @@ import { Tutor, Student, Profile, Calendar, Email } from "../";
 
 export default class HomeUI extends Component {
   componentDidMount() {
-    console.log("PROPS: ", this.props);
+    loadToken();
   }
   loadMainContent() {
     const { match } = this.props;

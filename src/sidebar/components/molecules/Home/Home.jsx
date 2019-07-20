@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import UseFullLinks from './UseFullLinks';
 import './home.scss';
 import DisplayStudents from './DisplayStudent';
+import { loadToken } from '../../../../utils/authUtils';
 
 export class HomeUI extends Component {
     constructor(props) {
@@ -18,6 +19,7 @@ export class HomeUI extends Component {
     }
 
     componentDidMount = () => {
+        loadToken();
         if (window.ga) {
             window.ga('send', {
                 hitType: 'pageview',
