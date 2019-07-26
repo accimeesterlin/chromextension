@@ -34,7 +34,7 @@ export async function fetchGoogleApi(path, cb) {
   });
 };
 
-export async function sendEmailToGoogle(payload) {
+export async function sendEmailToGoogle(payload, cb) {
   const url = `https://www.googleapis.com/gmail/v1/users/me/messages/send`;
   const token = loadToken();
 
@@ -46,12 +46,22 @@ export async function sendEmailToGoogle(payload) {
     },
     data: payload
   })
+  .then(response => cb(response, null))
   .catch((error) => {
-    const statusCode = error.data.statusCode;
+    let statusCode = 500;
+
+    if (error.data && error.data.statusCode) {
+      statusCode = error.data.statusCode;
+    }
 
     if (statusCode === 401 && !retry) {
       retry = true;
-      fetchGoogleApi();
+      window.localStorage.removeItem('token');
+      loadToken();
+      console.log('New Token generated!!!');
+      sendEmailToGoogle(payload, cb);
     }
+
+    cb(null, error);
   });
 };

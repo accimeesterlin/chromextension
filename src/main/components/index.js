@@ -4,6 +4,7 @@ import Student from './student/Student';
 import Profile from './profile/Profile';
 import Calendar from './calendar/Calendar';
 import Email from './email/Email';
+import Template from './template/Templates';
 
 
 export {
@@ -12,5 +13,6 @@ export {
     Student,
     Profile,
     Calendar,
-    Email
+    Email,
+    Template
 }

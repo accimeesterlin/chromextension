@@ -1,4 +1,7 @@
+/*eslint-disable */
 import React, { Component } from "react";
+import { Container } from '@material-ui/core';
+
 import { loadToken } from '../../../utils/authUtils';
 import "./home.scss";
 
@@ -7,11 +10,13 @@ import Footer from "../common/footer/Footer";
 import Sidebar from "../common/sidebar/Sidebar";
 
 // Components
-import { Tutor, Student, Profile, Calendar, Email } from "../";
+import { Tutor, Student, Profile, Calendar, Email, Template } from "../";
 
 export default class HomeUI extends Component {
   componentDidMount() {
-    loadToken();
+    if (chrome) {
+      loadToken();
+    }
   }
   loadMainContent() {
     const { match } = this.props;
@@ -23,6 +28,7 @@ export default class HomeUI extends Component {
         profile: <Profile />,
         calendar: <Calendar />,
         email: <Email />,
+        template: <Template />,
     };
 
     if (componentsToRender.hasOwnProperty(name)) {
@@ -40,7 +46,7 @@ export default class HomeUI extends Component {
   render() {
     // JSX
     return (
-      <div className="home">
+      <Container className="home">
         <Header />
 
         <div className="home-content">
@@ -49,7 +55,7 @@ export default class HomeUI extends Component {
         </div>
 
         <Footer />
-      </div>
+      </Container>
     );
   }
 }

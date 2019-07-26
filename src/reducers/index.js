@@ -1,17 +1,19 @@
 import { combineReducers } from 'redux';
 
 
-import emailReducer from './emailReducer';
-import tutorReducer from './tutorReducer';
-import studentReducer from './studentReducer';
-import eventReducer from './eventReducer';
+import email from './emailReducer';
+import tutor from './tutorReducer';
+import students  from './studentReducer';
+import events from './eventReducer';
+import templates from './templateReducer';
 
 
 const reducers = combineReducers({
-    email: emailReducer,
-    tutor: tutorReducer,
-    students: studentReducer,
-    events: eventReducer
+    email,
+    tutor,
+    students,
+    events,
+    templates
 });
 
 export default reducers;

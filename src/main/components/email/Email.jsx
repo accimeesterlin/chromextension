@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 import EmailUI from './EmailUI';
 
 
-const mapStateToProps = () => {
-
+const mapStateToProps = (state) => {
+    const templates = state.templates;
     return {
-
+        templates
     };
 };
 

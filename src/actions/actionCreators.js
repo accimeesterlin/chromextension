@@ -56,3 +56,12 @@ export function loadEvents(events) {
         payload: events
     };
 }
+
+
+// Templates
+export function addTemplate(template) {
+    return {
+        type: types.ADD_TEMPLATE,
+        payload: template
+    }
+}

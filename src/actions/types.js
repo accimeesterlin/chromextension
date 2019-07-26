@@ -11,3 +11,6 @@ export const TUTOR_GOOGLE_SHEET_URL = 'TUTOR_GOOGLE_SHEET_URL';
 // Google Calendar
 export const ADD_EVENT = 'ADD_EVENT';
 export const LOAD_EVENTS = 'LOAD_EVENTS';
+
+// Templates
+export const ADD_TEMPLATE = 'ADD_TEMPLATE';

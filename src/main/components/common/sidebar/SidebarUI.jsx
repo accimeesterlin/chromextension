@@ -33,7 +33,7 @@ const SidebarUI = props => {
       </div>
 
       <div className="sidebar-box">
-        <p data-name="email-templates" onClick={navigateToContent}>
+        <p data-name="template" onClick={navigateToContent}>
           Email Templates
         </p>
       </div>

@@ -1,0 +1,56 @@
+.template {
+    // display: flex;
+    // justify-content: flex-start;
+    margin-top: 10px;
+
+    form {
+        width: 100%;
+        margin-top: 5px;
+        padding-bottom: 20px;
+    }
+}
+
+#includeSubject {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.template-wrapperClassName {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    height: 300px;
+    overflow: scroll;
+}
+
+#template-cancel {
+    margin-left: 20px;
+}
+
+.template-templateTemplate {
+    margin: 20px 0px;
+}
+
+.template-preview {
+    border: 1px solid red;
+}
+
+.template-editorClassName {
+    height: 320px;
+    padding: 10px;
+    font-family: sans-serif;
+    margin-bottom: 20px;
+}
+
+.template-toolbarClassName {
+    // border: 1px solid red;
+}
+
+.template button {
+    margin-top: 20px;
+}
+
+.template-snackbar {
+    // height: 200px;
+}

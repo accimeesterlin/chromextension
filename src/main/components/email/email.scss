@@ -1,0 +1,45 @@
+.email {
+    // display: flex;
+    // justify-content: flex-start;
+    margin-top: 10px;
+
+    form {
+        width: 100%;
+        margin-top: 5px;
+    }
+}
+
+.email-wrapperClassName {
+    margin-top: 20px;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+}
+
+.email-emailTemplate {
+    margin: 20px 0px;
+}
+
+.email-preview {
+    border: 1px solid red;
+}
+
+.email-editorClassName {
+    height: 320px;
+    padding: 10px;
+    font-family: sans-serif;
+    // line-height: 25px;
+    // border: 1px solid lightgrey;
+    // border-top: none;
+}
+
+.email-toolbarClassName {
+    // border: 1px solid red;
+}
+
+.email button {
+    margin-top: 20px;
+}
+
+.email-snackbar {
+    // height: 200px;
+}

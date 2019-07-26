@@ -1,6 +1,4 @@
 .home {
-    max-width: 1200px;
-    margin: 0 auto;
     height: 100vh;
 }
 
@@ -8,6 +6,7 @@
 .home-content {
     display: flex;
     border: 1px solid lightgrey;
+    border-bottom: none;
     justify-content: flex-start;
     padding-right: 20px;
 
