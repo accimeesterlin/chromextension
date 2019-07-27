@@ -65,3 +65,11 @@ export function addTemplate(template) {
         payload: template
     }
 }
+
+// Messages
+export function loadMessages(messages) {
+    return {
+        type: types.LOAD_MESSAGES,
+        payload: messages
+    }
+}

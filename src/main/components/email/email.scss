@@ -15,6 +15,7 @@
     border-radius: 4px;
 }
 
+
 .email-emailTemplate {
     margin: 20px 0px;
 }
@@ -24,9 +25,10 @@
 }
 
 .email-editorClassName {
-    height: 320px;
+    height: 250px;
     padding: 10px;
     font-family: sans-serif;
+    overflow: scroll;
     // line-height: 25px;
     // border: 1px solid lightgrey;
     // border-top: none;

@@ -1,31 +1,32 @@
 import React, { Component } from "react";
-import { Editor } from "react-draft-wysiwyg";
+
 import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 import {
   Container,
-  TextField,
   Button,
-  Checkbox,
-  FormControlLabel,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle
+  DialogTitle,
+  Card,
+  CardContent
 } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+
+import TemplateFormUI from "./TemplateFormUI";
 
 import "./template.scss";
 
 export default class TemplateUI extends Component {
   initialState = {
     templateEditor: EditorState.createEmpty() || {},
-    templateContent: '',
+    templateContent: "",
     isOpen: false,
     includeSubject: false,
-    templateName: '',
-    includeSubject: '',
-    templateSubject: ''
+    templateName: "",
+    templateSubject: ""
   };
   state = this.initialState;
 
@@ -55,7 +56,7 @@ export default class TemplateUI extends Component {
     });
   };
 
-  addTemplate = (event) => {
+  addTemplate = event => {
     event.preventDefault();
 
     const {
@@ -76,15 +77,13 @@ export default class TemplateUI extends Component {
   };
 
   render() {
-    const { templateEditor } = this.state;
+    const { templateEditor, includeSubject } = this.state;
     console.log("Templates: ", this.props.templates);
     // JSX
     return (
       <Container className="template">
-        <h2>New Template</h2>
-
         <Button
-          variant="contained"
+          variant="outlined"
           color="primary"
           type="submit"
           onClick={this.handleClickOpen}
@@ -99,49 +98,13 @@ export default class TemplateUI extends Component {
         >
           <DialogTitle id="form-dialog-title">New Template</DialogTitle>
           <DialogContent>
-            <form>
-              <TextField
-                value={this.state.receiver}
-                label="Template name:"
-                fullWidth={true}
-                name="templateName"
-                onChange={this.handleChange}
-              />
-
-              <FormControlLabel
-                label="Include Subject"
-                id="includeSubject"
-                control={
-                  <Checkbox
-                    checked={this.state.checkedA}
-                    onChange={this.handleChecked("includeSubject")}
-                    value="includeSubject"
-                    color="primary"
-                    inputProps={{
-                      "aria-label": "primary checkbox"
-                    }}
-                  />
-                }
-              />
-
-              {this.state.includeSubject ? (
-                <TextField
-                  value={this.state.receiver}
-                  label="Subject:"
-                  fullWidth={true}
-                  name="templateSubject"
-                  onChange={this.handleChange}
-                />
-              ) : null}
-
-              <Editor
-                initialEditorState={templateEditor}
-                toolbarClassName="template-toolbarClassName"
-                wrapperClassName="template-wrapperClassName"
-                editorClassName="template-editorClassName"
-                onEditorStateChange={this.onEditorStateChange}
-              />
-            </form>
+            <TemplateFormUI
+              templateEditor={templateEditor}
+              onEditorStateChange={this.onEditorStateChange}
+              handleChange={this.handleChange}
+              handleChecked={this.handleChecked}
+              includeSubject={includeSubject}
+            />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
@@ -152,6 +115,32 @@ export default class TemplateUI extends Component {
             </Button>
           </DialogActions>
         </Dialog>
+
+        {this.props.templates.length > 0
+          ? this.props.templates.map(({ templateName }, key) => (
+              <Card className="template-card" key={key}>
+                <CardContent id="template-card__content">
+                  <Grid container justify="space-between" alignItems="center">
+                    <Grid>
+                      <p> <b>{ key + 1 }</b> - { templateName }</p>
+                    </Grid>
+                    <Grid className="template-card__buttons">
+                      <Button onClick={this.handleClose} color="primary">
+                        Copy
+                      </Button>
+                      <Button onClick={this.addTemplate} color="primary">
+                        Edit
+                      </Button>
+
+                      <Button onClick={this.addTemplate} color="primary">
+                        Delete
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
+            ))
+          : null}
       </Container>
     );
   }

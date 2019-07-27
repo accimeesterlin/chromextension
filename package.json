@@ -21,6 +21,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "^2.1.8",
     "redux": "^4.0.4",
+    "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^6.1.1",
     "stringquery": "^1.0.8"
   },

@@ -54,3 +54,24 @@
 .template-snackbar {
     // height: 200px;
 }
+
+.template-card {
+    width: 100%;
+    max-width: 1200px;
+    min-width: 760px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+#template-card__content {
+    padding: 10px 16px;
+    // padding-bottom: 10px;
+}
+
+.template-card__buttons {
+    opacity: 0;
+}
+
+.template-card:hover .template-card__buttons {
+    opacity: 1;
+}

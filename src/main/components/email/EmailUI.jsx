@@ -1,22 +1,28 @@
 /*eslint-disable */
 
 import React, { Component } from "react";
-import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
+// Dialog
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+
 import {
   Container,
-  TextField,
-  Select,
   MenuItem,
   Grid,
   Button,
-  CircularProgress
+  CircularProgress,
+  Card,
+  CardContent
 } from "@material-ui/core";
 import SnackBarContent from "../common/SnackBar";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
+import EmailFormUI from "./EmailFormUI";
 import {
   fetchGoogleApi,
   sendEmailToGoogle
@@ -35,14 +41,16 @@ export default class EmailUI extends Component {
     emailTemplate: "none",
     pending: false,
     variant: "success",
-    snackBarMessage: ""
+    snackBarMessage: "",
+    isModalOpen: false
   };
   state = this.initialState;
 
   componentDidMount() {
     if (chrome && chrome.identity) {
+      const { token, loadMessages } = this.props;
+      loadMessages(10, token);
       this.fetchLabels();
-      this.fetchMessages();
     }
   }
 
@@ -67,7 +75,7 @@ export default class EmailUI extends Component {
   };
 
   fetchMessages = () => {
-    fetchGoogleApi("/messages", (response, error) => {
+    fetchGoogleApi("/messages?maxResults=10", (response, error) => {
       if (error) {
         return this.handleMessagesError(error);
       }
@@ -78,7 +86,11 @@ export default class EmailUI extends Component {
 
   handleMessages = response => {
     const data = response.data;
-    console.log("Messages Data: ", data);
+
+    if (data.messages) {
+      this.props.loadMessages(data.messages);
+      console.log("Messages loaded!!!", data.messages);
+    }
   };
 
   handleMessagesError = error => {
@@ -92,17 +104,19 @@ export default class EmailUI extends Component {
     });
   };
 
-  selectTemplate = (event) => {
+  selectTemplate = event => {
     const templates = this.props.templates;
     const { value: index, name } = event.target;
 
-    const { templateContent, templateSubject, templateEditor } = templates[index];
+    const { templateContent, templateSubject, templateEditor } = templates[
+      index
+    ];
 
     this.setState({
       [name]: index,
       editorState: templateEditor,
       subject: templateSubject,
-      emailMessage: templateContent,
+      emailMessage: templateContent
     });
   };
 
@@ -137,6 +151,7 @@ export default class EmailUI extends Component {
     this.setState({
       ...this.initialState,
       open: true,
+      isModalOpen: false,
       variant: status,
       snackBarMessage: message
     });
@@ -177,66 +192,110 @@ export default class EmailUI extends Component {
       </MenuItem>
     ));
   };
-  render() {
-    const { editorState } = this.state;
 
-    console.log("State: ", this.state);
+  displayGmailSubject = payload => {
+    let subject = "No Subject found!!!";
+
+    if (payload && payload.headers) {
+      payload.headers.map(element => {
+        if (element.name === "Subject") {
+          subject = element.value;
+        }
+      });
+    }
+
+    return subject;
+  };
+  render() {
+    const {
+      editorState,
+      emailTemplate,
+      isModalOpen,
+      receiver,
+      subject
+    } = this.state;
+
     // JSX
     return (
       <Container className="email">
-        <Grid container space={4}>
-          <Grid item xs={6}>
-            <h2>New Message</h2>
-            <form onSubmit={this.sendEmail}>
-              <TextField
-                value={this.state.receiver}
-                label="To:"
-                fullWidth={true}
-                name="receiver"
-                onChange={this.handleChange}
-              />
-              <TextField
-                value={this.state.subject}
-                label="Subject:"
-                fullWidth={true}
-                name="subject"
-                onChange={this.handleChange}
-              />
-
-              {this.props.templates.length > 0 ? (
-                <Select
-                  value={this.state.emailTemplate}
-                  autoWidth={true}
-                  onChange={this.selectTemplate}
-                  name="emailTemplate"
-                  className="email-emailTemplate"
-                  inputProps={{
-                    name: "emailTemplate",
-                    id: "emailTemplate"
-                  }}
-                >
-                  <MenuItem value="none">None</MenuItem>
-                  {this.renderTemplateSelection()}
-                </Select>
-              ) : null}
-
-              <Editor
-                initialEditorState={editorState}
-                toolbarClassName="email-toolbarClassName"
-                wrapperClassName="email-wrapperClassName"
-                editorClassName="email-editorClassName"
-                onEditorStateChange={this.onEditorStateChange}
-              />
-              {this.renderSubmitButton()}
-            </form>
-          </Grid>
-        </Grid>
         <SnackBarContent
-          onClose={this.handleClose}
+          onClose={() => this.setState({ open: false })}
           open={this.state.open}
           variant={this.state.variant}
           message={this.state.snackBarMessage}
         />
+
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => this.setState({ isModalOpen: true })}
+        >
+          New Email
+        </Button>
+
+        <Dialog
+          open={isModalOpen}
+          onClose={() => this.setState({ isModalOpen: false })}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">New Message</DialogTitle>
+          <DialogContent>
+            <EmailFormUI
+              // Simple values
+              sendEmail={this.sendEmail}
+              receiver={receiver}
+              subject={subject}
+              emailTemplate={emailTemplate}
+              editorState={editorState}
+              templates={this.props.templates}
+              // List of functions
+              handleChange={this.handleChange}
+              selectTemplate={this.selectTemplate}
+              renderTemplateSelection={this.renderTemplateSelection}
+              onEditorStateChange={this.onEditorStateChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => this.setState({ isModalOpen: false })}
+              color="primary"
+            >
+              Cancel
+            </Button>
+            <Button onClick={this.sendEmail} type="submit" color="primary">
+              Send Email
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {this.props.templates.length > 0
+          ? this.props.messages.map(({ snippet, payload }, key) => (
+              <Card className="template-card" key={key}>
+                <CardContent id="template-card__content">
+                  <Grid container justify="space-between" alignItems="center">
+                    <Grid>
+                      <p>
+                        {" "}
+                        <b>{key + 1}</b> - {this.displayGmailSubject(payload)}
+                      </p>
+                    </Grid>
+                    <Grid className="template-card__buttons">
+                      <Button onClick={this.handleClose} color="primary">
+                        Copy
+                      </Button>
+                      <Button onClick={this.addTemplate} color="primary">
+                        Edit
+                      </Button>
+
+                      <Button onClick={this.addTemplate} color="primary">
+                        Delete
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
+            ))
+          : null}
       </Container>
     );
   }
