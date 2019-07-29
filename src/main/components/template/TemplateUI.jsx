@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
+
 import {
   Container,
   Button,
@@ -14,6 +15,7 @@ import {
   CardContent
 } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import SearchBox from "../common/searchBox/SearchBoxUI";
 
 import TemplateFormUI from "./TemplateFormUI";
 
@@ -26,7 +28,9 @@ export default class TemplateUI extends Component {
     isOpen: false,
     includeSubject: false,
     templateName: "",
-    templateSubject: ""
+    templateSubject: "",
+    searchClient: {},
+    templates: this.props.templates || []
   };
   state = this.initialState;
 
@@ -76,9 +80,17 @@ export default class TemplateUI extends Component {
     this.setState({ isOpen: false });
   };
 
+  searchTemplate = ({ target }) => {
+    const value = target.value.toLowerCase();
+    const templates = this.props.templates.filter(({ templateName }) =>
+      templateName.toLowerCase().includes(value)
+    );
+    this.setState({ templates });
+  };
+
   render() {
-    const { templateEditor, includeSubject } = this.state;
-    console.log("Templates: ", this.props.templates);
+    const { templateEditor, includeSubject, templates } = this.state;
+    console.log("Templates: ", templates);
     // JSX
     return (
       <Container className="template">
@@ -116,32 +128,46 @@ export default class TemplateUI extends Component {
           </DialogActions>
         </Dialog>
 
-        {this.props.templates.length > 0
-          ? this.props.templates.map(({ templateName }, key) => (
-              <Card className="template-card" key={key}>
-                <CardContent id="template-card__content">
-                  <Grid container justify="space-between" alignItems="center">
-                    <Grid>
-                      <p> <b>{ key + 1 }</b> - { templateName }</p>
-                    </Grid>
-                    <Grid className="template-card__buttons">
-                      <Button onClick={this.handleClose} color="primary">
-                        Copy
-                      </Button>
-                      <Button onClick={this.addTemplate} color="primary">
-                        Edit
-                      </Button>
-
-                      <Button onClick={this.addTemplate} color="primary">
-                        Delete
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
-            ))
-          : null}
+        <SearchBox
+          label="Search template" 
+          items={this.state.templates}
+          filterByName="templateName"
+          name="templateName">
+          <DisplayTemplates
+              handleClose={this.handleClose}
+              addTemplate={this.addTemplate}
+            />
+        </SearchBox>
       </Container>
     );
   }
+}
+
+function DisplayTemplates({ templateName, handleClose, addTemplate, num }) {
+  
+  return (
+    <Card className="template-card">
+      <CardContent id="template-card__content">
+        <Grid container justify="space-between" alignItems="center">
+          <Grid>
+            <p>
+              <b>{num}</b> - {templateName}
+            </p>
+          </Grid>
+          <Grid className="template-card__buttons">
+            <Button onClick={handleClose} color="primary">
+              Copy
+            </Button>
+            <Button onClick={addTemplate} color="primary">
+              Edit
+            </Button>
+
+            <Button onClick={addTemplate} color="primary">
+              Delete
+            </Button>
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
+  );
 }

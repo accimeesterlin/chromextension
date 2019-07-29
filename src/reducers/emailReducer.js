@@ -1,4 +1,38 @@
-const initialState = {};
+const dummyMessages = [
+    { 
+        snippet: 'Let me see what the heck happened',
+        payload: {
+            headers: {
+                name: 'Subject',
+                value: 'What is going happy to be here'
+            }
+        }
+    },
+
+    { 
+        snippet: 'Hello World',
+        payload: {
+            headers: {
+                name: 'Subject',
+                value: 'Let us see what happen'
+            }
+        }
+    },
+
+    { 
+        snippet: 'Go home',
+        payload: {
+            headers: {
+                name: 'Subject',
+                value: 'What is going on'
+            }
+        }
+    },
+]
+
+const initialState = {
+    messages: []
+};
 
 
 

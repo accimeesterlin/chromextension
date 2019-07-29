@@ -8,6 +8,8 @@ import { HashRouter } from "react-router-dom";
 import "./index.scss";
 import App from "./App";
 
+window.log = console.log;
+
 ReactDOM.render(
   <Provider store={store}>
     <HashRouter>

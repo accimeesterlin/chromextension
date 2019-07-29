@@ -1,13 +1,23 @@
 import * as types from '../actions/types';
 
-const dummyTemplates = {
-    templateContent: 'I am happy to be here',
-    templateSubject: 'Confirmation Email',
-    templateName: 'Mohit Negi has subscribed to you on YouTube 1 subscriber 1 video Channels who subscribe to you will be notified when you upload new videos or respond to others&#39; videos (by favoriting, commenting,',
-    templateEditor: 'What is going on guys or folks?'
-};
+const dummyTemplates = [
+    {
+        templateId: 0,
+        templateContent: 'I am happy to be here',
+        templateSubject: 'Confirmation Email',
+        templateName: 'Confirmation email',
+        templateEditor: 'What is going on guys or folks?'
+    },
+    {
+        templateId: 1,
+        templateContent: 'I am happy to be here',
+        templateSubject: 'Welcome emails',
+        templateName: 'Welcome email',
+        templateEditor: 'What is going on guys or folks?'
+    }
+];
 
-const initialState = [dummyTemplates];
+const initialState = dummyTemplates || [];
 
 function templateReducer(state = initialState, action) {
     const newState = [ ...state ];

@@ -3,12 +3,8 @@
 import React, { Component } from "react";
 import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
-
-// Dialog
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SearchBox from "../common/searchBox/SearchBoxUI";
 
 import {
   Container,
@@ -17,85 +13,53 @@ import {
   Button,
   CircularProgress,
   Card,
-  CardContent
+  CardContent,
+  Select,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle
 } from "@material-ui/core";
 import SnackBarContent from "../common/SnackBar";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 import EmailFormUI from "./EmailFormUI";
-import {
-  fetchGoogleApi,
-  sendEmailToGoogle
-} from "../../../utils/googleApiUtils";
+import { sendEmailToGoogle } from "../../../utils/googleApiUtils";
 import { generateEmailPayload } from "../../../utils/emailPayload";
 
 import "./email.scss";
 
 export default class EmailUI extends Component {
-  initialState = {
-    editorState: EditorState.createEmpty() || {},
-    subject: "",
-    emailMessage: "",
-    sender: "esterlinaccime@gmail.com", // TODO: temporary
-    receiver: "",
-    emailTemplate: "none",
-    pending: false,
-    variant: "success",
-    snackBarMessage: "",
-    isModalOpen: false
-  };
-  state = this.initialState;
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      editorState: EditorState.createEmpty() || {},
+      subject: "",
+      emailMessage: "",
+      sender: "esterlinaccime@gmail.com", // TODO: temporary
+      receiver: "",
+      emailTemplate: "none",
+      pending: false,
+      variant: "success",
+      snackBarMessage: "",
+      isModalOpen: false,
+      gmailLabel: "central_support",
+      hasMore: true,
+      query: null,
+      messages: props.messages || []
+    };
+  }
 
   componentDidMount() {
     if (chrome && chrome.identity) {
-      const { token, loadMessages } = this.props;
-      loadMessages(10, token);
-      this.fetchLabels();
+      const { token, loadMessages, loadLabels, messages } = this.props;
+      log("Message on LOAD: ", messages);
+      loadMessages(token);
+      loadLabels(token);
+      this.setState({ pageLoaded: true });
     }
   }
-
-  fetchLabels = () => {
-    fetchGoogleApi("/labels", (response, error) => {
-      if (error) {
-        return this.handleLabelsError(error);
-      }
-
-      this.handleLabels(response);
-    });
-  };
-
-  handleLabels = response => {
-    const data = response.data;
-
-    console.log("Label Data: ", data);
-  };
-
-  handleLabelsError = error => {
-    console.log(JSON.stringify(error.response));
-  };
-
-  fetchMessages = () => {
-    fetchGoogleApi("/messages?maxResults=10", (response, error) => {
-      if (error) {
-        return this.handleMessagesError(error);
-      }
-
-      this.handleMessages(response);
-    });
-  };
-
-  handleMessages = response => {
-    const data = response.data;
-
-    if (data.messages) {
-      this.props.loadMessages(data.messages);
-      console.log("Messages loaded!!!", data.messages);
-    }
-  };
-
-  handleMessagesError = error => {
-    console.log(JSON.stringify(error.response));
-  };
 
   handleChange = event => {
     const { value, name } = event.target;
@@ -133,7 +97,7 @@ export default class EmailUI extends Component {
     this.setState({ pending: true });
     sendEmailToGoogle(payload, (response, error) => {
       if (error) {
-        console.log(JSON.stringify(error.response));
+        log(JSON.stringify(error.response));
         const errorMessage =
           (error.response &&
             error.response.data &&
@@ -142,14 +106,13 @@ export default class EmailUI extends Component {
         this.openSnackBar(errorMessage, "error");
         return;
       }
-      console.log("Response: ", response.data);
+      log("Response: ", response.data);
       this.openSnackBar("Email sent!!!");
     });
   };
 
   openSnackBar = (message, status = "success") => {
     this.setState({
-      ...this.initialState,
       open: true,
       isModalOpen: false,
       variant: status,
@@ -198,7 +161,7 @@ export default class EmailUI extends Component {
 
     if (payload && payload.headers) {
       payload.headers.map(element => {
-        if (element.name === "Subject") {
+        if (element.name.toLowerCase() === "subject") {
           subject = element.value;
         }
       });
@@ -206,15 +169,44 @@ export default class EmailUI extends Component {
 
     return subject;
   };
+
+  fetchMoreData = () => {
+    const { token, nextPageToken, loadMessages } = this.props;
+    const { gmailLabel, query } = this.state;
+
+    if (gmailLabel !== "center_support") {
+      const label = "IMPORTANT";
+      loadMessages(token, nextPageToken, label, query);
+    }
+  };
+
+  selectGmailLabel = event => {
+    const { value, name } = event.target;
+    const { token, loadMessages } = this.props;
+
+    this.setState({
+      [name]: value
+    });
+    const shouldEmptyMessages = true;
+    const nextPageToken = null;
+    const query = null;
+    loadMessages(token, nextPageToken, value, query, shouldEmptyMessages);
+  };
+
   render() {
     const {
       editorState,
       emailTemplate,
       isModalOpen,
       receiver,
-      subject
+      subject,
+      gmailLabel
     } = this.state;
 
+    const { labels, resultSizeEstimate, messages } = this.props;
+    const hasMore = messages.length < resultSizeEstimate;
+    log("State: ", this.state);
+    log("Props: ", this.props);
     // JSX
     return (
       <Container className="email">
@@ -268,35 +260,93 @@ export default class EmailUI extends Component {
           </DialogActions>
         </Dialog>
 
-        {this.props.templates.length > 0
-          ? this.props.messages.map(({ snippet, payload }, key) => (
-              <Card className="template-card" key={key}>
-                <CardContent id="template-card__content">
-                  <Grid container justify="space-between" alignItems="center">
-                    <Grid>
-                      <p>
-                        {" "}
-                        <b>{key + 1}</b> - {this.displayGmailSubject(payload)}
-                      </p>
-                    </Grid>
-                    <Grid className="template-card__buttons">
-                      <Button onClick={this.handleClose} color="primary">
-                        Copy
-                      </Button>
-                      <Button onClick={this.addTemplate} color="primary">
-                        Edit
-                      </Button>
+        <Select
+          value={gmailLabel}
+          // autoWidth={true}
+          onChange={this.selectGmailLabel}
+          name="gmailLabel"
+          className="email-gmail__label"
+        >
+          <MenuItem value="central_support">Central Support</MenuItem>
+          {labels.length > 0
+            ? labels.map(({ id, name }) => (
+                <MenuItem value={id} key={id}>
+                  {name}
+                </MenuItem>
+              ))
+            : null}
+        </Select>
 
-                      <Button onClick={this.addTemplate} color="primary">
-                        Delete
-                      </Button>
+        <InfiniteScroll
+          dataLength={this.props.messages.length}
+          next={this.fetchMoreData}
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+        >
+          {messages.length > 0
+            ? messages.map(({ payload }, index) => (
+                <Card className="template-card">
+                  <CardContent id="template-card__content">
+                    <Grid container justify="space-between" alignItems="center">
+                      <Grid>
+                        <p>
+                          <b>{index + 1}</b> -
+                          {this.displayGmailSubject(payload)}
+                        </p>
+                      </Grid>
+                      <Grid className="template-card__buttons">
+                        <Button onClick={this.handleClose} color="primary">
+                          Copy
+                        </Button>
+                        <Button onClick={this.addTemplate} color="primary">
+                          Edit
+                        </Button>
+
+                        <Button onClick={this.addTemplate} color="primary">
+                          Delete
+                        </Button>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
-            ))
-          : null}
+                  </CardContent>
+                </Card>
+              ))
+            : null}
+        </InfiniteScroll>
       </Container>
     );
   }
+}
+
+function DisplayEmail(props) {
+  log("Display Email: ", props);
+  return (
+    <Card className="template-card">
+      <CardContent id="template-card__content">
+        <Grid container justify="space-between" alignItems="center">
+          <Grid>
+            <p>
+              <b>{props.num}</b> - {props.displayGmailSubject(payload)}
+            </p>
+          </Grid>
+          <Grid className="template-card__buttons">
+            <Button onClick={props.handleClose} color="primary">
+              Copy
+            </Button>
+            <Button onClick={props.addTemplate} color="primary">
+              Edit
+            </Button>
+
+            <Button onClick={props.addTemplate} color="primary">
+              Delete
+            </Button>
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
+  );
 }

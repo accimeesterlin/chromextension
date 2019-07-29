@@ -9,16 +9,19 @@ import promise from 'redux-promise-middleware';
 import logger from 'redux-logger'
 
 import gmailMiddleware from '../middleware/gmailMiddleware';
-
+import { isDevMode } from '../utils/environmentUtils';
 
 const middlewares = [
-    logger,
     promise,
     gmailMiddleware
 ]
 
+if (isDevMode) {
+    middlewares.push(logger);
+}
+
 const reduxDevTools = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
-const composeEnhancers = reduxDevTools ?
+const composeEnhancers = reduxDevTools && isDevMode ?
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
         name: 'Tutor Pro - Chrome Extension'
     }) : compose;

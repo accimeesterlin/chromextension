@@ -1,5 +1,6 @@
 .email {
-    // display: flex;
+    display: flex;
+    flex-direction: column;
     // justify-content: flex-start;
     margin-top: 10px;
 
@@ -13,6 +14,10 @@
     margin-top: 20px;
     border: 1px solid lightgrey;
     border-radius: 4px;
+}
+
+.email-gmail__label {
+    margin: 20px 0px;
 }
 
 

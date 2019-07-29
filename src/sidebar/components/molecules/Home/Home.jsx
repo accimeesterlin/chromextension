@@ -52,7 +52,10 @@ export class HomeUI extends Component {
 
     handleChange = ({ target }) => {
         const value = target.value.toLowerCase();
-        const students = this.props.students.filter((el) => el.name.toLowerCase().includes(value));
+        const students = this.props.students
+            .filter((el) => el.name
+            .toLowerCase()
+            .includes(value));
         this.setState({ students, value });
     };
 
