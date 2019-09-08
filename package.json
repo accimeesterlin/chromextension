@@ -53,6 +53,14 @@
     "@storybook/addon-links": "^4.1.18",
     "@storybook/addons": "^4.1.18",
     "@storybook/react": "^4.1.18",
-    "babel-loader": "8.0.5"
+    "babel-loader": "8.0.5",
+    "jest-webextension-mock": "^3.5.0",
+    "react-test-renderer": "^16.9.0",
+    "redux-mock-store": "^1.5.3"
+  },
+  "jest": {
+    "setupFiles": [
+      "jest-webextension-mock"
+    ]
   }
 }
