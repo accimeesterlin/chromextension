@@ -29,7 +29,6 @@ class UpcomingSessionUI extends Component {
 
         this.state = {
             retry: true,
-            // events: props.events.length > 0 ? props.evnets : events, // temporary
             events: props.events,
             isTutoring: false,
             isToken: true
@@ -116,8 +115,6 @@ class UpcomingSessionUI extends Component {
         }
 
         this.setState({ retry: false, isToken: false, isPending: false });
-        console.log('No able to fetch events!!!');
-
     };
 
     displayEvents = (events) => {

@@ -39,7 +39,5 @@ export const getLegacyTutorInfo = function (data) {
 };
 
 export const clearLegacyStorage = function () {
-    chrome.storage.sync.clear(function () {
-        console.log('Old Storage clear!');
-    })
+    chrome.storage.sync.clear(function () { })
 }

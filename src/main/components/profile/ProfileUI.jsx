@@ -6,7 +6,6 @@ export default class ProfileUI extends Component {
     // JSX
     return (
       <Content {...this.props}>
-        {/* <div className="home-content_main">{this.loadMainContent()}</div> */}
         <h2>I am the Profile Component</h2>
       </Content>
     );

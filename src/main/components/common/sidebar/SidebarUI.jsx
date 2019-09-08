@@ -11,7 +11,7 @@ import "./sidebar.scss";
 
 const SidebarUI = ({ history, currentRoute, setCurrent }) => {
 
-  const dashboardMenus = [
+  const sideNavBarItems = [
     { icon: 'dashboard', name: 'Dashboard', route: '/dashboard' },
     { icon: 'email', name: 'Email', route: '/email' },
     { icon: 'school', name: 'Student', route: '/student' },
@@ -36,7 +36,7 @@ const SidebarUI = ({ history, currentRoute, setCurrent }) => {
       <SidebarProfile />
 
       <ul className="sidebar-menu">
-        {dashboardMenus.map(({ name, icon, route }, idx) => <MenuItems
+        {sideNavBarItems.map(({ name, icon, route }, idx) => <MenuItems
             goTo={() => goTo(route, idx)}
             key={idx}
             name={name}

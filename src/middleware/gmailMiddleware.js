@@ -2,12 +2,11 @@
 import axios from 'axios';
 import * as types from '../actions/types';
 import { getGmailMessage } from '../actions/asyncActionCreators';
-import { loadToken, generateToken } from '../utils/authUtils';
+import { loadToken } from '../utils/authUtils';
 
 const gmailMiddleware = (store) => (next) => async (action) => {
 
     next(action);
-    const state = store.getState();
     const dispatch = store.dispatch;
     const token = loadToken();
 
@@ -64,21 +63,5 @@ const gmailMiddleware = (store) => (next) => async (action) => {
     };
 };
 
-
-// Handle this logic on the midddleware side
-/*
-
-if (error.data && error.data.statusCode) {
-      statusCode = error.data.statusCode;
-    }
-
-if (statusCode === 401 && !retry) {
-    retry = true;
-    window.localStorage.removeItem('token');
-    loadToken();
-    console.log('New Token generated!!!');
-    sendEmailToGoogle(payload, cb);
-}
-*/
 
 export default gmailMiddleware

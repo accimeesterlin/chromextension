@@ -17,7 +17,6 @@ export default class HomeUI extends Component {
     // JSX
     return (
       <Content {...this.props}>
-        {/* <div className="home-content_main">{this.loadMainContent()}</div> */}
         <div className="home">
           <h1>I am the Home Component</h1>
         </div>

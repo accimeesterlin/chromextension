@@ -206,9 +206,6 @@ export default class EmailUI extends Component {
 
     const { labels, resultSizeEstimate, messages } = this.props;
     const hasMore = messages.length < resultSizeEstimate;
-    const log = console.log;
-    log('State: ', this.state);
-    log('Props: ', this.props);
     // JSX
     return (
       <Content className="email" {...this.props}>

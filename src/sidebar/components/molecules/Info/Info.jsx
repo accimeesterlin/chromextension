@@ -113,11 +113,7 @@ export class InfoUI extends Component {
                     });
                     isValid = true;
                 }
-            } catch (error) {
-                console.log('Error is displaying');
-                // TODO
-                // Handle multiple cases of failures
-            }
+            } catch (error) { }
         }
         this.validateCorrectColum(isValid);
     };
