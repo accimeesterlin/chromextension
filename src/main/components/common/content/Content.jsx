@@ -11,7 +11,9 @@ export default class ContentComponent extends Component {
     return (
       <div className="content">
         <Sidebar {...this.props} />
-        <div className={this.props.className}>{this.props.children}</div>
+        <div className={this.props.className}>
+            {this.props.children}
+        </div>
       </div>
     );
   }

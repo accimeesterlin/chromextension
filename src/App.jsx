@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
 
-import Header from "./main/components/common/header/Header";
-import Footer from "./main/components/common/footer/Footer";
 
+// Main App with Full Web Page
 import {
   Tutor,
   Home,
@@ -11,8 +10,11 @@ import {
   Profile,
   Calendar,
   Email,
-  Template
+  Template,
+  Dashboard
 } from "./main/components";
+
+// Sidebar App
 import {
   HomeWithNav,
   AddStudentWithNav,
@@ -24,13 +26,14 @@ import {
 
 import "./reset.scss";
 import "./global.scss";
+import "./App.scss";
 
 export default class App extends Component {
   render() {
     return (
       <div className="app">
-        <Header />
-        <div>
+        
+        <div className="app-content">
           <Route exact path="/" component={HomeWithNav} />
           <Route path="/student/add" component={AddStudentWithNav} />
           <Route path="/student/delete" component={DeleteStudentWithNav} />
@@ -46,8 +49,7 @@ export default class App extends Component {
           <Route path="/new/calendar" component={Calendar} />
           <Route path="/new/email" component={Email} />
           <Route path="/new/tutor" component={Tutor} />
-
-          <Footer />
+          <Route path="/new/dashboard" component={Dashboard} />
         </div>
       </div>
     );

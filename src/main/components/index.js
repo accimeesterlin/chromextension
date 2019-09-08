@@ -5,6 +5,7 @@ import Profile from './profile/Profile';
 import Calendar from './calendar/Calendar';
 import Email from './email/Email';
 import Template from './template/Templates';
+import Dashboard from './dashboard/Dashboard';
 
 
 export {
@@ -14,5 +15,6 @@ export {
     Profile,
     Calendar,
     Email,
-    Template
+    Template,
+    Dashboard
 }
