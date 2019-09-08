@@ -1,19 +1,22 @@
 import { connect } from 'react-redux';
+import { setCurrent } from '../../../../actions/actionCreators';
+
 import SidebarUI from './SidebarUI';
 
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
+    const currentRoute = (state.route && state.route.currentRoute) || 'No route found!!';
 
     return {
-        a: ''
+        currentRoute
     };
 };
 
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = (dispatch) => {
 
     return {
-        b: ''
+        setCurrent: (currentRoute) => dispatch(setCurrent(currentRoute))
     };
 };
 

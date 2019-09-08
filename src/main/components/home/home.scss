@@ -3,7 +3,7 @@
 }
 
 
-.home-content {
+.content {
     display: flex;
     border: 1px solid lightgrey;
     border-bottom: none;
@@ -13,4 +13,9 @@
     &_main {
         margin-left: 10px;
     }
+}
+
+.content > div:nth-child(2) {
+    padding: 1em;
+    width: 100%;
 }

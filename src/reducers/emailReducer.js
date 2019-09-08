@@ -1,4 +1,4 @@
-const dummyMessages = [
+export const dummyMessages = [
     { 
         snippet: 'Let me see what the heck happened',
         payload: {

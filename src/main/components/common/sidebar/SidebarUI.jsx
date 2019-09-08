@@ -1,44 +1,56 @@
-import React from "react";
+// Importing libraries
+import React from 'react';
+import PropTypes from 'prop-types';
+
+// Importing files
+import MenuItems from "./MenuItem";
+import SidebarProfile from './SidebarProfile';
 
 import "./sidebar.scss";
 
-// TODO:
-// Make it more dynamic
 
-const SidebarUI = props => {
-  const { navigateToContent } = props;
+const SidebarUI = ({ history, currentRoute, setCurrent }) => {
+
+  const sideNavBarItems = [
+    { icon: 'dashboard', name: 'Dashboard', route: '/dashboard' },
+    { icon: 'email', name: 'Email', route: '/email' },
+    { icon: 'school', name: 'Student', route: '/student' },
+    { icon: 'people', name: 'Tutor', route: '/tutor' },
+    { icon: 'dynamic_feed', name: 'Email Templates', route: '/template' },
+    { icon: 'perm_identity', name: 'Profile', route: '/profile' }
+  ];
+
+  const goTo = (route, idx) => {
+    const url = '/new' + route;
+    
+    setCurrent(route);
+
+    // Verify push exist on the history object
+    if (history && history.push) {
+      history.push(url);
+    }
+  };
+  
   // JSX
-  return (
-    <div className="sidebar">
-      <div className="sidebar-box">
-        <p data-name="email" onClick={navigateToContent}>
-          Email
-        </p>
-      </div>
-      <div className="sidebar-box">
-        <p data-name="student" onClick={navigateToContent}>
-          Student
-        </p>
-      </div>
-      <div className="sidebar-box">
-        <p data-name="tutor" onClick={navigateToContent}>
-          Tutor
-        </p>
-      </div>
+  return <div className="sidebar">
+      <SidebarProfile />
 
-      <div className="sidebar-box">
-        <p data-name="calendar" onClick={navigateToContent}>
-          Calendar
-        </p>
-      </div>
+      <ul className="sidebar-menu">
+        {sideNavBarItems.map(({ name, icon, route }, idx) => <MenuItems
+            goTo={() => goTo(route, idx)}
+            key={idx}
+            name={name}
+            active={ route === currentRoute ? 'sidebar-active' : ''}
+            icon={icon} />
+        )}
+      </ul>
+  </div>;
+};
 
-      <div className="sidebar-box">
-        <p data-name="template" onClick={navigateToContent}>
-          Email Templates
-        </p>
-      </div>
-    </div>
-  );
+SidebarUI.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  })
 };
 
 export default SidebarUI;

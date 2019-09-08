@@ -4,10 +4,8 @@ import React, { Component } from "react";
 import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import InfiniteScroll from "react-infinite-scroll-component";
-import SearchBox from "../common/searchBox/SearchBoxUI";
 
 import {
-  Container,
   MenuItem,
   Grid,
   Button,
@@ -26,8 +24,11 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import EmailFormUI from "./EmailFormUI";
 import { sendEmailToGoogle } from "../../../utils/googleApiUtils";
 import { generateEmailPayload } from "../../../utils/emailPayload";
+import Content from "../common/content/Content";
 
 import "./email.scss";
+
+
 
 export default class EmailUI extends Component {
   constructor(props) {
@@ -205,11 +206,9 @@ export default class EmailUI extends Component {
 
     const { labels, resultSizeEstimate, messages } = this.props;
     const hasMore = messages.length < resultSizeEstimate;
-    log("State: ", this.state);
-    log("Props: ", this.props);
     // JSX
     return (
-      <Container className="email">
+      <Content className="email" {...this.props}>
         <SnackBarContent
           onClose={() => this.setState({ open: false })}
           open={this.state.open}
@@ -317,7 +316,7 @@ export default class EmailUI extends Component {
               ))
             : null}
         </InfiniteScroll>
-      </Container>
+      </Content>
     );
   }
 }

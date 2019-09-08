@@ -1,14 +1,10 @@
 /*eslint-disable */
-const log = console.log;
-
 export function saveToken(token) {
   if (token) {
     window.localStorage.setItem('token', token);
-    log("Generated Token: ", token);
     return;
   }
 
-  log("No Token generated!!!");
 };
 
 export function loadToken() {

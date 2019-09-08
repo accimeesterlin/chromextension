@@ -28,7 +28,7 @@ const waitForEl = function (selector, callback) {
 
 $(window).bind('load', function () {
     waitForEl('.a8X.gU .bAK', function () {
-        // work the magic
+        // Append the Tutor App Icon into Gmail 
         $('.a8X.gU .bAK').append(iconContainer);
         $('.tutorAppIcon').css({
             backgroundImage: `url('https://avatars.slack-edge.com/2016-10-16/91995446787_0a4aa4fbb71d8872175d_88.jpg')`,
@@ -36,7 +36,6 @@ $(window).bind('load', function () {
             backgroundSize: '20px',
             backgroundPosition: 'center'
         });
-        console.log('It works like charms!!');
 
 
 
@@ -45,8 +44,7 @@ $(window).bind('load', function () {
 
 $(document).on('click', '.aj9.pp div[role="button"]', function () {
     waitForEl('.a8X.gU .bAK', function () {
-        // work the magic
-        console.log('It works like shit!!');
+        // Append the Tutor App Icon into Gmail 
         $('.a8X.gU .bAK').append(iconContainer);
         $('.tutorAppIcon').css({
             backgroundImage: `url('https://avatars.slack-edge.com/2016-10-16/91995446787_0a4aa4fbb71d8872175d_88.jpg')`,
@@ -57,5 +55,4 @@ $(document).on('click', '.aj9.pp div[role="button"]', function () {
 
 
     });
-    console.log('We just click the button');
 });

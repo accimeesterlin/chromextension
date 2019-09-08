@@ -38,7 +38,6 @@ export class InfoUI extends Component {
 
     startCounter = () => {
         this.counter++;
-        console.log('Counter: ', this.counter);
 
         if (this.counter >= 5) {
             clearInterval(this.timerID);
@@ -114,11 +113,7 @@ export class InfoUI extends Component {
                     });
                     isValid = true;
                 }
-            } catch (error) {
-                console.log('Error is displaying');
-                // TODO
-                // Handle multiple cases of failures
-            }
+            } catch (error) { }
         }
         this.validateCorrectColum(isValid);
     };

@@ -7,6 +7,7 @@ import students  from './studentReducer';
 import events from './eventReducer';
 import templates from './templateReducer';
 import gmail from './gmailReducer';
+import routeReducer from './routeReducer';
 
 
 const reducers = combineReducers({
@@ -15,7 +16,8 @@ const reducers = combineReducers({
     students,
     events,
     templates,
-    gmail
+    gmail,
+    route: routeReducer
 });
 
 export default reducers;
