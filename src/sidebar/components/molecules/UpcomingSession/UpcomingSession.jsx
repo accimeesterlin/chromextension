@@ -105,7 +105,6 @@ class UpcomingSessionUI extends Component {
     };
 
     handleCalendarErrors = (response) => {
-        console.log('Errors: ', response.data);
         if (response.status === 401) {
             this.setState({ isToken: false });
             return
@@ -117,7 +116,6 @@ class UpcomingSessionUI extends Component {
         }
 
         this.setState({ retry: false, isToken: false, isPending: false });
-
         console.log('No able to fetch events!!!');
 
     };

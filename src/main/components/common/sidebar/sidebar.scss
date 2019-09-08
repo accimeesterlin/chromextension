@@ -1,9 +1,21 @@
 .sidebar {
-    height: auto;
-    min-height: 760px;
-    border: 1px solid lightgrey;
+    height: 100vh;
     border-top: none;
-    width: 150px;
+    width: 260px;
+    background-color: #3f4a59;
+    color: #fff;
+    border-left: 5px solid #33cabb;
+
+
+    &-profile {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        text-align: center;
+    }
 
     &-box {
         padding: 5px;
@@ -19,5 +31,36 @@
     &-box:hover {
         background-color: grey;
         color: #fff;
+    }
+    
+    &-menu li {
+        list-style: none;
+        cursor: pointer;
+    }
+    
+    &-menu li p {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+        height: 64px;
+        color: #fff;
+    }
+
+    &-active {
+        color: #33cabb;
+    }
+
+    h4, .avatar {
+        margin-bottom: 1em;
+    }
+
+    img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .avatar {
+        border-radius: 100%;
     }
 }

@@ -38,7 +38,6 @@ export class InfoUI extends Component {
 
     startCounter = () => {
         this.counter++;
-        console.log('Counter: ', this.counter);
 
         if (this.counter >= 5) {
             clearInterval(this.timerID);

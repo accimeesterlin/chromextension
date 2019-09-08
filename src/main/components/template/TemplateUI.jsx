@@ -3,9 +3,7 @@ import React, { Component } from "react";
 import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
-
 import {
-  Container,
   Button,
   Dialog,
   DialogActions,
@@ -20,6 +18,8 @@ import SearchBox from "../common/searchBox/SearchBoxUI";
 import TemplateFormUI from "./TemplateFormUI";
 
 import "./template.scss";
+
+import Content from "../common/content/Content";
 
 export default class TemplateUI extends Component {
   initialState = {
@@ -89,11 +89,10 @@ export default class TemplateUI extends Component {
   };
 
   render() {
-    const { templateEditor, includeSubject, templates } = this.state;
-    console.log("Templates: ", templates);
+    const { templateEditor, includeSubject } = this.state;
     // JSX
     return (
-      <Container className="template">
+      <Content className="template" {...this.props}>
         <Button
           variant="outlined"
           color="primary"
@@ -138,7 +137,7 @@ export default class TemplateUI extends Component {
               addTemplate={this.addTemplate}
             />
         </SearchBox>
-      </Container>
+      </Content>
     );
   }
 }

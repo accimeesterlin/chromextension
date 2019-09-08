@@ -51,7 +51,6 @@ const gmailMiddleware = (store) => (next) => async (action) => {
             break;
 
         case types.LOAD_MESSAGES:
-            console.log('LOAD: ', types.LOAD_MESSAGES);
             const isReset = action.isReset;
 
             if (isReset) {

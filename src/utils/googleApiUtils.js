@@ -20,13 +20,10 @@ export async function fetchGoogleApi(path, cb) {
     if (error.response) {
       statusCode = error.response.status;
     }
-    console.log('Status Code: ', statusCode);
-
     if (statusCode === 401 && !retry) {
       retry = true;
       window.localStorage.removeItem('token');
       loadToken();
-      console.log('New Token generated!!!');
       fetchGoogleApi(path, cb);
     }
 
@@ -58,7 +55,6 @@ export async function sendEmailToGoogle(payload, cb) {
       retry = true;
       window.localStorage.removeItem('token');
       loadToken();
-      console.log('New Token generated!!!');
       sendEmailToGoogle(payload, cb);
     }
 

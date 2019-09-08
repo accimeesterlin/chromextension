@@ -2,8 +2,7 @@ import { connect } from 'react-redux';
 import SidebarUI from './SidebarUI';
 
 
-const mapStateToProps = () => {
-
+const mapStateToProps = (state, ownProps) => {
     return {
         a: ''
     };
