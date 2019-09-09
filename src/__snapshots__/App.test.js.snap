@@ -1,0 +1,217 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App.js snapshot 1`] = `
+<div
+  className="app"
+>
+  <div
+    className="app-content"
+  >
+    <div
+      className="home-sidebar"
+    >
+      <nav
+        className="nav"
+      >
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root"
+          focusable="false"
+          onClick={[Function]}
+          role="presentation"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+          />
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+        </svg>
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root"
+          focusable="false"
+          onClick={[Function]}
+          role="presentation"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+        </svg>
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root"
+          focusable="false"
+          onClick={[Function]}
+          role="presentation"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+          />
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+        </svg>
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root"
+          focusable="false"
+          onClick={[Function]}
+          role="presentation"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+          />
+        </svg>
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root"
+          focusable="false"
+          onClick={[Function]}
+          role="presentation"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"
+          />
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+        </svg>
+      </nav>
+      <div
+        className="home-sidebar"
+      >
+        <p
+          className="home-sidebar-name"
+        >
+           
+           
+        </p>
+        <div
+          className="useful-links"
+        >
+          <div
+            className="tooltip"
+          >
+            <a
+              aria-describedby={null}
+              className=""
+              href="https://workforcenow.adp.com"
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onMouseLeave={[Function]}
+              onMouseOver={[Function]}
+              onTouchEnd={[Function]}
+              onTouchStart={[Function]}
+              rel="noopener noreferrer"
+              target="_blank"
+              title="ADP URL"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M7.88 3.39L6.6 1.86 2 5.71l1.29 1.53 4.59-3.85zM22 5.72l-4.6-3.86-1.29 1.53 4.6 3.86L22 5.72zM12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7zm1-11h-2v3H8v2h3v3h2v-3h3v-2h-3V9z"
+                />
+              </svg>
+               
+            </a>
+          </div>
+          <div
+            className="tooltip"
+          >
+            <a
+              aria-describedby={null}
+              className=""
+              href="https://docs.google.com/forms/d/e/1FAIpQLSc_q0CSp5Bpn7lfDAdoPCbBTW-OxWQVhC3gG5P9e6iE4FERjw/viewform"
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onMouseLeave={[Function]}
+              onMouseOver={[Function]}
+              onTouchEnd={[Function]}
+              onTouchStart={[Function]}
+              rel="noopener noreferrer"
+              target="_blank"
+              title="Tutor Form Sheet"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"
+                />
+              </svg>
+               
+            </a>
+          </div>
+        </div>
+        <div
+          className="search"
+        >
+          <div
+            className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
+          >
+            <label
+              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+              data-shrink={false}
+              htmlFor="standard-search"
+            >
+              Search student
+            </label>
+            <div
+              className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
+              onClick={[Function]}
+            >
+              <input
+                aria-invalid={false}
+                className="MuiInputBase-input MuiInput-input MuiInputBase-inputTypeSearch MuiInput-inputTypeSearch"
+                disabled={false}
+                id="standard-search"
+                name="value"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={false}
+                type="search"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

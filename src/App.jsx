@@ -28,7 +28,7 @@ import "./reset.scss";
 import "./global.scss";
 import "./App.scss";
 
-export default class App extends Component {
+export class App extends Component {
   render() {
     return (
       <div className="app">
@@ -55,3 +55,6 @@ export default class App extends Component {
     );
   }
 }
+
+
+export default App;

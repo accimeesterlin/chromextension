@@ -88,8 +88,8 @@ export class HomeUI extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const students = state.students;
-    const { tutorName, googleSheetUrl } = state.tutor;
+    const students = (state && state.students) || [];
+    const { tutorName, googleSheetUrl } = (state && state.tutor) || {};
     return {
         students,
         tutorName,
