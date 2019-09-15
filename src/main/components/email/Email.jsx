@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { loadToken } from '../../../utils/authUtils';
-import { loadMessages, loadLabels } from '../../../actions/asyncActionCreators';
+import { loadMessages, loadLabels, getTutorGmailProfile } from '../../../actions/asyncActionCreators';
 import EmailUI from './EmailUI';
 
 
@@ -34,7 +34,11 @@ const mapDispatchToProps = (dispatch) => {
 
         loadLabels: (token) => {
             dispatch(loadLabels(token));
-        }
+        },
+
+        getTutorGmailProfile: (token) => {
+            dispatch(getTutorGmailProfile(token));
+        },
     };
 };
 

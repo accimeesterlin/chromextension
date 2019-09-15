@@ -3,7 +3,11 @@ import * as types from '../actions/types';
 const initialState = {
     tutorName: '',
     rosterName: '',
-    googleSheetUrl: ''
+    googleSheetUrl: '',
+    emailAddress: '',
+    messagesTotal: 0,
+    threadsTotal: 0,
+    historyId: 0
 };
 
 
@@ -24,6 +28,11 @@ function tutorReducer(state = initialState, action) {
             newState.rosterName = action.payload;
             return { ...newState }
     
+        case types.GET_GMAIL_PROFILE_FULFILLED:
+            return {
+                ...state,
+                ...(action.payload && action.payload.data)
+            };
         default:
             return state;
     };
