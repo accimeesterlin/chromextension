@@ -26,11 +26,10 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SimpleCard({ title, isEnable, status }) {
+export default function SimpleCard({ title, isEnable, status, integrateService }) {
   const classes = useStyles();
   const disabledClass = !isEnable ? classes.disabled : '';
-  console.log('Enable: ', isEnable);
-  console.log('DisabledClass: ', disabledClass);
+
   return (
     <Card className={`${classes.card} ${disabledClass}`}>
       <CardContent>
@@ -42,7 +41,7 @@ export default function SimpleCard({ title, isEnable, status }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">{status}</Button>
+        <Button size="small" onClick={() =>integrateService()}>{status}</Button>
       </CardActions>
     </Card>
   );
@@ -51,5 +50,6 @@ export default function SimpleCard({ title, isEnable, status }) {
 SimpleCard.propTypes = {
     title: PropTypes.string.isRequired,
     isEnable: PropTypes.bool,
+    integrateService: PropTypes.func,
     status: PropTypes.string,
 }

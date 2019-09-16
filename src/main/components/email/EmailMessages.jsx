@@ -21,6 +21,9 @@ const EmailMessages = ({ fetchMoreData, messages, resultSizeEstimate }) => {
     return subject;
   };
 
+  const handleClose = () => false;
+  const addTemplate = () => false;
+
   if (isEmpty(messages)) return null;
 
   const hasMore = messages.length < resultSizeEstimate;
@@ -49,14 +52,14 @@ const EmailMessages = ({ fetchMoreData, messages, resultSizeEstimate }) => {
                 </p>
               </Grid>
               <Grid className="template-card__buttons">
-                <Button onClick={this.handleClose} color="primary">
+                <Button onClick={handleClose} color="primary">
                   Copy
                 </Button>
-                <Button onClick={this.addTemplate} color="primary">
+                <Button onClick={addTemplate} color="primary">
                   Edit
                 </Button>
 
-                <Button onClick={this.addTemplate} color="primary">
+                <Button onClick={addTemplate} color="primary">
                   Delete
                 </Button>
               </Grid>

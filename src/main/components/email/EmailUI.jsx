@@ -51,8 +51,6 @@ export default class EmailUI extends Component {
   }
 
   sendEmail = (subject, receiver, msg) => {
-    // TODO
-    // get sender from the store
     const { sender } = this.state;
     const payload = createEmailPayload({
       subject,
@@ -62,20 +60,20 @@ export default class EmailUI extends Component {
     });
 
     this.setState({ pending: true });
-    // sendEmailToGoogle(payload, (response, error) => {
-    //   if (error) {
-    //     log(JSON.stringify(error.response));
-    //     const errorMessage =
-    //       (error.response &&
-    //         error.response.data &&
-    //         error.response.data.error.message) ||
-    //       "Failed sending email!!";
-    //     this.openSnackBar(errorMessage, "error");
-    //     return;
-    //   }
-    //   log("Response: ", response.data);
-    //   this.openSnackBar("Email sent!!!");
-    // });
+    sendEmailToGoogle(payload, (response, error) => {
+      if (error) {
+        log(JSON.stringify(error.response));
+        const errorMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.error.message) ||
+          "Failed sending email!!";
+        this.openSnackBar(errorMessage, "error");
+        return;
+      }
+      log("Response: ", response.data);
+      this.openSnackBar("Email sent!!!");
+    });
   };
 
   openSnackBar = (message, status = "success") => {
@@ -122,7 +120,7 @@ export default class EmailUI extends Component {
       loadMessages
     } = this.props;
     
-    if (!token) return <IntegationComponents />;
+    if (!token) return <IntegationComponents {...this.props} />;
 
     // JSX
     return (
