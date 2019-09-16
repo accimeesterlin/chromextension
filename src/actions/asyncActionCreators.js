@@ -19,6 +19,23 @@ export const getGmailMessage = (messageId, token) => {
     }
 };
 
+export const getTutorGmailProfile = (token) => {
+    const url = `https://www.googleapis.com/gmail/v1/users/me/profile`;
+    return {
+        type: types.GET_GMAIL_PROFILE,
+        payload: axios({
+            url,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }),
+        meta: {
+            url
+        }
+    };
+};
+
 export const loadMessages = (token, nextPageToken, labels, query, shouldEmptyMessages) => {
     let url = `https://www.googleapis.com/gmail/v1/users/me/messages?maxResults=10`;
 

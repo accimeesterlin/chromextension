@@ -2,11 +2,7 @@ import React from "react";
 import { Editor } from "react-draft-wysiwyg";
 import propTypes from "prop-types";
 
-import {
-    MenuItem,
-    TextField,
-    Select
-  } from "@material-ui/core";
+import { MenuItem, TextField, Select } from "@material-ui/core";
 
 function EmailFormUI({
   sendEmail,

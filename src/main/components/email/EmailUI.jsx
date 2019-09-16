@@ -23,12 +23,12 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 import EmailFormUI from "./EmailFormUI";
 import { sendEmailToGoogle } from "../../../utils/googleApiUtils";
-import { generateEmailPayload } from "../../../utils/emailPayload";
+import { createEmailPayload } from "../../../utils/emailPayload";
 import Content from "../common/content/Content";
 
 import "./email.scss";
 
-
+const log = console.log;
 
 export default class EmailUI extends Component {
   constructor(props) {
@@ -54,8 +54,9 @@ export default class EmailUI extends Component {
 
   componentDidMount() {
     if (chrome && chrome.identity) {
-      const { token, loadMessages, loadLabels, messages } = this.props;
+      const { token, loadMessages, loadLabels, messages, getTutorGmailProfile } = this.props;
       log("Message on LOAD: ", messages);
+      getTutorGmailProfile(token);
       loadMessages(token);
       loadLabels(token);
       this.setState({ pageLoaded: true });
@@ -88,7 +89,7 @@ export default class EmailUI extends Component {
   sendEmail = event => {
     event.preventDefault();
     const { subject, emailMessage, sender, receiver } = this.state;
-    const payload = generateEmailPayload({
+    const payload = createEmailPayload({
       subject,
       message: emailMessage,
       sender,
