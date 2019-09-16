@@ -45,7 +45,7 @@ const initialState = {
     resultSizeEstimate: 0,
     labels: [
         { name: 'INBOX', id: 1 },
-        { name: 'IMPORTANT', id: 2 },
+        { name: 'IMPORTANT', id: 2 }
     ]
 };
 
