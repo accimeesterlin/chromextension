@@ -1,41 +1,22 @@
 import * as types from '../actions/types';
+import message from './getMessage.json';
 
 export const dummyMessages = [
-    { 
-        snippet: 'Let me see what the heck happened',
-        payload: {
-            headers: [
-                {
-                    name: 'Subject',
-                    value: 'What is going happy to be here'
-                }
-            ]
-        }
-    },
-
-    { 
-        snippet: 'Hello World',
-        payload: {
-            headers: [
-                {
-                    name: 'Subject',
-                    value: 'Let us see what happen'
-                }
-            ]
-        }
-    },
-
-    { 
-        snippet: 'Go home',
-        payload: {
-            headers: [
-                {
-                    name: 'Subject',
-                    value: 'What is going on'
-                }
-            ]
-        }
-    },
+    message,
+    message,
+    message,
+    message,
+    message,
+    message,
+    message,
+    message,
+    message,
+    message,
+    message,
+    message,
+    message,
+    message,
+    message,
 ]
 
 
@@ -49,6 +30,8 @@ const initialState = {
     ]
 };
 
+// TODO
+// Refactor reducer
 function gmailReducer(state = initialState, action) {
     const newState = { ...state };
     switch(action.type) {

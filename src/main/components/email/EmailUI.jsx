@@ -1,7 +1,8 @@
 /*eslint-disable */
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
-import { Button, CircularProgress } from "@material-ui/core";
+import PropTypes from "prop-types";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Button } from "@material-ui/core";
 import SnackBarContent from "../common/SnackBar";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
@@ -22,7 +23,7 @@ export default class EmailUI extends Component {
     super(props);
 
     this.state = {
-      sender: "esterlinaccime@gmail.com", // TODO: temporary
+      sender: props.tutorEmail,
       emailTemplate: "none",
       pending: false,
       variant: "success",
@@ -85,20 +86,6 @@ export default class EmailUI extends Component {
     });
   };
 
-  renderSubmitButton = () => {
-    const { pending } = this.state;
-
-    if (pending) {
-      return <CircularProgress />;
-    }
-
-    return (
-      <Button variant="contained" color="primary" type="submit">
-        Send
-      </Button>
-    );
-  };
-
   fetchMoreData = () => {
     const { token, nextPageToken, loadMessages } = this.props;
     const { gmailLabel, query } = this.state;
@@ -108,7 +95,6 @@ export default class EmailUI extends Component {
       loadMessages(token, nextPageToken, label, query);
     }
   };
-  
 
   render() {
     const {
@@ -119,8 +105,10 @@ export default class EmailUI extends Component {
       token,
       loadMessages
     } = this.props;
-    
+
     if (!token) return <IntegationComponents {...this.props} />;
+
+    const hasMore = messages.length < resultSizeEstimate;
 
     // JSX
     return (
@@ -133,15 +121,28 @@ export default class EmailUI extends Component {
         />
 
         <EmailFormModal sendEmail={this.sendEmail} templates={templates}>
-          <Button
-            variant="outlined"
-            color="primary"
-          >
+          <Button variant="outlined" color="primary">
             New Email
           </Button>
         </EmailFormModal>
         <EmailLabels loadMessages={loadMessages} labels={labels} />
-        <EmailMessages messages={messages} fetchMoreData={this.fetchMoreData} />
+
+        <InfiniteScroll
+          dataLength={messages.length}
+          next={this.fetchMoreData}
+          className="email-messages"
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+        >
+          <EmailMessages
+            messages={messages}
+          />
+        </InfiniteScroll>
       </Content>
     );
   }
@@ -154,5 +155,6 @@ EmailUI.propTypes = {
   nextPageToken: PropTypes.string.isRequired,
   labels: PropTypes.array.isRequired,
   tutorEmail: PropTypes.string.isRequired,
-  resultSizeEstimate: PropTypes.number
+  resultSizeEstimate: PropTypes.number,
+  tutorEmail: PropTypes.string.isRequired
 };

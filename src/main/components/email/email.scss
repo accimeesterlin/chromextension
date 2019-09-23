@@ -1,7 +1,6 @@
 .email {
     display: flex;
     flex-direction: column;
-    // justify-content: flex-start;
     margin-top: 10px;
 
     form {
@@ -25,22 +24,14 @@
     margin: 20px 0px;
 }
 
-.email-preview {
-    border: 1px solid red;
-}
-
 .email-editorClassName {
     height: 250px;
     padding: 10px;
     font-family: sans-serif;
     overflow: scroll;
-    // line-height: 25px;
-    // border: 1px solid lightgrey;
-    // border-top: none;
 }
 
 .email-toolbarClassName {
-    // border: 1px solid red;
 }
 
 .email button {
@@ -48,7 +39,6 @@
 }
 
 .email-snackbar {
-    // height: 200px;
 }
 
 .integrations {
@@ -62,4 +52,18 @@
     width: 30%;
     margin: 10px;
     height: 164px;
+}
+
+.email-messages {
+    overflow: scroll;
+}
+
+.email-preview {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    margin: 15px 0px;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    cursor: pointer;
 }
