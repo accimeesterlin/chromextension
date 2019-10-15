@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Button } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 import SnackBarContent from "../common/SnackBar";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
