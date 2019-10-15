@@ -11,6 +11,7 @@ import {
 
 import EmailFormUI from "./EmailFormUI";
 import TemplateSelection from "./TemplateSelection";
+import FormEditor from "../common/FormEditor";
 
 const EmailFormModal = props => {
   const { sendEmail, templates } = props;
@@ -20,8 +21,8 @@ const EmailFormModal = props => {
   const send = msg => {
     // TODO
     // Grab the necessary data it needs
-    sendEmail();
-    setIsModelOpen(false);
+    // sendEmail();
+    // setIsModelOpen(false);
   };
 
   // Attach a click event on the props.children element
@@ -29,23 +30,35 @@ const EmailFormModal = props => {
     onClick: () => setIsModelOpen(true)
   });
 
+  const componentToRender = () => {
+    return (
+      <React.Fragment>
+        <EmailFormUI onEmailFormSubmission={() => ""} />
+
+        <TemplateSelection
+          setCurrentEmailMessage={send}
+          templates={templates}
+        />
+
+        <FormEditor onEditorChange={() => ""} />
+      </React.Fragment>
+    );
+  };
+
   return (
     <div>
-      { childElement }
+      {childElement}
       <Dialog
         open={isModalOpen}
         onClose={() => setIsModelOpen(true)}
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">New Message</DialogTitle>
+        
         <DialogContent>
-          <EmailFormUI sendEmail={sendEmail}>
-            <TemplateSelection
-              setCurrentEmailMessage={send}
-              templates={templates}
-            />
-          </EmailFormUI>
+          {componentToRender()}
         </DialogContent>
+        
         <DialogActions>
           <Button onClick={() => setIsModelOpen(false)} color="primary">
             Cancel

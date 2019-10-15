@@ -23,7 +23,7 @@ export const createEmailPayload = ({ subject, receiver, sender, message, threadI
     return payload;
 }
 
-const createRf2822Format = ({ sender, receiver, subject, message }) => {
+export const createRf2822Format = ({ sender, receiver, subject, message }) => {
     // RFC 2822 format
     let rfc2822Format = `From: ${sender}\n`
         rfc2822Format += `To: ${receiver}\n`

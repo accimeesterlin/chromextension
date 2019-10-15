@@ -17,13 +17,25 @@ const dummyTemplates = [
     }
 ];
 
-const initialState = dummyTemplates || [];
+const initialState = {
+    listTemplates: dummyTemplates || [],
+    currentTemplate: {
+        templateId: 3,
+        templateContent: '',
+        templateSubject: '',
+        templateName: '',
+        templateEditor: '<p>I am happy to be here</p>'
+    }
+}
 
 function templateReducer(state = initialState, action) {
-    const newState = [ ...state ];
+    const newState = { ...state };
     switch(action.type) {
         case types.ADD_TEMPLATE:
-            return [ ...newState, action.payload];
+            newState.listTemplates = [...newState.listTemplates, action.payload]
+            return {
+                ...newState
+            };
 
         default:
             return state;

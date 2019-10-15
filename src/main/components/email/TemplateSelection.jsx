@@ -8,7 +8,6 @@ const TemplateSelection = ({ templates, setCurrentEmailMessage }) => {
   const [templateSubject, setTemplateSubject] = useState();
   const [emailMessage, setEmailMessage] = useState();
   const [emailTemplate, setEmailTemplate] = useState();
-  console.log('Template Selection: ', templates);
 
   const selectTemplate = ({ value: index, name }) => {
     const currentTemplate = templates[index];
@@ -23,6 +22,7 @@ const TemplateSelection = ({ templates, setCurrentEmailMessage }) => {
     setTemplateSubject(templateSubject);
     setEmailMessage(templateContent);
     setCurrentEmailMessage(emailMessage);
+    setEmailTemplate(emailTemplate);
     // this.setState({ [name]: index, });
   };
 

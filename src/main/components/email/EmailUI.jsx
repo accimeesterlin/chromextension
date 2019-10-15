@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Button } from "@material-ui/core";
-import { Button, CircularProgress } from "@material-ui/core";
 import SnackBarContent from "../common/SnackBar";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
@@ -24,7 +23,7 @@ export default class EmailUI extends Component {
     super(props);
 
     this.state = {
-      sender: props.tutorEmail,
+      sender: props.tutorEmail || 'esterlinaccime@gmail.com', // TODO for development
       emailTemplate: "none",
       pending: false,
       variant: "success",
@@ -145,7 +144,10 @@ export default class EmailUI extends Component {
           message={this.state.snackBarMessage}
         />
        
-        <EmailFormModal sendEmail={this.sendEmail} templates={templates}>
+        <EmailFormModal
+          sendEmail={this.sendEmail}
+          templates={templates}
+        >
           <Button variant="outlined" color="primary">
             New Email
           </Button>

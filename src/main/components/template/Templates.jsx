@@ -1,9 +1,12 @@
 import { connect } from 'react-redux';
 import TemplateUI from './TemplateUI';
 import { addTemplate } from '../../../actions/actionCreators';
+import { getTemplates } from '../../selectors/templateSelectors';
+
+
 
 const mapStateToProps = (state) => {
-    const templates = state.templates;
+    const templates = getTemplates(state);
 
     return {
         templates

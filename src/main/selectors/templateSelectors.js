@@ -1,1 +1,1 @@
-export const getTemplates = (state) => (state && state.templates) || [];
+export const getTemplates = (state) => (state && state.templates && state.templates.listTemplates) || [];
