@@ -29,7 +29,8 @@ export default class EmailUI extends Component {
       variant: "success",
       snackBarMessage: "",
       query: null,
-      messages: props.messages || []
+      messages: props.messages || [],
+      enableEmailMessages: false // feature flag (hardcoded)
     };
   }
 
@@ -96,37 +97,17 @@ export default class EmailUI extends Component {
     }
   };
 
-  render() {
-    const {
-      labels,
-      resultSizeEstimate,
-      messages,
-      templates,
-      token,
-      loadMessages
-    } = this.props;
-
-    if (!token) return <IntegationComponents {...this.props} />;
-
+  enableEmailMessages = () => {
+    const { labels, messages, loadMessages, resultSizeEstimate } = this.props;
     const hasMore = messages.length < resultSizeEstimate;
 
-    // JSX
+    if (!this.state.enableEmailMessages) {
+      return null
+    }
+
     return (
-      <Content className="email" {...this.props}>
-        <SnackBarContent
-          onClose={() => this.setState({ open: false })}
-          open={this.state.open}
-          variant={this.state.variant}
-          message={this.state.snackBarMessage}
-        />
-
-        <EmailFormModal sendEmail={this.sendEmail} templates={templates}>
-          <Button variant="outlined" color="primary">
-            New Email
-          </Button>
-        </EmailFormModal>
+      <div>
         <EmailLabels loadMessages={loadMessages} labels={labels} />
-
         <InfiniteScroll
           dataLength={messages.length}
           next={this.fetchMoreData}
@@ -143,6 +124,34 @@ export default class EmailUI extends Component {
             messages={messages}
           />
         </InfiniteScroll>
+      </div>
+    );
+    
+  };
+
+  render() {
+    const { templates, token } = this.props;
+
+    if (!token) return <IntegationComponents {...this.props} />;
+
+    // JSX
+    return (
+      <Content className="email" {...this.props}>
+        <SnackBarContent
+          onClose={() => this.setState({ open: false })}
+          open={this.state.open}
+          variant={this.state.variant}
+          message={this.state.snackBarMessage}
+        />
+       
+        <EmailFormModal sendEmail={this.sendEmail} templates={templates}>
+          <Button variant="outlined" color="primary">
+            New Email
+          </Button>
+        </EmailFormModal>
+
+        {this.enableEmailMessages()}
+        
       </Content>
     );
   }
