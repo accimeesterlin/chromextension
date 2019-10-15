@@ -50,3 +50,16 @@
 .email-snackbar {
     // height: 200px;
 }
+
+.integrations {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.integrations > div {
+    width: 30%;
+    margin: 10px;
+    height: 164px;
+}

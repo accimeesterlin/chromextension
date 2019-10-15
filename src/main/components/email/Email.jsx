@@ -6,13 +6,17 @@ import EmailUI from './EmailUI';
 
 
 const mapStateToProps = (state) => {
-    const templates = state.templates;
-    const messages = state.gmail.messages;
-    const nextPageToken = state.gmail.nextPageToken;
-    const labels = state.gmail.labels;
-    const resultSizeEstimate = state.gmail.resultSizeEstimate;
-
-    const token = loadToken();
+    // TODO
+    // Refactor these below as selectors
+    const messages = (state.gmail && state.gmail.messages);
+    const labels = (state.gmail && state.gmail.labels) || [];
+    const tutorEmail = (state.tutor && state.tutor.emailAddress);
+    
+    const templates = (state && state.templates) || [];
+    const resultSizeEstimate = (state.gmail && state.gmail.resultSizeEstimate);
+    
+    const nextPageToken = (state.gmail && state.gmail.nextPageToken) || '';
+    const token = loadToken() || '';
 
     return {
         templates,
@@ -20,7 +24,8 @@ const mapStateToProps = (state) => {
         token,
         nextPageToken,
         labels,
-        resultSizeEstimate
+        resultSizeEstimate,
+        tutorEmail
     };
 };
 
@@ -28,6 +33,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 
     return {
+        // TODO
+        // Refactor this function
         loadMessages: (token, nextPageToken, labels, query, shouldEmptyMessages) => {
             dispatch(loadMessages(token, nextPageToken, labels, query, shouldEmptyMessages));
         },
