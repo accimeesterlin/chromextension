@@ -23,7 +23,7 @@ export default class EmailUI extends Component {
     super(props);
 
     this.state = {
-      sender: props.tutorEmail || 'esterlinaccime@gmail.com', // TODO for development
+      sender: props.tutorEmail,
       emailTemplate: "none",
       pending: false,
       variant: "success",

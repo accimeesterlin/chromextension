@@ -1,25 +1,6 @@
 import * as types from '../actions/types';
 import message from './getMessage.json';
 
-export const dummyMessages = [
-    message,
-    message,
-    message,
-    message,
-    message,
-    message,
-    message,
-    message,
-    message,
-    message,
-    message,
-    message,
-    message,
-    message,
-    message,
-]
-
-
 const initialState = {
     nextPageToken: null,
     messages: [],
