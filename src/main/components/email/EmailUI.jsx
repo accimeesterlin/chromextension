@@ -1,7 +1,8 @@
 /*eslint-disable */
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
-import { Button, CircularProgress } from "@material-ui/core";
+import PropTypes from "prop-types";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Button } from "@material-ui/core";
 import SnackBarContent from "../common/SnackBar";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
@@ -22,13 +23,14 @@ export default class EmailUI extends Component {
     super(props);
 
     this.state = {
-      sender: "esterlinaccime@gmail.com", // TODO: temporary
+      sender: props.tutorEmail,
       emailTemplate: "none",
       pending: false,
       variant: "success",
       snackBarMessage: "",
       query: null,
-      messages: props.messages || []
+      messages: props.messages || [],
+      enableEmailMessages: false // feature flag (hardcoded)
     };
   }
 
@@ -50,30 +52,17 @@ export default class EmailUI extends Component {
     }
   }
 
-  sendEmail = (subject, receiver, msg) => {
-    const { sender } = this.state;
-    const payload = createEmailPayload({
-      subject,
-      message: msg,
-      sender,
-      receiver
-    });
-
-    this.setState({ pending: true });
-    sendEmailToGoogle(payload, (response, error) => {
-      if (error) {
-        log(JSON.stringify(error.response));
-        const errorMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.error.message) ||
-          "Failed sending email!!";
-        this.openSnackBar(errorMessage, "error");
-        return;
-      }
-      log("Response: ", response.data);
-      this.openSnackBar("Email sent!!!");
-    });
+  sendEmail = (subject, receiver) => {
+    const { currentTemplate } = this.props;
+    console.log('Current Template: ', currentTemplate);
+    console.log('Subject: ', subject);
+    console.log('Receiver: ', receiver);
+    // const payload = createEmailPayload({
+    //   subject,
+    //   message: msg,
+    //   sender,
+    //   receiver
+    // });
   };
 
   openSnackBar = (message, status = "success") => {
@@ -85,20 +74,6 @@ export default class EmailUI extends Component {
     });
   };
 
-  renderSubmitButton = () => {
-    const { pending } = this.state;
-
-    if (pending) {
-      return <CircularProgress />;
-    }
-
-    return (
-      <Button variant="contained" color="primary" type="submit">
-        Send
-      </Button>
-    );
-  };
-
   fetchMoreData = () => {
     const { token, nextPageToken, loadMessages } = this.props;
     const { gmailLabel, query } = this.state;
@@ -108,18 +83,52 @@ export default class EmailUI extends Component {
       loadMessages(token, nextPageToken, label, query);
     }
   };
-  
+
+  enableEmailMessages = () => {
+    const { labels, messages, loadMessages, resultSizeEstimate } = this.props;
+    const hasMore = messages.length < resultSizeEstimate;
+
+    if (!this.state.enableEmailMessages) {
+      return null
+    }
+
+    return (
+      <div>
+        <EmailLabels loadMessages={loadMessages} labels={labels} />
+        <InfiniteScroll
+          dataLength={messages.length}
+          next={this.fetchMoreData}
+          className="email-messages"
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+        >
+          <EmailMessages
+            messages={messages}
+          />
+        </InfiniteScroll>
+      </div>
+    );
+    
+  };
 
   render() {
     const {
-      labels,
-      resultSizeEstimate,
-      messages,
       templates,
       token,
-      loadMessages
+      updateTemplate,
+      currentTemplate,
+      updateReceiverDetails,
+      updateReceiverMsg,
+      receiverSubject,
+      receiverEmail,
+      receiverMsg
     } = this.props;
-    
+
     if (!token) return <IntegationComponents {...this.props} />;
 
     // JSX
@@ -131,28 +140,48 @@ export default class EmailUI extends Component {
           variant={this.state.variant}
           message={this.state.snackBarMessage}
         />
-
-        <EmailFormModal sendEmail={this.sendEmail} templates={templates}>
-          <Button
-            variant="outlined"
-            color="primary"
-          >
+       
+        <EmailFormModal
+          sendEmail={this.sendEmail}
+          templates={templates}
+          updateTemplate={updateTemplate}
+          currentTemplate={currentTemplate}
+          updateReceiverDetails={updateReceiverDetails}
+          updateReceiverMsg={updateReceiverMsg}
+          subject={receiverSubject}
+          receiver={receiverEmail}
+        >
+          <Button variant="outlined" color="primary">
             New Email
           </Button>
         </EmailFormModal>
-        <EmailLabels loadMessages={loadMessages} labels={labels} />
-        <EmailMessages messages={messages} fetchMoreData={this.fetchMoreData} />
+
+        {this.enableEmailMessages()}
+        
       </Content>
     );
   }
 }
 
 EmailUI.propTypes = {
-  messages: PropTypes.array.isRequired,
-  templates: PropTypes.array.isRequired,
+  // Token
   token: PropTypes.string.isRequired,
   nextPageToken: PropTypes.string.isRequired,
-  labels: PropTypes.array.isRequired,
+  
+  // Emails
   tutorEmail: PropTypes.string.isRequired,
-  resultSizeEstimate: PropTypes.number
+  receiverSubject: PropTypes.string.isRequired,
+  receiverEmail: PropTypes.string.isRequired,
+  receiverMsg: PropTypes.string.isRequired,
+  messages: PropTypes.array.isRequired,
+  resultSizeEstimate: PropTypes.number,
+  labels: PropTypes.array.isRequired,
+  updateReceiverDetails: PropTypes.func.isRequired,
+  updateReceiverMsg: PropTypes.func.isRequired,
+
+  // templates
+  updateTemplate: PropTypes.func.isRequired,
+  currentTemplate: PropTypes.object.isRequired,
+  templates: PropTypes.array.isRequired,
+  templateSubject: PropTypes.string
 };

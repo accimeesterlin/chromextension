@@ -50,8 +50,50 @@ export const addTemplate = (template) => ({
     payload: template
 });
 
+export const updateCurrentTemplate = (currentTemplate) => {
+
+    return {
+        type: types.UPDATE_CURRENT_TEMPLATE,
+        payload: currentTemplate
+    };
+};
+
+
 // Manage Messages
 export const loadMessages = (messages) => ({
     type: types.LOAD_MESSAGES,
     payload: messages
 });
+
+
+// Email
+export const updateReceiverSubject = (subject) => {
+
+    return {
+        type: types.UPDATE_RECEIVER_SUBJECT,
+        payload: subject
+    };
+};
+
+export const updateReceiverEmail = (email) => {
+
+    return {
+        type: types.UPDATE_RECEIVER_EMAIL,
+        payload: email
+    };
+};
+
+export const updateReceiverMsg = (msg) => {
+
+    return {
+        type: types.UPDATE_RECEIVER_MSG,
+        payload: msg
+    };
+};
+
+export const updateReceiverDetails = (info) => {
+    return {
+        type: types.UPDATE_RECEIVER_DETAILS,
+        payload: info
+    };
+};

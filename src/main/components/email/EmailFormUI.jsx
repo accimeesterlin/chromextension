@@ -1,64 +1,40 @@
-import React, { useState } from "react";
-import { Editor } from "react-draft-wysiwyg";
+import React from "react";
 import propTypes from "prop-types";
-import { stateToHTML } from "draft-js-export-html";
-import { EditorState } from "draft-js";
 
 import { TextField } from "@material-ui/core";
 
-const EmailFormUI = (props, { sendEmail }) => {
-  
-  const [receiver, setReceiver] = useState('');
-  const [subject, setSubject] = useState('');
-  const [emailMessage, setEmailMessage] = useState('');
-  const [editor, setEditor] = useState(EditorState.createEmpty() || {});
-
-  const submit = (e) => {
-    e.preventDefault();
-
-    sendEmail(subject, receiver, emailMessage)
+const EmailFormUI = ({ subject, receiver, updateReceiverDetails }) => {
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    updateReceiverDetails({ [name]: value });
   };
 
-  const onEditorStateChange = editorState => {
-    const editorSourceHTML = stateToHTML(editorState.getCurrentContent());
-    
-    setEditor(editorState);
-    setEmailMessage(editorSourceHTML);
-  };
 
   return (
-    <form onSubmit={submit}>
+    <form >
       <TextField
         value={receiver}
         label="To:"
         fullWidth={true}
-        name="receiver"
-        onChange={(e) => setReceiver(e.target.value)}
+        name="email"
+        onChange={handleChange}
       />
       <TextField
         value={subject}
         label="Subject:"
         fullWidth={true}
         name="subject"
-        onChange={(e) => setSubject(e.target.value)}
-      />
-
-     { props.children }
-
-      <Editor
-        editorState={editor}
-        defaultEditorState={editor}
-        toolbarClassName="email-toolbarClassName"
-        wrapperClassName="email-wrapperClassName"
-        editorClassName="email-editorClassName"
-        onEditorStateChange={onEditorStateChange}
+        onChange={handleChange}
       />
     </form>
   );
-}
+};
 
 EmailFormUI.propTypes = {
-    sendEmail: propTypes.func.isRequired
+  subject: propTypes.string,
+  receiver: propTypes.string,
+  updateReceiverDetails: propTypes.func
+  
 };
 
 export default EmailFormUI;
