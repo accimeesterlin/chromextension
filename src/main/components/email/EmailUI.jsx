@@ -52,30 +52,17 @@ export default class EmailUI extends Component {
     }
   }
 
-  sendEmail = (subject, receiver, msg) => {
-    const { sender } = this.state;
-    const payload = createEmailPayload({
-      subject,
-      message: msg,
-      sender,
-      receiver
-    });
-
-    this.setState({ pending: true });
-    sendEmailToGoogle(payload, (response, error) => {
-      if (error) {
-        log(JSON.stringify(error.response));
-        const errorMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.error.message) ||
-          "Failed sending email!!";
-        this.openSnackBar(errorMessage, "error");
-        return;
-      }
-      log("Response: ", response.data);
-      this.openSnackBar("Email sent!!!");
-    });
+  sendEmail = (subject, receiver) => {
+    const { currentTemplate } = this.props;
+    console.log('Current Template: ', currentTemplate);
+    console.log('Subject: ', subject);
+    console.log('Receiver: ', receiver);
+    // const payload = createEmailPayload({
+    //   subject,
+    //   message: msg,
+    //   sender,
+    //   receiver
+    // });
   };
 
   openSnackBar = (message, status = "success") => {
@@ -130,7 +117,17 @@ export default class EmailUI extends Component {
   };
 
   render() {
-    const { templates, token } = this.props;
+    const {
+      templates,
+      token,
+      updateTemplate,
+      currentTemplate,
+      updateReceiverDetails,
+      updateReceiverMsg,
+      receiverSubject,
+      receiverEmail,
+      receiverMsg
+    } = this.props;
 
     if (!token) return <IntegationComponents {...this.props} />;
 
@@ -147,6 +144,12 @@ export default class EmailUI extends Component {
         <EmailFormModal
           sendEmail={this.sendEmail}
           templates={templates}
+          updateTemplate={updateTemplate}
+          currentTemplate={currentTemplate}
+          updateReceiverDetails={updateReceiverDetails}
+          updateReceiverMsg={updateReceiverMsg}
+          subject={receiverSubject}
+          receiver={receiverEmail}
         >
           <Button variant="outlined" color="primary">
             New Email
@@ -161,12 +164,24 @@ export default class EmailUI extends Component {
 }
 
 EmailUI.propTypes = {
-  messages: PropTypes.array.isRequired,
-  templates: PropTypes.array.isRequired,
+  // Token
   token: PropTypes.string.isRequired,
   nextPageToken: PropTypes.string.isRequired,
-  labels: PropTypes.array.isRequired,
+  
+  // Emails
   tutorEmail: PropTypes.string.isRequired,
+  receiverSubject: PropTypes.string.isRequired,
+  receiverEmail: PropTypes.string.isRequired,
+  receiverMsg: PropTypes.string.isRequired,
+  messages: PropTypes.array.isRequired,
   resultSizeEstimate: PropTypes.number,
-  tutorEmail: PropTypes.string.isRequired
+  labels: PropTypes.array.isRequired,
+  updateReceiverDetails: PropTypes.func.isRequired,
+  updateReceiverMsg: PropTypes.func.isRequired,
+
+  // templates
+  updateTemplate: PropTypes.func.isRequired,
+  currentTemplate: PropTypes.object.isRequired,
+  templates: PropTypes.array.isRequired,
+  templateSubject: PropTypes.string
 };

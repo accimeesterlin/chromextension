@@ -3,27 +3,14 @@ import PropTypes from "prop-types";
 import { MenuItem, Select } from "@material-ui/core";
 import { isEmpty } from "lodash";
 
-const TemplateSelection = ({ templates, setCurrentEmailMessage }) => {
-  const [editor, setEditor] = useState();
-  const [templateSubject, setTemplateSubject] = useState();
-  const [emailMessage, setEmailMessage] = useState();
-  const [emailTemplate, setEmailTemplate] = useState();
-
+const TemplateSelection = ({ templates, updateTemplate }) => {
+  const [currentItem, setCurrentItem] = useState('None');
+  
   const selectTemplate = ({ value: index, name }) => {
     const currentTemplate = templates[index];
 
-    const {
-      templateContent,
-      templateSubject,
-      templateEditor
-    } = currentTemplate;
-
-    setEditor(templateEditor);
-    setTemplateSubject(templateSubject);
-    setEmailMessage(templateContent);
-    setCurrentEmailMessage(emailMessage);
-    setEmailTemplate(emailTemplate);
-    // this.setState({ [name]: index, });
+    setCurrentItem(currentTemplate.templateName); // update state
+    updateTemplate(currentTemplate); // update redux store
   };
 
   if (isEmpty(templates)) return null;
@@ -31,7 +18,7 @@ const TemplateSelection = ({ templates, setCurrentEmailMessage }) => {
   // JSX
   return (
     <Select
-      value={emailTemplate || "none"}
+      value={currentItem || "none"}
       autoWidth={true}
       onChange={e => selectTemplate(e.target)}
       name="emailTemplate"
@@ -41,7 +28,7 @@ const TemplateSelection = ({ templates, setCurrentEmailMessage }) => {
         id: "emailTemplate"
       }}
     >
-      <MenuItem value="none">None</MenuItem>
+      <MenuItem value={currentItem}>{ currentItem }</MenuItem>
 
       {templates.map(({ templateName }, key) => (
         <MenuItem key={key} value={key}>
@@ -60,7 +47,7 @@ TemplateSelection.propTypes = {
     templateName: PropTypes.string.isRequired,
     templateEditor: PropTypes.string.isRequired
   })).isRequired,
-  setCurrentEmailMessage: PropTypes.func.isRequired
+  updateTemplate: PropTypes.func.isRequired
 };
 
 export default TemplateSelection;

@@ -14,33 +14,46 @@ import TemplateSelection from "./TemplateSelection";
 import FormEditor from "../common/FormEditor";
 
 const EmailFormModal = props => {
-  const { sendEmail, templates } = props;
+  const {
+    sendEmail,
+    templates,
+    updateTemplate,
+    currentTemplate,
+    updateReceiverDetails,
+    updateReceiverMsg,
+    receiver,
+    subject
+  } = props;
   const [isModalOpen, setIsModelOpen] = useState(false);
-  const [emailMessage, setEmailMessage] = useState(false);
 
-  const send = msg => {
-    // TODO
-    // Grab the necessary data it needs
-    // sendEmail();
-    // setIsModelOpen(false);
-  };
+  // Pulling from redux
+  const { templateEditor } = currentTemplate;
 
   // Attach a click event on the props.children element
   const childElement = React.cloneElement(props.children, {
     onClick: () => setIsModelOpen(true)
   });
 
-  const componentToRender = () => {
+  const displayContent = () => {
     return (
       <React.Fragment>
-        <EmailFormUI onEmailFormSubmission={() => ""} />
-
-        <TemplateSelection
-          setCurrentEmailMessage={send}
-          templates={templates}
+        <EmailFormUI
+          subject={subject}
+          receiver={receiver}
+          updateReceiverDetails={updateReceiverDetails}
         />
 
-        <FormEditor onEditorChange={() => ""} />
+        <TemplateSelection
+          templates={templates}
+          updateTemplate={updateTemplate}
+        />
+
+        <FormEditor
+          onEditorChange={() => ""}
+          editorContent={templateEditor}
+          name="email"
+          updateReceiverMsg={updateReceiverMsg}
+        />
       </React.Fragment>
     );
   };
@@ -56,14 +69,14 @@ const EmailFormModal = props => {
         <DialogTitle id="form-dialog-title">New Message</DialogTitle>
         
         <DialogContent>
-          {componentToRender()}
+          {displayContent()}
         </DialogContent>
         
         <DialogActions>
           <Button onClick={() => setIsModelOpen(false)} color="primary">
             Cancel
           </Button>
-          <Button onClick={send} type="submit" color="primary">
+          <Button onClick={sendEmail} type="submit" color="primary">
             Send Email
           </Button>
         </DialogActions>
@@ -82,7 +95,14 @@ EmailFormModal.propTypes = {
       templateEditor: PropTypes.string.isRequired
     }).isRequired
   ),
-  sendEmail: PropTypes.func.isRequired
+  receiver: PropTypes.string,
+  subject: PropTypes.string,
+  currentTemplate: PropTypes.object.isRequired,
+  sendEmail: PropTypes.func.isRequired,
+  updateTemplate: PropTypes.func.isRequired,
+  updateReceiverDetails: PropTypes.func.isRequired,
+  updateReceiverMsg: PropTypes.func.isRequired
+
 };
 
 export default EmailFormModal;

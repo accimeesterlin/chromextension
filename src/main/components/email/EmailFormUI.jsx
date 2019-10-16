@@ -1,41 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
 import propTypes from "prop-types";
 
 import { TextField } from "@material-ui/core";
 
-const EmailFormUI = ({ onEmailFormSubmission }) => {
-  
-  const [receiver, setReceiver] = useState('');
-  const [subject, setSubject] = useState('');
-
-  const submit = (e) => {
-    e.preventDefault();
-
-    onEmailFormSubmission(receiver, subject);
+const EmailFormUI = ({ subject, receiver, updateReceiverDetails }) => {
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    updateReceiverDetails({ [name]: value });
   };
 
+
   return (
-    <form onSubmit={submit}>
+    <form >
       <TextField
         value={receiver}
         label="To:"
         fullWidth={true}
-        name="receiver"
-        onChange={(e) => setReceiver(e.target.value)}
+        name="email"
+        onChange={handleChange}
       />
       <TextField
         value={subject}
         label="Subject:"
         fullWidth={true}
         name="subject"
-        onChange={(e) => setSubject(e.target.value)}
+        onChange={handleChange}
       />
     </form>
   );
-}
+};
 
 EmailFormUI.propTypes = {
-    onEmailFormSubmission: propTypes.func
+  subject: propTypes.string,
+  receiver: propTypes.string,
+  updateReceiverDetails: propTypes.func
+  
 };
 
 export default EmailFormUI;

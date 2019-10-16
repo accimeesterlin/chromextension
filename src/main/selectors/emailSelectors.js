@@ -58,3 +58,12 @@ export const getMessages = (state) => getGmail(state).messages || [];
 export const getLabels = (state) => getGmail(state).labels || [];
 export const getResultSizeEstimate = (state) => getGmail(state).resultSizeEstimate;
 export const getNextPageToken = (state) => getGmail(state).nextPageToken || '';
+
+
+export const getEmail = (state) => (state && state.email) || {};
+
+export const getReceiverDetails = (state) => getEmail(state).receiverDetails || {};
+
+export const getReceiverEmail = (state) => getReceiverDetails(state).email || '';
+export const getReceiverSubject = (state) => getReceiverDetails(state).subject || '';
+export const getReceiverMsg = (state) => getReceiverDetails(state).msg || '';
