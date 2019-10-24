@@ -1,26 +1,31 @@
 import { Base64 } from 'js-base64';
+import selectn from 'selectn';
 
+const log = console.log;
 
-export const createEmailPayload = ({ subject, receiver, sender, message, threadId }) => {
-    if (!subject && !subject && !receiver && !sender) {
+export const createEmailPayload = (state) => {
+    const payload = {};
+    const subject = selectn('email.receiverDetails.subject', state) ||  selectn('templates.currentTemplate.templateSubject', state);
+    const msg = selectn('email.receiverDetails.msg', state) || selectn('templates.currentTemplate.templateContent', state);
+    const receiverEmail = selectn('email.receiverDetails.email', state);
+    const senderEmail = selectn('tutor.emailAddress', state);
+
+    if (!subject && !receiverEmail && !senderEmail) {
         throw new Error('Please provide the following required params subject, receiver, sender, and message');
     }
-    const payload = {
-        subject,
-        receiver,
-        sender,
-        message
-    };
   
+    payload.receiver = receiverEmail;
+    payload.sender = senderEmail;
+    payload.subject = subject;
+    payload.message = msg;
+
     const rfc2822Format = createRf2822Format(payload);
 
-    payload.raw = Base64.encode(rfc2822Format).replace(/\+/g, "-") // base64Url
+    const raw = Base64.encode(rfc2822Format).replace(/\+/g, "-") // base64Url
 
-    if (threadId) {
-        payload.threadId = threadId;
-    }
-
-    return payload;
+    return {
+        raw
+    };
 }
 
 export const createRf2822Format = ({ sender, receiver, subject, message }) => {
@@ -32,5 +37,6 @@ export const createRf2822Format = ({ sender, receiver, subject, message }) => {
         rfc2822Format += `Content-Transfer-Encoding: base64\n\n`
 
         rfc2822Format += `${message}`;
+    log('RFC2822 Format: ', rfc2822Format);
     return rfc2822Format;
 };

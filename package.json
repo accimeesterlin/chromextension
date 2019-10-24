@@ -63,6 +63,7 @@
     "redux-promise-middleware": "6.1.1",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
+    "selectn": "1.1.2",
     "stringquery": "1.0.8",
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "1.2.2",
