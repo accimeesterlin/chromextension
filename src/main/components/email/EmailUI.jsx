@@ -1,7 +1,6 @@
 /*eslint-disable */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { Button } from "@material-ui/core";
 import SnackBarContent from "../common/SnackBar";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -11,8 +10,6 @@ import EmailFormModal from "./EmailFormModal";
 import { sendEmailToGoogle } from "../../../utils/googleApiUtils";
 import { createEmailPayload } from "../../../utils/emailPayload";
 import Content from "../common/content/Content";
-import EmailLabels from "./EmailLabels";
-import EmailMessages from "./EmailMessages";
 
 import "./email.scss";
 
@@ -28,9 +25,7 @@ export default class EmailUI extends Component {
       pending: false,
       variant: "success",
       snackBarMessage: "",
-      query: null,
-      messages: props.messages || [],
-      enableEmailMessages: false // feature flag (hardcoded)
+      query: null
     };
   }
 
@@ -39,30 +34,17 @@ export default class EmailUI extends Component {
     if (chrome && chrome.identity) {
       const {
         token,
-        loadMessages,
-        loadLabels,
-        messages,
         getTutorGmailProfile
       } = this.props;
-      log("Message on LOAD: ", messages);
       getTutorGmailProfile(token);
-      loadMessages(token);
-      loadLabels(token);
       this.setState({ pageLoaded: true });
     }
   }
 
-  sendEmail = (subject, receiver) => {
-    const { currentTemplate } = this.props;
-    console.log('Current Template: ', currentTemplate);
-    console.log('Subject: ', subject);
-    console.log('Receiver: ', receiver);
-    // const payload = createEmailPayload({
-    //   subject,
-    //   message: msg,
-    //   sender,
-    //   receiver
-    // });
+  sendEmailToGmail = (event) => {
+    const { requestToSendEmail } = this.props;
+    event.preventDefault();
+    requestToSendEmail();
   };
 
   openSnackBar = (message, status = "success") => {
@@ -74,47 +56,7 @@ export default class EmailUI extends Component {
     });
   };
 
-  fetchMoreData = () => {
-    const { token, nextPageToken, loadMessages } = this.props;
-    const { gmailLabel, query } = this.state;
 
-    if (gmailLabel !== "center_support") {
-      const label = "IMPORTANT";
-      loadMessages(token, nextPageToken, label, query);
-    }
-  };
-
-  enableEmailMessages = () => {
-    const { labels, messages, loadMessages, resultSizeEstimate } = this.props;
-    const hasMore = messages.length < resultSizeEstimate;
-
-    if (!this.state.enableEmailMessages) {
-      return null
-    }
-
-    return (
-      <div>
-        <EmailLabels loadMessages={loadMessages} labels={labels} />
-        <InfiniteScroll
-          dataLength={messages.length}
-          next={this.fetchMoreData}
-          className="email-messages"
-          hasMore={hasMore}
-          loader={<h4>Loading...</h4>}
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
-        >
-          <EmailMessages
-            messages={messages}
-          />
-        </InfiniteScroll>
-      </div>
-    );
-    
-  };
 
   render() {
     const {
@@ -142,7 +84,7 @@ export default class EmailUI extends Component {
         />
        
         <EmailFormModal
-          sendEmail={this.sendEmail}
+          sendEmail={this.sendEmailToGmail}
           templates={templates}
           updateTemplate={updateTemplate}
           currentTemplate={currentTemplate}
@@ -156,8 +98,6 @@ export default class EmailUI extends Component {
           </Button>
         </EmailFormModal>
 
-        {this.enableEmailMessages()}
-        
       </Content>
     );
   }
@@ -173,11 +113,10 @@ EmailUI.propTypes = {
   receiverSubject: PropTypes.string.isRequired,
   receiverEmail: PropTypes.string.isRequired,
   receiverMsg: PropTypes.string.isRequired,
-  messages: PropTypes.array.isRequired,
   resultSizeEstimate: PropTypes.number,
-  labels: PropTypes.array.isRequired,
   updateReceiverDetails: PropTypes.func.isRequired,
   updateReceiverMsg: PropTypes.func.isRequired,
+  requestToSendEmail: PropTypes.func.isRequired,
 
   // templates
   updateTemplate: PropTypes.func.isRequired,

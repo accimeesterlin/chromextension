@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
 import { loadToken } from '../../../utils/authUtils';
-import { loadMessages, loadLabels, getTutorGmailProfile } from '../../../actions/asyncActionCreators';
-import { updateCurrentTemplate, updateReceiverDetails, updateReceiverMsg } from '../../../actions/actionCreators';
+import { getTutorGmailProfile } from '../../../actions/asyncActionCreators';
+import {
+    updateCurrentTemplate,
+    updateReceiverDetails,
+    updateReceiverMsg,
+    requestToSendEmail
+} from '../../../actions/actionCreators';
 import EmailUI from './EmailUI';
 import {
-    getMessages,
-    getLabels,
-    getResultSizeEstimate,
     getNextPageToken,
     getReceiverEmail,
     getReceiverSubject,
@@ -17,11 +19,8 @@ import { getTemplates, getCurrentTemplate } from '../../selectors/templateSelect
 
 
 const mapStateToProps = (state) => {
-    const messages = getMessages(state);
-    const labels = getLabels(state);
     const tutorEmail = getTutorEmailAddress(state);
     
-    const resultSizeEstimate = getResultSizeEstimate(state);
     const currentTemplate = getCurrentTemplate(state);
     const templates = getTemplates(state);
 
@@ -35,11 +34,8 @@ const mapStateToProps = (state) => {
 
     return {
         templates,
-        messages,
         token,
         nextPageToken,
-        labels,
-        resultSizeEstimate,
         tutorEmail,
         currentTemplate,
         receiverEmail,
@@ -52,16 +48,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 
     return {
-        // TODO
-        // Refactor this function
-        loadMessages: (token, nextPageToken, labels, query, shouldEmptyMessages) => {
-            dispatch(loadMessages(token, nextPageToken, labels, query, shouldEmptyMessages));
-        },
-
-        loadLabels: (token) => {
-            dispatch(loadLabels(token));
-        },
-
         getTutorGmailProfile: (token) => {
             dispatch(getTutorGmailProfile(token));
         },
@@ -76,6 +62,9 @@ const mapDispatchToProps = (dispatch) => {
 
         updateReceiverMsg: msg => {
             dispatch(updateReceiverMsg(msg));
+        },
+        requestToSendEmail: () => {
+            dispatch(requestToSendEmail());
         }
     };
 };

@@ -59,12 +59,6 @@ export const updateCurrentTemplate = (currentTemplate) => {
 };
 
 
-// Manage Messages
-export const loadMessages = (messages) => ({
-    type: types.LOAD_MESSAGES,
-    payload: messages
-});
-
 
 // Email
 export const updateReceiverSubject = (subject) => {
@@ -97,3 +91,9 @@ export const updateReceiverDetails = (info) => {
         payload: info
     };
 };
+
+export const requestToSendEmail = () => {
+    return {
+        type: types.REQUEST_TO_SEND_EMAIL
+    }
+}
