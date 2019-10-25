@@ -4,11 +4,14 @@ import * as types from '../actions/types';
 import selectn from 'selectn';
 import { loadToken } from '../utils/authUtils';
 import { createEmailPayload } from '../utils/emailPayload';
+import { getTutorGmailProfile } from '../actions/asyncActionCreators';
+import { sendNotification, resetNotification } from '../actions/actionCreators';
 
 const log = console.log;
 const endpoint = 'https://www.googleapis.com/gmail/v1/users/me';
 
 let retryEmailCount = 0;
+let retryTutorProfile = 0;
 
 export const sendEmailToGmail = async (state, token) => {
     const url = `${endpoint}/messages/send`;
@@ -64,28 +67,29 @@ const gmailMiddleware = (store) => (next) => async (action) => {
         case types.REQUEST_TO_SEND_EMAIL:
             // Get token
             const emailResponse = await sendEmailToGmail(state, token);
-            log('Email Response: ', emailResponse);
+
+            if (emailResponse.status === 200) {
+                dispatch(
+                    sendNotification('success', 'Email has been sent!!!')
+                );
+            } else {
+                log('Email Response: ', emailResponse);
+                dispatch(
+                    sendNotification('error', 'Failed sending the email!!!')
+                );
+            }
+
+            setTimeout(() => {
+                dispatch(resetNotification());
+            }, 1500);
             break;
         case types.GET_GMAIL_PROFILE_REJECTED:
-            const profileAction = {
-                type: action.type.replace('_REJECTED', ''),
-                payload: axios({
-                    url: action.meta.url,
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }),
-                meta: {
-                    try: true
-                }
-            };
-            // Try request
-            const profileRetry = selectn('meta.retry', action);
-            if (!profileRetry) {
-                generateAuthToken((token) => {
-                    dispatch(profileAction);
+            retryTutorProfile += 1;
+            if (retryTutorProfile <= 2) {
+                return generateAuthToken((token) => {
+                    dispatch(getTutorGmailProfile(token));
                     window.localStorage.setItem('token', token);
+                    retryTutorProfile = 0;
                 });
             }
             break;

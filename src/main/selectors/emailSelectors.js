@@ -57,8 +57,6 @@ export const getGmail = (state) => (state && state.gmail) || {};
 export const getMessages = (state) => getGmail(state).messages || [];
 export const getLabels = (state) => getGmail(state).labels || [];
 export const getResultSizeEstimate = (state) => getGmail(state).resultSizeEstimate;
-export const getNextPageToken = (state) => getGmail(state).nextPageToken || '';
-
 
 export const getEmail = (state) => (state && state.email) || {};
 

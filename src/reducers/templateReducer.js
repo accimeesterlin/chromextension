@@ -27,6 +27,12 @@ function templateReducer(state = initialState, action) {
                 ...newState
             }
 
+        case types.LOAD_DATA:
+            newState.listTemplates = action.templates;
+            return {
+                ...newState
+            }
+
         default:
             return state;
     };

@@ -1,3 +1,6 @@
+// Initialize the app
+export const INIT_APP = 'INIT_APP';
+export const LOAD_DATA = 'LOAD_DATA';
 // Students
 export const ADD_STUDENT = 'ADD_STUDENT';
 export const REMOVE_STUDENT = 'REMOVE_STUDENT';
@@ -50,3 +53,8 @@ export const CURRENT_ROUTE = 'CURRENT_ROUTE';
 // List of integrations
 export const GMAIL_INTEGRATION_FULFILLED = 'GMAIL_INTEGRATION_FULFILLED';
 export const GMAIL_INTEGRATION_REJECTED = 'GMAIL_INTEGRATION_REJECTED';
+
+
+// Notifications
+export const SEND_NOTIFICATION = 'SEND_NOTIFICATION';
+export const RESET_NOTIFICATION = 'RESET_NOTIFICATION';

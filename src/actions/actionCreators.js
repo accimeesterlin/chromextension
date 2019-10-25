@@ -1,5 +1,11 @@
 import * as types from './types';
 
+export const initializeApp = () => {
+    return {
+        type: types.INIT_APP,
+    }
+}
+
 // Manage Students
 export const addStudent = (student) => ({
     type: types.ADD_STUDENT,
@@ -95,5 +101,22 @@ export const updateReceiverDetails = (info) => {
 export const requestToSendEmail = () => {
     return {
         type: types.REQUEST_TO_SEND_EMAIL
+    }
+}
+
+
+export const sendNotification = (notificationType, message) => {
+    return {
+        type: types.SEND_NOTIFICATION,
+        payload: {
+            message,
+            notificationType
+        }
+    }
+}
+
+export const resetNotification = () => {
+    return {
+        type: types.RESET_NOTIFICATION,
     }
 }

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { loadToken } from '../../../utils/authUtils';
-import { getTutorGmailProfile } from '../../../actions/asyncActionCreators';
+
 import {
     updateCurrentTemplate,
     updateReceiverDetails,
@@ -9,7 +9,6 @@ import {
 } from '../../../actions/actionCreators';
 import EmailUI from './EmailUI';
 import {
-    getNextPageToken,
     getReceiverEmail,
     getReceiverSubject,
     getReceiverMsg,
@@ -27,15 +26,11 @@ const mapStateToProps = (state) => {
     const receiverEmail = getReceiverEmail(state);
     const receiverSubject = getReceiverSubject(state) || currentTemplate.templateSubject;
     const receiverMsg = getReceiverMsg(state);
-    
-    
-    const nextPageToken = getNextPageToken(state);
     const token = loadToken() || '';
-
+    
     return {
         templates,
         token,
-        nextPageToken,
         tutorEmail,
         currentTemplate,
         receiverEmail,
@@ -48,10 +43,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 
     return {
-        getTutorGmailProfile: (token) => {
-            dispatch(getTutorGmailProfile(token));
-        },
-
         updateTemplate: (currentTemplate) => {
             dispatch(updateCurrentTemplate(currentTemplate));
         },

@@ -6,6 +6,9 @@ import * as types from '../actions/types';
 const dispatch = store.dispatch;
 
 export const integrateGmail = () => {
+    const options = {
+        interactive: false
+    };
     chrome.identity.getAuthToken(options, function (token) {
         if (token) {
             localStorage.setItem('isTokenAuthorized', true);
