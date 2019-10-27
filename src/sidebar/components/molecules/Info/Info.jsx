@@ -4,7 +4,13 @@ import Form from './Form';
 import axios from 'axios';
 import * as tutorUtils from '../../../utils/tutorUtils';
 import { connect } from 'react-redux';
-import { saveTutorName, saveTutorGoogleSheetUrl, saveTutorRoster, addStudent } from '../../../../actions/actionCreators';
+import {
+    saveTutorName,
+    saveTutorGoogleSheetUrl,
+    saveTutorRoster,
+    addStudent,
+    loadStudentFromGoogleSheet
+} from '../../../../actions/actionCreators';
 
 
 
@@ -91,30 +97,42 @@ export class InfoUI extends Component {
     validateCorrectColum = (isValid) => {
         if (isValid) {
             this.setState({ status: 'success', message: 'Successfully' });
-
-        } else {
-            this.setState({ status: 'error', message: 'Columns Error' });
+            return;
         }
 
+        this.setState({ status: 'error', message: 'Columns Error' });
+    };
+
+    filterStudentFromGoogleSheet = (googleSheetData) => {
+        let listStudents = [];
+        for (let i = 0; i < googleSheetData.length; i++) {
+            try {
+                const columnData = googleSheetData[i];
+                const email = columnData[3];
+                if (email.includes('@')) {
+                    const student = {
+                        name: columnData[2],
+                        githubUsername: columnData[4],
+                        email,
+                        studentCode: columnData[0]
+                    };
+                    listStudents.push(student);
+                }
+            } catch (error) { }
+        }
+        return listStudents;
     };
 
     addStudentToStore = (data) => {
         let isValid = false;
+        const students = this.filterStudentFromGoogleSheet(data);
 
-        for (let i = 0; i < data.length; i++) {
-            try {
-                const email = data[i][3];
-                if (email.includes('@')) {
-                    this.props.addStudent({
-                        name: data[i][2],
-                        githubUsername: data[i][4],
-                        email,
-                        studentCode: data[i][0]
-                    });
-                    isValid = true;
-                }
-            } catch (error) { }
+        if (students.length > 0) {
+            isValid = true;
         }
+        
+        localStorage.setItem('students', JSON.stringify(students));
+        this.props.loadStudentFromGoogleSheet(students);
         this.validateCorrectColum(isValid);
     };
 
@@ -198,6 +216,7 @@ const mapDispatchToProps = (dispatch) => {
         saveTutorGoogleSheetUrl: (url) => dispatch(saveTutorGoogleSheetUrl(url)),
         saveTutorRoster: (roster) => dispatch(saveTutorRoster(roster)),
         addStudent: (student) => dispatch(addStudent(student)),
+        loadStudentFromGoogleSheet: (students) => dispatch(loadStudentFromGoogleSheet(students))
     };
 };
 

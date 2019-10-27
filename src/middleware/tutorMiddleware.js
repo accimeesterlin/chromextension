@@ -31,6 +31,16 @@ const saveTemplates = (templates) => {
     localStorage.setItem('templates', JSON.stringify(templates));
 };
 
+const loadStudents = () => {
+    const students = JSON.parse(localStorage.getItem('students'));
+
+    if (!Array.isArray(students)) {
+        return [];
+    }
+    
+    return students;
+};
+
 const tutorMiddleware = (store) => (next) => async (action) => {
     next(action);
     const dispatch = store.dispatch;
@@ -39,16 +49,18 @@ const tutorMiddleware = (store) => (next) => async (action) => {
 
     switch(action.type) {
         case types.INIT_APP:
+            // Getting data from storage
             const token = loadToken() || '';
-            dispatch(getTutorGmailProfile(token));
-
-            // Getting templates from storage
+            const students = loadStudents();
+            
             const templates = loadTemplates();
+            dispatch(getTutorGmailProfile(token));
             if (templates.length > 0) {
                 dispatch({
                     type: types.LOAD_DATA,
                     isAppInitialized: true,
-                    templates
+                    templates,
+                    students
                 });
             }
             break;
