@@ -9,11 +9,13 @@ import promise from 'redux-promise-middleware';
 import logger from 'redux-logger'
 
 import gmailMiddleware from '../middleware/gmailMiddleware';
+import tutorMiddleware from '../middleware/tutorMiddleware';
 import { isDevMode } from '../utils/environmentUtils';
 
 const middlewares = [
     promise,
-    gmailMiddleware
+    gmailMiddleware,
+    tutorMiddleware
 ]
 
 if (isDevMode) {

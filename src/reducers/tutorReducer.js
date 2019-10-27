@@ -7,7 +7,8 @@ const initialState = {
     emailAddress: '',
     messagesTotal: 0,
     threadsTotal: 0,
-    historyId: 0
+    historyId: 0,
+    isAppInitialized: false
 };
 
 
@@ -33,6 +34,12 @@ function tutorReducer(state = initialState, action) {
                 ...state,
                 ...(action.payload && action.payload.data)
             };
+        
+        case types.LOAD_DATA:
+            return {
+                ...state,
+                isAppInitialized: true
+            }
         default:
             return state;
     };

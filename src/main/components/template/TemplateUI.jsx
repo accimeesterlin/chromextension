@@ -35,7 +35,8 @@ export default class TemplateUI extends Component {
   state = this.initialState;
 
   onEditorStateChange = templateEditor => {
-    const editorSourceHTML = stateToHTML(templateEditor.getCurrentContent());
+    const currentEditorContent = templateEditor.getCurrentContent();
+    const editorSourceHTML = stateToHTML(currentEditorContent);
     this.setState({
       templateContent: editorSourceHTML,
       templateEditor

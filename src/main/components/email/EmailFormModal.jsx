@@ -34,6 +34,11 @@ const EmailFormModal = props => {
     onClick: () => setIsModelOpen(true)
   });
 
+  const submitEmail = () => {
+    sendEmail();
+    setIsModelOpen(false);
+  };
+
   const displayContent = () => {
     return (
       <React.Fragment>
@@ -76,7 +81,7 @@ const EmailFormModal = props => {
           <Button onClick={() => setIsModelOpen(false)} color="primary">
             Cancel
           </Button>
-          <Button onClick={sendEmail} type="submit" color="primary">
+          <Button onClick={submitEmail} type="submit" color="primary">
             Send Email
           </Button>
         </DialogActions>

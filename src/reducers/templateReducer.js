@@ -1,4 +1,5 @@
 import * as types from '../actions/types';
+import { EditorState } from "draft-js";
 
 
 const initialState = {
@@ -8,7 +9,7 @@ const initialState = {
         templateContent: '',
         templateSubject: '',
         templateName: '',
-        templateEditor: ''
+        templateEditor: EditorState.createEmpty() || {}
     }
 }
 
@@ -23,6 +24,12 @@ function templateReducer(state = initialState, action) {
 
         case types.UPDATE_CURRENT_TEMPLATE:
             newState.currentTemplate = action.payload;
+            return {
+                ...newState
+            }
+
+        case types.LOAD_DATA:
+            newState.listTemplates = action.templates;
             return {
                 ...newState
             }

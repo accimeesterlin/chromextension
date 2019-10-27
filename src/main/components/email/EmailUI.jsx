@@ -7,8 +7,6 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 import IntegationComponents from "./Integrations";
 import EmailFormModal from "./EmailFormModal";
-import { sendEmailToGoogle } from "../../../utils/googleApiUtils";
-import { createEmailPayload } from "../../../utils/emailPayload";
 import Content from "../common/content/Content";
 
 import "./email.scss";
@@ -29,21 +27,8 @@ export default class EmailUI extends Component {
     };
   }
 
-  // Initialize data
-  componentDidMount() {
-    if (chrome && chrome.identity) {
-      const {
-        token,
-        getTutorGmailProfile
-      } = this.props;
-      getTutorGmailProfile(token);
-      this.setState({ pageLoaded: true });
-    }
-  }
-
   sendEmailToGmail = (event) => {
     const { requestToSendEmail } = this.props;
-    event.preventDefault();
     requestToSendEmail();
   };
 
@@ -104,10 +89,9 @@ export default class EmailUI extends Component {
 }
 
 EmailUI.propTypes = {
-  // Token
-  token: PropTypes.string.isRequired,
-  nextPageToken: PropTypes.string.isRequired,
-  
+  // token
+  token:  PropTypes.string.isRequired,
+
   // Emails
   tutorEmail: PropTypes.string.isRequired,
   receiverSubject: PropTypes.string.isRequired,
