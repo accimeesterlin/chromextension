@@ -29,7 +29,6 @@ export default class EmailUI extends Component {
 
   sendEmailToGmail = (event) => {
     const { requestToSendEmail } = this.props;
-    event.preventDefault();
     requestToSendEmail();
   };
 

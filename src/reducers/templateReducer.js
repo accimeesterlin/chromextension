@@ -1,4 +1,5 @@
 import * as types from '../actions/types';
+import { EditorState } from "draft-js";
 
 
 const initialState = {
@@ -8,7 +9,7 @@ const initialState = {
         templateContent: '',
         templateSubject: '',
         templateName: '',
-        templateEditor: ''
+        templateEditor: EditorState.createEmpty() || {}
     }
 }
 

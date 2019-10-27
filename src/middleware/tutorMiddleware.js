@@ -1,6 +1,6 @@
 /*eslint-disable */
 import * as types from '../actions/types';
-import { convertFromRaw, convertToRaw } from 'draft-js';
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 
 import selectn from 'selectn';
 import { getTutorGmailProfile } from '../actions/asyncActionCreators';
@@ -11,11 +11,16 @@ const loadTemplates = () => {
 
     if (Array.isArray(templates)) {
         const listTemplates = templates.map((template) => {
-            console.log('Template From Local Storage: ', template);
+            const templateEditor =  EditorState.createWithContent(
+                convertFromRaw(template.templateEditor)
+            );
+
             return {
-                ...template
+                ...template,
+                templateEditor
             };
         });
+
         return listTemplates;
     }
 
@@ -26,8 +31,7 @@ const saveTemplates = (templates) => {
     localStorage.setItem('templates', JSON.stringify(templates));
 };
 
-const gmailMiddleware = (store) => (next) => async (action) => {
-
+const tutorMiddleware = (store) => (next) => async (action) => {
     next(action);
     const dispatch = store.dispatch;
     const state = store.getState();
@@ -51,7 +55,13 @@ const gmailMiddleware = (store) => (next) => async (action) => {
 
         case types.ADD_TEMPLATE:
             const listTemplates = selectn('templates.listTemplates', state);
-            saveTemplates(listTemplates);
+            const convertListTemplates = listTemplates.map((template) => {
+                return {
+                    ...template,
+                    templateEditor: convertToRaw(template.templateEditor.getCurrentContent())
+                }
+            });
+            saveTemplates(convertListTemplates);
             break;
         default:
             break;
@@ -59,4 +69,4 @@ const gmailMiddleware = (store) => (next) => async (action) => {
 };
 
 
-export default gmailMiddleware
+export default tutorMiddleware
