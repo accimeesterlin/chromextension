@@ -11,6 +11,18 @@ function studentReducer(state = initialState, action) {
             const studentEmail = action.payload;
             const students = newState.filter(({ email }) => email !== studentEmail);
             return [...students]
+
+        case types.LOAD_STUDENTS_FROM_GOOGLE_SHEETS:
+            return [
+                ...newState,
+                ...action.payload
+            ]
+
+        case types.LOAD_DATA:
+            return [
+                ...newState,
+                ...action.students
+            ]
         default:
             return state;
     };

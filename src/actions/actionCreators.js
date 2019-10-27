@@ -12,6 +12,11 @@ export const addStudent = (student) => ({
     payload: student
 })
 
+export const loadStudentFromGoogleSheet = (students) => ({
+    type: types.LOAD_STUDENTS_FROM_GOOGLE_SHEETS,
+    payload: students
+})
+
 export const removeStudent = (studentEmail) => ({
     type: types.REMOVE_STUDENT,
     payload: studentEmail
