@@ -1,40 +1,27 @@
 import React from "react";
 import propTypes from "prop-types";
 
-import { TextField } from "@material-ui/core";
+const DisplayStudents = (props) => {
 
-const DisplayStudents = ({ subject, receiver, updateReceiverDetails }) => {
-  const handleChange = ({ target }) => {
-    const { name, value } = target;
-    updateReceiverDetails({ [name]: value });
-  };
-
+  if (props.students.length === 0) return <p>No students available</p>;
 
   return (
-    <form >
-      <TextField
-        value={receiver}
-        label="To:"
-        fullWidth={true}
-        name="email"
-        onChange={handleChange}
-      />
-      <TextField
-        value={subject}
-        label="Subject:"
-        fullWidth={true}
-        name="subject"
-        onChange={handleChange}
-      />
-    </form>
+    <div className="display-students">
+      {props.students.map((student) => (
+        <div className="student-profile">
+          <p>{student.name}</p>
+          <p>{student.email}</p>
+          <p>{student.githubUsername}</p>
+          <p>{student.studentCode}</p>
+          <p>{student.studentTimeZone}</p>
+        </div>
+      ))}
+    </div>
   );
 };
 
 DisplayStudents.propTypes = {
-  subject: propTypes.string,
-  receiver: propTypes.string,
-  updateReceiverDetails: propTypes.func
-  
+  students: propTypes.array,
 };
 
-export default EmailFormUI;
+export default DisplayStudents;

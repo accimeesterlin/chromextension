@@ -7,14 +7,14 @@ export function saveToken(token) {
 
 };
 
-export function loadToken() {
-  const token = window.localStorage.getItem('token');
+export function loadToken(isNewToken) {
+  const token = window.localStorage.getItem('token') || '';
 
-  if (token) {
-    return token;
+  if (!token && isNewToken) {
+    return generateToken();
   }
 
-  return generateToken();
+  return token;
 }
 
 

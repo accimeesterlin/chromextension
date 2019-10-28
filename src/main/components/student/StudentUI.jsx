@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Content from "../common/content/Content";
+import { Button } from "@material-ui/core";
 
-import AddStudent from './AddStudent';
+import Content from "../common/content/Content";
+import AddStudent from "./AddStudent";
+import DisplayStudents from "./DisplayStudents";
+
 import "./student.scss";
 
 export default class StudentUI extends Component {
   state = {
     name: "",
-    githubUsername: "",
-    email: "",
-    studentCode: "",
-    studentTimeZone: "",
     status: null,
-    message: "Not able to fetch data"
+    message: "Not able to fetch data",
+    isAddStudentViewEnabled: false
   };
 
   handleChange = ({ target }) => {
@@ -38,26 +38,56 @@ export default class StudentUI extends Component {
     return null;
   };
 
-  selectTimeZone = target => {
-    this.setState({ studentTimeZone: target.value });
-  };
-
   submit = student => {
     this.props.addStudent(student);
   };
 
-  render() {
+  showAddStudent = () => {
+    this.setState({ isAddStudentViewEnabled: true });
+  };
 
+  showDisplayStudents = () => {
+    this.setState({ isAddStudentViewEnabled: false });
+  };
+
+  render() {
     // JSX
+
+    let componentToRender;
+
+    if (this.state.isAddStudentViewEnabled) {
+      componentToRender = (
+        <AddStudent
+          addStudent={this.props.addStudent}
+          submit={this.submit}
+          sendNotification={this.props.sendNotification}
+        />
+      );
+    } else {
+      componentToRender = <DisplayStudents students={this.props.students}/>;
+    }
+
     return (
       <Content {...this.props}>
         <div className="student">
-          <h2>I am the Student Component</h2>
-          <AddStudent
-            addStudent={this.props.addStudent}
-            submit={this.submit}
-            sendNotification={this.props.sendNotification}
-          />
+          <Button
+            className="student-add-button"
+            variant="outlined"
+            onClick={this.showAddStudent}
+            color="primary"
+          >
+            Add Student
+          </Button>
+
+          <Button
+            className="student-view-button"
+            variant="outlined"
+            onClick={this.showDisplayStudents}
+            color="primary"
+          >
+            View Students
+          </Button>
+          { componentToRender }
         </div>
       </Content>
     );
@@ -67,5 +97,5 @@ export default class StudentUI extends Component {
 StudentUI.propTypes = {
   students: PropTypes.array,
   addStudent: PropTypes.func,
-  sendNotification: PropTypes.func,
+  sendNotification: PropTypes.func
 };

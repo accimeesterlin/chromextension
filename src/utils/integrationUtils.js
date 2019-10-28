@@ -7,7 +7,7 @@ const dispatch = store.dispatch;
 
 export const integrateGmail = () => {
     const options = {
-        interactive: false
+        interactive: true
     };
     chrome.identity.getAuthToken(options, function (token) {
         if (token) {

@@ -41,7 +41,7 @@ export default function SimpleCard({ title, isEnable, status, integrateService }
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={() =>integrateService()}>{status}</Button>
+        <Button size="small" onClick={() => integrateService()}>{status}</Button>
       </CardActions>
     </Card>
   );

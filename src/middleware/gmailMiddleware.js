@@ -51,7 +51,9 @@ export const generateAuthToken = (cb) => {
     };
     chrome.identity.getAuthToken(options, function(token) {
         cb(token);
-        window.localStorage.setItem('token', token);
+        if (token) {
+            window.localStorage.setItem('token', token);
+        }
     });
 };
 
@@ -60,7 +62,8 @@ const gmailMiddleware = (store) => (next) => async (action) => {
     next(action);
     const dispatch = store.dispatch;
     const state = store.getState();
-    const token = loadToken();
+    const isTokenAuthorized = selectn('tutor.isTokenAuthorized', state);
+    const token = loadToken(isTokenAuthorized);
 
 
     switch(action.type) {
@@ -88,10 +91,15 @@ const gmailMiddleware = (store) => (next) => async (action) => {
             if (retryTutorProfile <= 2) {
                 return generateAuthToken((token) => {
                     dispatch(getTutorGmailProfile(token));
-                    window.localStorage.setItem('token', token);
-                    retryTutorProfile = 0;
+                    if (token) {
+                        window.localStorage.setItem('token', token);
+                    }
                 });
             }
+            break;
+
+        case types.GET_GMAIL_PROFILE_FULFILLED:
+            retryTutorProfile = 0;
             break;
         default:
             break;

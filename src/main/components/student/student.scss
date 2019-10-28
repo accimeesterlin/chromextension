@@ -1,7 +1,25 @@
 .student {
 
-
     .student-button {
+        margin-top: 20px;
+    }
+
+    .student-view-button {
+        margin-left: 10px;
+    }
+
+    .display-students {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    .student-profile {
+        border: 1px solid lightgrey;
+        padding: 10px;
+        line-height: 25px;
+        border-radius: 4px;
+        width: 300px;
         margin-top: 20px;
     }
 }
