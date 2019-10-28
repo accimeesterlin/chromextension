@@ -8,7 +8,8 @@ const initialState = {
     messagesTotal: 0,
     threadsTotal: 0,
     historyId: 0,
-    isAppInitialized: false
+    isAppInitialized: false,
+    
 };
 
 
@@ -38,8 +39,13 @@ function tutorReducer(state = initialState, action) {
         case types.LOAD_DATA:
             return {
                 ...state,
-                isAppInitialized: true
+                isAppInitialized: action.isAppInitialized,
+                isTokenAuthorized: action.isTokenAuthorized
             }
+
+        case types.GMAIL_INTEGRATION_FULFILLED:
+            newState.isTokenAuthorized = true;
+            return { ...newState }
         default:
             return state;
     };

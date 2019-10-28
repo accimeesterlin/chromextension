@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { loadToken } from '../../../utils/authUtils';
+import selectn from 'selectn';
 
 import {
     updateCurrentTemplate,
@@ -26,7 +27,8 @@ const mapStateToProps = (state) => {
     const receiverEmail = getReceiverEmail(state);
     const receiverSubject = getReceiverSubject(state) || currentTemplate.templateSubject;
     const receiverMsg = getReceiverMsg(state);
-    const token = loadToken() || '';
+    const isTokenAuthorized = selectn('tutor.isTokenAuthorized', state);
+    const token = loadToken(isTokenAuthorized) || '';
     
     return {
         templates,

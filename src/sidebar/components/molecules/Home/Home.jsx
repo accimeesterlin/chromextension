@@ -19,7 +19,8 @@ export class HomeUI extends Component {
     }
 
     componentDidMount = () => {
-        loadToken();
+        const isTokenAuthorized = true;
+        loadToken(isTokenAuthorized);
         if (window.ga) {
             window.ga('send', {
                 hitType: 'pageview',

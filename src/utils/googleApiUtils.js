@@ -2,10 +2,11 @@ import axios from 'axios';
 import { loadToken } from './authUtils';
 
 let retry = false;
+const isTokenAuthorized = true;
 
 export async function fetchGoogleApi(path, cb) {
   const url = `https://www.googleapis.com/gmail/v1/users/me${path}`;
-  const token = loadToken();
+  const token = loadToken(isTokenAuthorized);
 
   return axios({
     url,
@@ -23,7 +24,7 @@ export async function fetchGoogleApi(path, cb) {
     if (statusCode === 401 && !retry) {
       retry = true;
       window.localStorage.removeItem('token');
-      loadToken();
+      loadToken(isTokenAuthorized);
       fetchGoogleApi(path, cb);
     }
 
@@ -33,7 +34,7 @@ export async function fetchGoogleApi(path, cb) {
 
 export async function sendEmailToGoogle(payload, cb) {
   const url = `https://www.googleapis.com/gmail/v1/users/me/messages/send`;
-  const token = loadToken();
+  const token = loadToken(isTokenAuthorized);
 
   axios({
     url,
@@ -54,7 +55,7 @@ export async function sendEmailToGoogle(payload, cb) {
     if (statusCode === 401 && !retry) {
       retry = true;
       window.localStorage.removeItem('token');
-      loadToken();
+      loadToken(isTokenAuthorized);
       sendEmailToGoogle(payload, cb);
     }
 
