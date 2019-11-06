@@ -12,12 +12,9 @@ import "./sidebar.scss";
 const SidebarUI = ({ history, currentRoute, setCurrent }) => {
 
   const sideNavBarItems = [
-    { icon: 'dashboard', name: 'Dashboard', route: '/dashboard' },
     { icon: 'email', name: 'Email', route: '/email' },
     { icon: 'school', name: 'Student', route: '/student' },
-    { icon: 'people', name: 'Tutor', route: '/tutor' },
     { icon: 'dynamic_feed', name: 'Email Templates', route: '/template' },
-    { icon: 'perm_identity', name: 'Profile', route: '/profile' }
   ];
 
   const goTo = (route, idx) => {

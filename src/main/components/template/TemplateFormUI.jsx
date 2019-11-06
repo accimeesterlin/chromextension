@@ -1,6 +1,7 @@
 import React from "react";
 import { Editor } from "react-draft-wysiwyg";
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { stateToHTML } from "draft-js-export-html";
 
 import {
     TextField,
@@ -8,23 +9,50 @@ import {
     FormControlLabel,
   } from "@material-ui/core";
 
-function TemplateFormUI({ handleChange, handleChecked, includeSubject, templateEditor, onEditorStateChange }) {
+const TemplateFormUI = (props) => {
+  const onEditorStateChange = (editor) => {
+    const currentEditorContent = editor.getCurrentContent();
+    const editorSourceHTML = stateToHTML(currentEditorContent);
+    props.updateTemplateEditorInput(editor);
+    props.updateTemplateInput({ templateContent: editorSourceHTML });
+  };
+
+  const {
+    includeSubject,
+    templateEditor,
+    templateName,
+    templateSubject
+  } = props.templateInputs;
+
+
+  const handleChange = ({ target }) => {
+    const name = target.name;
+    const value = name === 'includeSubject' ? target.checked : target.value;
+
+    props.updateTemplateInput({
+      [name]: value
+    });
+  };
+  
+  
   return (
     <form>
       <TextField
         label="Template name:"
         fullWidth={true}
         name="templateName"
+        value={templateName}
         onChange={handleChange}
       />
 
       <FormControlLabel
         label="Include Subject"
         id="includeSubject"
+        name="includeSubject"
         control={
           <Checkbox
-            onChange={handleChecked("includeSubject")}
-            value="includeSubject"
+            checked={includeSubject}
+            onChange={handleChange}
             color="primary"
             inputProps={{
               "aria-label": "primary checkbox"
@@ -37,6 +65,7 @@ function TemplateFormUI({ handleChange, handleChecked, includeSubject, templateE
         <TextField
           label="Subject:"
           fullWidth={true}
+          value={templateSubject}
           name="templateSubject"
           onChange={handleChange}
         />
@@ -54,11 +83,9 @@ function TemplateFormUI({ handleChange, handleChecked, includeSubject, templateE
 }
 
 TemplateFormUI.propTypes = {
-    templateEditor: propTypes.object.isRequired,
-    onEditorStateChange: propTypes.func.isRequired,
-    handleChange: propTypes.func.isRequired,
-    handleChecked: propTypes.func.isRequired,
-    includeSubject: propTypes.bool,
+    updateTemplateInput: PropTypes.func.isRequired,
+    updateTemplateEditorInput: PropTypes.func.isRequired,
+    templateInputs: PropTypes.object.isRequired
 };
 
 

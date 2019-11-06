@@ -1,67 +1,29 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import { EditorState } from "draft-js";
-import { stateToHTML } from "draft-js-export-html";
-
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Card,
-  CardContent
-} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
+import { Button, CardContent } from "@material-ui/core";
 import SearchBox from "../common/searchBox/SearchBoxUI";
-
+import DisplayTemplates from "./DisplayTemplates";
+import TemplateModal from "./TemplateModal";
 import TemplateFormUI from "./TemplateFormUI";
+
 
 import "./template.scss";
 
 import Content from "../common/content/Content";
 
 export default class TemplateUI extends Component {
-  initialState = {
-    templateEditor: EditorState.createEmpty() || {},
-    templateContent: "",
-    isOpen: false,
-    includeSubject: false,
-    templateName: "",
-    templateSubject: "",
-    searchClient: {},
-    templates: this.props.templates || []
-  };
-  state = this.initialState;
 
-  onEditorStateChange = templateEditor => {
-    const currentEditorContent = templateEditor.getCurrentContent();
-    const editorSourceHTML = stateToHTML(currentEditorContent);
-    this.setState({
-      templateContent: editorSourceHTML,
-      templateEditor
-    });
-  };
+  constructor(props) {
+    super(props);
 
-  handleClickOpen = () => {
-    this.setState({ isOpen: true });
-  };
+    this.state = {
+      templates: props.templates
+    };
+  }
 
-  handleClose = () => {
-    this.setState({ isOpen: false });
-  };
 
-  handleChecked = name => event => {
-    this.setState({ ...this.state, [name]: event.target.checked });
-  };
-
-  handleChange = ({ target }) => {
-    this.setState({
-      [target.name]: target.value
-    });
-  };
-
-  addTemplate = event => {
+  submitTemplate = event => {
     event.preventDefault();
 
     const {
@@ -78,7 +40,6 @@ export default class TemplateUI extends Component {
       templateEditor
     });
 
-    this.setState({ isOpen: false });
   };
 
   searchTemplate = ({ target }) => {
@@ -89,85 +50,82 @@ export default class TemplateUI extends Component {
     this.setState({ templates });
   };
 
+  templateForm = () => {
+    return <TemplateFormUI
+      updateTemplateInput={this.props.updateTemplateInput}
+      templateInputs={this.props.templateInputs}
+      updateTemplateEditorInput={this.props.updateTemplateEditorInput}
+    />
+  }
+
+  searchTemplateByName = (value) => {
+    const filteredTemplate = this.props.templates.filter((template) => {
+      const { templateName } = template;
+      if (templateName.toLowerCase().indexOf(value) !== -1) {
+        return template
+      }
+    });
+
+    this.setState({ templates: filteredTemplate });
+  };
+
+  saveTemplate = () => {
+    const templateInputs = this.props.templateInputs;
+    this.props.addTemplate(templateInputs);
+    this.props.resetTemplateInputs();
+  };
+
+  isFormValid = () => {
+    const { templateEditor, templateName, templateSubject } = this.props.templateInputs;
+
+    if (templateName && templateSubject && templateEditor.getCurrentContent().hasText()) {
+      return true
+    }
+
+    return false;
+  };
+
   render() {
-    const { templateEditor, includeSubject } = this.state;
     // JSX
     return (
       <Content className="template" {...this.props}>
-        <Button
-          variant="outlined"
-          color="primary"
-          type="submit"
-          onClick={this.handleClickOpen}
+        <TemplateModal
+          updateTemplateInput={this.props.updateTemplateInput}
+          addTemplate={this.submitTemplate}
+          templateForm={this.templateForm}
+          saveTemplate={this.saveTemplate}
+          isFormValid={this.isFormValid}
         >
-          New Template
-        </Button>
-
-        <Dialog
-          open={this.state.isOpen}
-          onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">New Template</DialogTitle>
-          <DialogContent>
-            <TemplateFormUI
-              templateEditor={templateEditor}
-              onEditorStateChange={this.onEditorStateChange}
-              handleChange={this.handleChange}
-              handleChecked={this.handleChecked}
-              includeSubject={includeSubject}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.addTemplate} color="primary">
-              Save template
-            </Button>
-          </DialogActions>
-        </Dialog>
+          <Button
+            variant="outlined"
+            color="primary"
+            type="submit"
+          >
+            New Template
+          </Button>
+        </TemplateModal>
 
         <SearchBox
-          label="Search template" 
-          items={this.state.templates}
+          label="Search template"
           filterByName="templateName"
-          name="templateName">
-          <DisplayTemplates
-              handleClose={this.handleClose}
-              addTemplate={this.addTemplate}
-            />
-        </SearchBox>
+          searchTemplateByName={this.searchTemplateByName}
+          name="templateName"
+        />
+
+        <DisplayTemplates
+          handleClose={this.handleClose}
+          templates={this.props.templates}
+        />
       </Content>
     );
   }
 }
 
-function DisplayTemplates({ templateName, handleClose, addTemplate, num }) {
-  
-  return (
-    <Card className="template-card">
-      <CardContent id="template-card__content">
-        <Grid container justify="space-between" alignItems="center">
-          <Grid>
-            <p>
-              <b>{num}</b> - {templateName}
-            </p>
-          </Grid>
-          <Grid className="template-card__buttons">
-            <Button onClick={handleClose} color="primary">
-              Copy
-            </Button>
-            <Button onClick={addTemplate} color="primary">
-              Edit
-            </Button>
-
-            <Button onClick={addTemplate} color="primary">
-              Delete
-            </Button>
-          </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
-  );
-}
+TemplateUI.propTypes = {
+  templates: PropTypes.array.isRequired,
+  updateTemplateInput: PropTypes.func.isRequired,
+  updateTemplateEditorInput: PropTypes.func.isRequired,
+  addTemplate: PropTypes.func.isRequired,
+  resetTemplateInputs: PropTypes.func.isRequired,
+  templateInputs: PropTypes.object.isRequired,
+};
