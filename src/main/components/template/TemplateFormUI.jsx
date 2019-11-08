@@ -1,7 +1,6 @@
 import React from "react";
 
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from 'draft-js';
 import PropTypes from 'prop-types';
 import { stateToHTML } from "draft-js-export-html";
 
@@ -12,8 +11,6 @@ import {
   } from "@material-ui/core";
 
 const TemplateFormUI = (props) => {
-  const isEditMode = props.isEditMode;
-  
   const onEditorStateChange = (editor) => {
     const currentEditorContent = editor.getCurrentContent();
     const editorSourceHTML = stateToHTML(currentEditorContent);
@@ -28,10 +25,6 @@ const TemplateFormUI = (props) => {
     templateName,
     templateSubject
   } = props.templateInputs;
-
-  const content = templateEditor.getCurrentContent();
-  const editor = isEditMode ? EditorState.createWithContent(content) : templateEditor;
-
 
   return (
     <form>
@@ -70,8 +63,8 @@ const TemplateFormUI = (props) => {
       ) : null}
 
       <Editor
-        initialEditorState={editor}
-        defaultEditorState={editor}
+        initialEditorState={templateEditor}
+        editorState={templateEditor}
         toolbarClassName="template-toolbarClassName"
         wrapperClassName="template-wrapperClassName"
         editorClassName="template-editorClassName"
@@ -82,10 +75,8 @@ const TemplateFormUI = (props) => {
 }
 
 TemplateFormUI.propTypes = {
-    editTemplate: PropTypes.func.isRequired,
     handleChange: PropTypes.func.isRequired,
     handleEditor: PropTypes.func.isRequired,
-    templateInputs: PropTypes.object.isRequired,
     isEditMode: PropTypes.bool
 };
 

@@ -4,21 +4,14 @@ import selectn from "selectn";
 import { EditorState } from "draft-js";
 import PropTypes from "prop-types";
 
-import { Button, CardContent } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import TemplateFormUI from "./TemplateFormUI";
 
-import {
-  addTemplate,
-  updateTemplateInput,
-  updateTemplateEditorInput,
-  resetTemplateInputs,
-  editTemplate,
-  deleteTemplate
-} from "../../../actions/actionCreators";
+import { editTemplate, updateSelectedTemplate } from "../../../actions/actionCreators";
+import Content from "../common/content/Content";
 
 import "./template.scss";
 
-import Content from "../common/content/Content";
 
 class TemplateEditUI extends Component {
   state = {
@@ -27,49 +20,75 @@ class TemplateEditUI extends Component {
     templateEditor: EditorState.createEmpty() || {},
     templateId: "",
     templateName: "",
-    templateSubject: ""
+    templateSubject: "",
+    isLoaded: false,
+    templateIndex: 0
   };
+
   componentDidMount = () => {
-    // const templates = this.props.templates;
-    // const templateInputs = this.getCurrentTemplate(templates);
-    // this.setState({ ...templateInputs });
-  };
-  getCurrentTemplate = templates => {
-    const templateIndex = parseInt(this.props.match.params.id);
-    const currentTemplate = templates[templateIndex];
-    return currentTemplate;
+    if (!this.state.isLoaded) {
+      const { match, templates } = this.props;
+      const templateIndex = parseInt(match.params.id);
+      const currentTemplate = templates[templateIndex];
+      this.setState({
+        ...currentTemplate,
+        templateIndex,
+        isLoaded: true
+      });
+    }
   };
 
 
-  handleEditChange = (name, value) => {
+  handleChange = ({ target }) => {
+    const name = target.name;
+    const value = name === "includeSubject" ? target.checked : target.value;
+
     this.setState({
       [name]: value
     });
   };
+
+  handleEditor = (editor, content) => {
+    this.setState({
+      templateEditor: editor,
+      templateContent: content
+    });
+  };
+
+  updateTemplate = event => {
+    event.preventDefault();
+    const templateIndex = this.state.templateIndex;
+    this.props.updateSelectedTemplate(this.state, templateIndex);
+  };
+
   render() {
     // JSX
-    console.log("Props: ", this.props);
     return (
       <Content className="template-edit" {...this.props}>
-        <h1>I am the edit component</h1>
         <TemplateFormUI
-          updateTemplateInput={this.props.updateTemplateInput}
           templateInputs={this.state}
-          handleEditChange={this.handleEditChange}
           isEditMode={true}
+          handleChange={this.handleChange}
+          handleEditor={this.handleEditor}
           editTemplate={this.props.editTemplate}
-          updateTemplateEditorInput={this.props.updateTemplateEditorInput}
         />
 
-        <Button variant="outlined" color="primary">
-            Update template
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={this.updateTemplate}
+        >
+          Update template
         </Button>
       </Content>
     );
   }
 }
 
-TemplateEditUI.propTypes = {};
+TemplateEditUI.propTypes = {
+  match: PropTypes.object.isRequired,
+  templates: PropTypes.array.isRequired
+};
 
 const mapStateToProps = state => {
   const templates = selectn("templates.listTemplates", state);
@@ -81,17 +100,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateTemplateEditorInput: editor => {
-      dispatch(updateTemplateEditorInput(editor));
-    },
-
-    updateTemplateInput: userInput => {
-      dispatch(updateTemplateInput(userInput));
-    },
-
     editTemplate: id => {
       dispatch(editTemplate(id));
-    }
+    },
+  
+    updateSelectedTemplate: (template, index) => {
+      dispatch(updateSelectedTemplate(template, index));
+    },
+    
   };
 };
 

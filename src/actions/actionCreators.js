@@ -66,6 +66,16 @@ export const deleteTemplate = (index) => ({
     payload: index
 });
 
+export const updateSelectedTemplate = (template, templateIndex) => {
+    return {
+        type: types.UPDATE_SELECTED_TEMPLATE,
+        payload: {
+            template,
+            templateIndex
+        }
+    }
+};
+
 
 
 export const updateCurrentTemplate = (currentTemplate) => {
@@ -84,26 +94,6 @@ export const editTemplate = (template) => {
     };
 };
 
-
-export const updateTemplateInput = (data) => {
-    return {
-        type: types.UPDATE_TEMPLATE_INPUT,
-        payload: data
-    };
-};
-
-export const updateTemplateEditorInput = (editor) => {
-    return {
-        type: types.UPDATE_TEMPLATE_EDITOR_INPUT,
-        payload: editor
-    }
-};
-
-export const resetTemplateInputs = () => {
-    return {
-        type: types.RESET_TEMPLATE_INPUTS
-    };
-};
 
 
 // Email

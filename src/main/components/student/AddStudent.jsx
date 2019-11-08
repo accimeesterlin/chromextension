@@ -78,7 +78,6 @@ const AddStudent = props => {
         <InputLabel htmlFor="student-timezone">Student Timezone</InputLabel>
         <Select
           value={studentTimeZone}
-          autoWidth={true}
           onChange={e => selectTimeZone(e.target)}
           autoWidth
           name="studentTimeZone"

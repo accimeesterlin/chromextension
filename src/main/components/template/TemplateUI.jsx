@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { EditorState } from "draft-js";
-import { Button, CardContent } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
 import SearchBox from "../common/searchBox/SearchBoxUI";
 import DisplayTemplates from "./DisplayTemplates";
@@ -78,9 +78,7 @@ export default class TemplateUI extends Component {
   templateForm = () => {
     return (
       <TemplateFormUI
-        updateTemplateInput={this.props.updateTemplateInput}
         templateInputs={this.state.templateInputs}
-        updateTemplateEditorInput={this.props.updateTemplateEditorInput}
         handleChange={this.handleChange}
         handleEditor={this.handleEditor}
       />
@@ -91,7 +89,7 @@ export default class TemplateUI extends Component {
     const templates = this.props.templates;
     if (!templates.length) return [];
 
-    const filteredTemplate = this.props.templates.filter(template => {
+    const filteredTemplate = templates.filter(template => {
       const { templateName } = template;
       if (templateName && templateName.toLowerCase().indexOf(value) !== -1) {
         return template;
@@ -166,10 +164,6 @@ export default class TemplateUI extends Component {
 
 TemplateUI.propTypes = {
   templates: PropTypes.array.isRequired,
-  updateTemplateInput: PropTypes.func.isRequired,
-  updateTemplateEditorInput: PropTypes.func.isRequired,
   addTemplate: PropTypes.func.isRequired,
-  deleteTemplate: PropTypes.func.isRequired,
-  resetTemplateInputs: PropTypes.func.isRequired,
-  templateInputs: PropTypes.object.isRequired
+  deleteTemplate: PropTypes.func.isRequired
 };

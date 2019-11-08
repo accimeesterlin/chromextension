@@ -18,14 +18,6 @@ const initialState = {
         templateSubject: '',
         templateName: '',
         templateEditor: EditorState.createEmpty() || {}
-    },
-    templateInputs: {
-        templateId: '',
-        templateContent: '',
-        templateSubject: '',
-        templateName: '',
-        templateEditor: EditorState.createEmpty() || {},
-        includeSubject: false
     }
 }
 
@@ -34,6 +26,8 @@ const deleteTemplateByIndex = (templates, index) => {
     const filteredTemplates = templates.filter((template, key) => key !== index);
     return filteredTemplates;
 };
+
+
 
 const templateReducer = (state = initialState, action) => {
     const newState = { ...state };
@@ -63,42 +57,18 @@ const templateReducer = (state = initialState, action) => {
                 ...newState
             }
 
+        case types.UPDATE_SELECTED_TEMPLATE:
+            const index = action.payload.templateIndex;
+            const template = action.payload.template;
+            newState.listTemplates[index] = template;
+            return {
+                ...newState,
+            };
+
         case types.LOAD_DATA:
             newState.listTemplates = action.templates;
             return {
                 ...newState
-            }
-
-        case types.UPDATE_TEMPLATE_INPUT:
-            return {
-                ...newState,
-                templateInputs: {
-                    ...newState.templateInputs,
-                    ...action.payload
-                }
-            };
-
-        case types.UPDATE_TEMPLATE_EDITOR_INPUT:
-            return {
-                ...newState,
-                templateInputs: {
-                    ...newState.templateInputs,
-                    templateEditor: action.payload
-                }
-
-            }
-        
-        case types.RESET_TEMPLATE_INPUTS:
-            return {
-                ...newState,
-                templateInputs: {
-                    templateId: '',
-                    templateContent: '',
-                    templateSubject: '',
-                    templateName: '',
-                    templateEditor: EditorState.createEmpty() || {},
-                    includeSubject: false
-                }
             }
 
         default:

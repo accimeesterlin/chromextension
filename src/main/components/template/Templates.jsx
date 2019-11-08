@@ -3,9 +3,6 @@ import selectn from 'selectn';
 import TemplateUI from './TemplateUI';
 import {
     addTemplate,
-    updateTemplateInput,
-    updateTemplateEditorInput,
-    resetTemplateInputs,
     deleteTemplate
 } from '../../../actions/actionCreators';
 
@@ -13,11 +10,9 @@ import {
 
 const mapStateToProps = (state) => {
     const templates = selectn('templates.listTemplates', state);
-    const templateInputs = selectn('templates.templateInputs', state);
 
     return {
-        templates,
-        templateInputs
+        templates
     };
 };
 
@@ -32,18 +27,6 @@ const mapDispatchToProps = (dispatch) => {
         deleteTemplate: (index) => {
             dispatch(deleteTemplate(index));
         },
-
-        updateTemplateInput: (userInput) => {
-            dispatch(updateTemplateInput(userInput));
-        },
-
-        updateTemplateEditorInput: (editor) => {
-            dispatch(updateTemplateEditorInput(editor));
-        },
-
-        resetTemplateInputs: () => {
-            dispatch(resetTemplateInputs());
-        }
     };
 };
 
