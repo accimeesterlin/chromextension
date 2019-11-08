@@ -1,20 +1,11 @@
 import React, { Component } from "react";
-
+import PropTypes from "prop-types";
 import { EditorState } from "draft-js";
-import { stateToHTML } from "draft-js-export-html";
+import { Button } from "@material-ui/core";
 
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Card,
-  CardContent
-} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
 import SearchBox from "../common/searchBox/SearchBoxUI";
-
+import DisplayTemplates from "./DisplayTemplates";
+import TemplateModal from "./TemplateModal";
 import TemplateFormUI from "./TemplateFormUI";
 
 import "./template.scss";
@@ -22,152 +13,157 @@ import "./template.scss";
 import Content from "../common/content/Content";
 
 export default class TemplateUI extends Component {
-  initialState = {
-    templateEditor: EditorState.createEmpty() || {},
-    templateContent: "",
-    isOpen: false,
-    includeSubject: false,
-    templateName: "",
-    templateSubject: "",
-    searchClient: {},
-    templates: this.props.templates || []
-  };
-  state = this.initialState;
+  constructor(props) {
+    super(props);
 
-  onEditorStateChange = templateEditor => {
-    const currentEditorContent = templateEditor.getCurrentContent();
-    const editorSourceHTML = stateToHTML(currentEditorContent);
-    this.setState({
-      templateContent: editorSourceHTML,
-      templateEditor
-    });
-  };
+    this.state = {
+      templates: this.props.templates,
+      templateSearchResults: [],
+      templateInputs: {
+        includeSubject: false,
+        templateContent: "",
+        templateEditor: EditorState.createEmpty() || {},
+        templateId: "",
+        templateName: "",
+        templateSubject: ""
+      },
+      isSearchMode: false,
+      searchValue: ''
+    };
+  }
 
-  handleClickOpen = () => {
-    this.setState({ isOpen: true });
-  };
+  submitTemplate = event => {
+    event.preventDefault();
 
-  handleClose = () => {
-    this.setState({ isOpen: false });
-  };
-
-  handleChecked = name => event => {
-    this.setState({ ...this.state, [name]: event.target.checked });
+    this.props.addTemplate(this.state.templateInputs);
   };
 
   handleChange = ({ target }) => {
-    this.setState({
-      [target.name]: target.value
+    const name = target.name;
+    const value = name === "includeSubject" ? target.checked : target.value;
+
+    this.setState((state) => {
+      return {
+        templateInputs: {
+          ...state.templateInputs,
+          [name]: value
+        }
+      }
     });
   };
 
-  addTemplate = event => {
-    event.preventDefault();
-
-    const {
-      templateContent,
-      templateName,
-      templateSubject,
-      templateEditor
-    } = this.state;
-
-    this.props.addTemplate({
-      templateContent,
-      templateSubject,
-      templateName,
-      templateEditor
+  handleEditor = (editor, content) => {
+    this.setState((state) => {
+      return {
+        templateInputs: {
+          ...state.templateInputs,
+          templateContent: content,
+          templateEditor: editor
+        }
+      }
     });
-
-    this.setState({ isOpen: false });
   };
 
-  searchTemplate = ({ target }) => {
-    const value = target.value.toLowerCase();
-    const templates = this.props.templates.filter(({ templateName }) =>
-      templateName.toLowerCase().includes(value)
+  static getDerivedStateFromProps(props, state) {
+    return {
+      templates: props.templates
+    };
+  }
+
+  templateForm = () => {
+    return (
+      <TemplateFormUI
+        templateInputs={this.state.templateInputs}
+        handleChange={this.handleChange}
+        handleEditor={this.handleEditor}
+      />
     );
-    this.setState({ templates });
+  };
+
+  handleSearchValue = (value) => {
+    this.setState({ searchValue: value });
+  };
+
+  searchTemplate = () => {
+    const templates = this.props.templates;
+    const value = this.state.searchValue;
+    if (!templates.length) return [];
+
+    const filteredTemplate = templates.filter(template => {
+      const { templateName } = template;
+      if (templateName && templateName.toLowerCase().indexOf(value) !== -1) {
+        return template;
+      }
+    });
+
+    return filteredTemplate;
+  };
+
+  saveTemplate = () => {
+    const templateInputs = this.state.templateInputs;
+    this.props.addTemplate(templateInputs);
+    this.setState({
+      templateInputs: {
+        includeSubject: false,
+        templateContent: "",
+        templateEditor: EditorState.createEmpty() || {},
+        templateId: "",
+        templateName: "",
+        templateSubject: ""
+      }
+    });
+  };
+
+  isFormValid = () => {
+    const { templateEditor, templateName } = this.state.templateInputs;
+
+    if (templateName &&  templateEditor.getCurrentContent().hasText()) {
+      return true;
+    }
+
+    return false;
+  };
+
+  editTemplate = index => {
+    this.props.history.push(`/new/template/${index}`);
   };
 
   render() {
-    const { templateEditor, includeSubject } = this.state;
     // JSX
     return (
       <Content className="template" {...this.props}>
-        <Button
-          variant="outlined"
-          color="primary"
-          type="submit"
-          onClick={this.handleClickOpen}
+        <TemplateModal
+          updateTemplateInput={this.props.updateTemplateInput}
+          addTemplate={this.submitTemplate}
+          templateForm={this.templateForm}
+          saveTemplate={this.saveTemplate}
+          isFormValid={this.isFormValid}
         >
-          New Template
-        </Button>
-
-        <Dialog
-          open={this.state.isOpen}
-          onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">New Template</DialogTitle>
-          <DialogContent>
-            <TemplateFormUI
-              templateEditor={templateEditor}
-              onEditorStateChange={this.onEditorStateChange}
-              handleChange={this.handleChange}
-              handleChecked={this.handleChecked}
-              includeSubject={includeSubject}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.addTemplate} color="primary">
-              Save template
-            </Button>
-          </DialogActions>
-        </Dialog>
+          <Button variant="outlined" color="primary" type="submit">
+            New Template
+          </Button>
+        </TemplateModal>
 
         <SearchBox
-          label="Search template" 
-          items={this.state.templates}
+          label="Search template"
           filterByName="templateName"
-          name="templateName">
-          <DisplayTemplates
-              handleClose={this.handleClose}
-              addTemplate={this.addTemplate}
-            />
-        </SearchBox>
+          handleSearchValue={this.handleSearchValue}
+          name="templateName"
+        />
+
+        <DisplayTemplates
+          handleClose={this.handleClose}
+          templates={this.searchTemplate()}
+          deleteTemplate={this.props.deleteTemplate}
+          editTemplate={this.editTemplate}
+        />
       </Content>
     );
   }
 }
 
-function DisplayTemplates({ templateName, handleClose, addTemplate, num }) {
-  
-  return (
-    <Card className="template-card">
-      <CardContent id="template-card__content">
-        <Grid container justify="space-between" alignItems="center">
-          <Grid>
-            <p>
-              <b>{num}</b> - {templateName}
-            </p>
-          </Grid>
-          <Grid className="template-card__buttons">
-            <Button onClick={handleClose} color="primary">
-              Copy
-            </Button>
-            <Button onClick={addTemplate} color="primary">
-              Edit
-            </Button>
-
-            <Button onClick={addTemplate} color="primary">
-              Delete
-            </Button>
-          </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
-  );
-}
+TemplateUI.propTypes = {
+  templates: PropTypes.array.isRequired,
+  addTemplate: PropTypes.func.isRequired,
+  deleteTemplate: PropTypes.func.isRequired
+};

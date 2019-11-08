@@ -5,6 +5,7 @@ import Profile from './profile/Profile';
 import Calendar from './calendar/Calendar';
 import Email from './email/Email';
 import Template from './template/Templates';
+import TemplateEdit from './template/TemplateEdit';
 import Dashboard from './dashboard/Dashboard';
 
 
@@ -16,5 +17,6 @@ export {
     Calendar,
     Email,
     Template,
-    Dashboard
+    Dashboard,
+    TemplateEdit
 }

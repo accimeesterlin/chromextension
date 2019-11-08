@@ -61,11 +61,36 @@ export const addTemplate = (template) => ({
     payload: template
 });
 
+export const deleteTemplate = (index) => ({
+    type: types.DELETE_TEMPLATE,
+    payload: index
+});
+
+export const updateSelectedTemplate = (template, templateIndex) => {
+    return {
+        type: types.UPDATE_SELECTED_TEMPLATE,
+        payload: {
+            template,
+            templateIndex
+        }
+    }
+};
+
+
+
 export const updateCurrentTemplate = (currentTemplate) => {
 
     return {
         type: types.UPDATE_CURRENT_TEMPLATE,
         payload: currentTemplate
+    };
+};
+
+export const editTemplate = (template) => {
+
+    return {
+        type: types.EDIT_TEMPLATE,
+        payload: template
     };
 };
 

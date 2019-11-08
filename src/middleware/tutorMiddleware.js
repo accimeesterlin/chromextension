@@ -87,6 +87,7 @@ const tutorMiddleware = (store) => (next) => async (action) => {
             break;
 
         case types.ADD_TEMPLATE:
+        case types.DELETE_TEMPLATE:
             const listTemplates = selectn('templates.listTemplates', state);
             const convertListTemplates = listTemplates.map((template) => {
                 return {

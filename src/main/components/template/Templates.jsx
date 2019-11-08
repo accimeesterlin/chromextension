@@ -1,12 +1,15 @@
 import { connect } from 'react-redux';
+import selectn from 'selectn';
 import TemplateUI from './TemplateUI';
-import { addTemplate } from '../../../actions/actionCreators';
-import { getTemplates } from '../../selectors/templateSelectors';
+import {
+    addTemplate,
+    deleteTemplate
+} from '../../../actions/actionCreators';
 
 
 
 const mapStateToProps = (state) => {
-    const templates = getTemplates(state);
+    const templates = selectn('templates.listTemplates', state);
 
     return {
         templates
@@ -19,7 +22,11 @@ const mapDispatchToProps = (dispatch) => {
     return {
         addTemplate: (template) => {
             dispatch(addTemplate(template));
-        }
+        },
+
+        deleteTemplate: (index) => {
+            dispatch(deleteTemplate(index));
+        },
     };
 };
 

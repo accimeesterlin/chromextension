@@ -75,3 +75,22 @@
 .template-card:hover .template-card__buttons {
     opacity: 1;
 }
+
+.search-box {
+    margin-bottom: 25px;
+}
+
+.display-templates {
+    display: flex;
+    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    padding: 0px 10px;
+    margin-top: 10px;
+
+    button {
+        margin-top: 20px;
+    }
+}

@@ -1,55 +1,33 @@
-import React, { Component } from "react";
+import React from "react";
 import propTypes from 'prop-types';
 import { TextField } from "@material-ui/core";
 
-export default class SearchBoxUI extends Component {
-  constructor(props) {
-    super(props);
+const SearchBoxUI = (props) => {
 
-    this.state = {
-      items: props.items || []
-    };
+  const handleChange = event => {
+    const value = event.target.value;
+
+    props.handleSearchValue(value);
   }
 
-
-  searchTemplate = ({ target }) => {
-    const value = target.value.toLowerCase();
-    const filterByName = this.props.filterByName
-
-    const items = this.props.items
-      .filter((item) => item[filterByName]
-      .toLowerCase()
-      .includes(value)
-    );
-    this.setState({ items });
-  };
-  render() {
-    const { label, name, children } = this.props;
-    const { items } = this.state;
-    const childrenWithProps = React.Children.map(children, child => {
-      return items.map((element, num) => (
-        React.cloneElement(child, { ...element, num: num + 1 })
-      ));
-    });
-    // JSX
-    return (
-      <div>
-        <TextField
-          label={label}
-          name={name}
-          onChange={this.searchTemplate}
-        />
-        
-        {childrenWithProps}
-      </div>
-    );
-  }
+  return (
+    <div className="search-box">
+      <TextField
+        label={props.label}
+        name={props.name}
+        onChange={handleChange}
+      />
+      
+    </div>
+  );
 }
 
 
 SearchBoxUI.propTypes = {
   name: propTypes.string,
   label: propTypes.string,
-  items: propTypes.array.isRequired,
-  filterByName: propTypes.string.isRequired
+  filterByName: propTypes.string.isRequired,
+  handleSearchValue: propTypes.func.isRequired,
 };
+
+export default SearchBoxUI;
