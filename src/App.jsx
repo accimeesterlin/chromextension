@@ -15,7 +15,8 @@ import {
   Calendar,
   Email,
   Template,
-  Dashboard
+  Dashboard,
+  TemplateEdit
 } from "./main/components";
 
 // Sidebar App
@@ -70,7 +71,8 @@ export class App extends Component {
 
           {/* New Design for the Chrome Web Page */}
           <Route path="/new/home" component={Home} />
-          <Route path="/new/template" component={Template} />
+          <Route exact path="/new/template" component={Template} />
+          <Route exact path="/new/template/:id" component={TemplateEdit} />
           <Route path="/new/student" component={Student} />
           <Route path="/new/profile" component={Profile} />
           <Route path="/new/calendar" component={Calendar} />

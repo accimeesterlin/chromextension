@@ -22,10 +22,10 @@ const DisplayTemplates = props => {
   return <div>
       <h2>Total Templates:  {props.templates.length}</h2>
       {props.templates.map(({ templateName, templateEditor }, key) => (
-        <div className="display-templates" key={key}>
+        <div className="display-templates" key={key} onClick={() => props.editTemplate(key)}>
           <p>{templateName}</p>
           <p>{getTemplateText(templateEditor)}</p>
-          <Button>Delete</Button>
+          <Button onClick={() => props.deleteTemplate(key)}>Delete</Button>
         </div>
       ))}
   </div>;
@@ -33,7 +33,9 @@ const DisplayTemplates = props => {
 
 
 DisplayTemplates.propTypes = {
-    templates: PropTypes.array.isRequired
+    templates: PropTypes.array.isRequired,
+    deleteTemplate: PropTypes.func.isRequired,
+    editTemplate: PropTypes.func.isRequired
 }
 
 export default DisplayTemplates;

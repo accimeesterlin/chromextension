@@ -5,7 +5,8 @@ import {
     addTemplate,
     updateTemplateInput,
     updateTemplateEditorInput,
-    resetTemplateInputs
+    resetTemplateInputs,
+    deleteTemplate
 } from '../../../actions/actionCreators';
 
 
@@ -27,7 +28,11 @@ const mapDispatchToProps = (dispatch) => {
         addTemplate: (template) => {
             dispatch(addTemplate(template));
         },
-        
+
+        deleteTemplate: (index) => {
+            dispatch(deleteTemplate(index));
+        },
+
         updateTemplateInput: (userInput) => {
             dispatch(updateTemplateInput(userInput));
         },

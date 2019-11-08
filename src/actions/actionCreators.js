@@ -61,6 +61,13 @@ export const addTemplate = (template) => ({
     payload: template
 });
 
+export const deleteTemplate = (index) => ({
+    type: types.DELETE_TEMPLATE,
+    payload: index
+});
+
+
+
 export const updateCurrentTemplate = (currentTemplate) => {
 
     return {
@@ -68,6 +75,15 @@ export const updateCurrentTemplate = (currentTemplate) => {
         payload: currentTemplate
     };
 };
+
+export const editTemplate = (template) => {
+
+    return {
+        type: types.EDIT_TEMPLATE,
+        payload: template
+    };
+};
+
 
 export const updateTemplateInput = (data) => {
     return {

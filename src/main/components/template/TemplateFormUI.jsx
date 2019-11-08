@@ -1,5 +1,7 @@
 import React from "react";
+
 import { Editor } from "react-draft-wysiwyg";
+import { EditorState } from 'draft-js';
 import PropTypes from 'prop-types';
 import { stateToHTML } from "draft-js-export-html";
 
@@ -10,13 +12,16 @@ import {
   } from "@material-ui/core";
 
 const TemplateFormUI = (props) => {
+  const isEditMode = props.isEditMode;
+  
   const onEditorStateChange = (editor) => {
     const currentEditorContent = editor.getCurrentContent();
     const editorSourceHTML = stateToHTML(currentEditorContent);
-    props.updateTemplateEditorInput(editor);
-    props.updateTemplateInput({ templateContent: editorSourceHTML });
+    props.handleEditor(editor, editorSourceHTML);
   };
 
+  if (!props.templateInputs) return 'No matching template';
+  
   const {
     includeSubject,
     templateEditor,
@@ -24,17 +29,10 @@ const TemplateFormUI = (props) => {
     templateSubject
   } = props.templateInputs;
 
+  const content = templateEditor.getCurrentContent();
+  const editor = isEditMode ? EditorState.createWithContent(content) : templateEditor;
 
-  const handleChange = ({ target }) => {
-    const name = target.name;
-    const value = name === 'includeSubject' ? target.checked : target.value;
 
-    props.updateTemplateInput({
-      [name]: value
-    });
-  };
-  
-  
   return (
     <form>
       <TextField
@@ -42,7 +40,7 @@ const TemplateFormUI = (props) => {
         fullWidth={true}
         name="templateName"
         value={templateName}
-        onChange={handleChange}
+        onChange={props.handleChange}
       />
 
       <FormControlLabel
@@ -51,8 +49,8 @@ const TemplateFormUI = (props) => {
         name="includeSubject"
         control={
           <Checkbox
-            checked={includeSubject}
-            onChange={handleChange}
+            checked={includeSubject || false}
+            onChange={props.handleChange}
             color="primary"
             inputProps={{
               "aria-label": "primary checkbox"
@@ -67,12 +65,13 @@ const TemplateFormUI = (props) => {
           fullWidth={true}
           value={templateSubject}
           name="templateSubject"
-          onChange={handleChange}
+          onChange={props.handleChange}
         />
       ) : null}
 
       <Editor
-        initialEditorState={templateEditor}
+        initialEditorState={editor}
+        defaultEditorState={editor}
         toolbarClassName="template-toolbarClassName"
         wrapperClassName="template-wrapperClassName"
         editorClassName="template-editorClassName"
@@ -83,9 +82,11 @@ const TemplateFormUI = (props) => {
 }
 
 TemplateFormUI.propTypes = {
-    updateTemplateInput: PropTypes.func.isRequired,
-    updateTemplateEditorInput: PropTypes.func.isRequired,
-    templateInputs: PropTypes.object.isRequired
+    editTemplate: PropTypes.func.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    handleEditor: PropTypes.func.isRequired,
+    templateInputs: PropTypes.object.isRequired,
+    isEditMode: PropTypes.bool
 };
 
 

@@ -1,46 +1,71 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
+import { EditorState } from "draft-js";
 import { Button, CardContent } from "@material-ui/core";
+
 import SearchBox from "../common/searchBox/SearchBoxUI";
 import DisplayTemplates from "./DisplayTemplates";
 import TemplateModal from "./TemplateModal";
 import TemplateFormUI from "./TemplateFormUI";
-
 
 import "./template.scss";
 
 import Content from "../common/content/Content";
 
 export default class TemplateUI extends Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-      templates: props.templates
+      templates: this.props.templates,
+      templateInputs: {
+        includeSubject: false,
+        templateContent: "",
+        templateEditor: EditorState.createEmpty() || {},
+        templateId: "",
+        templateName: "",
+        templateSubject: ""
+      }
     };
   }
-
 
   submitTemplate = event => {
     event.preventDefault();
 
-    const {
-      templateContent,
-      templateName,
-      templateSubject,
-      templateEditor
-    } = this.state;
-
-    this.props.addTemplate({
-      templateContent,
-      templateSubject,
-      templateName,
-      templateEditor
-    });
-
+    this.props.addTemplate(this.state.templateInputs);
   };
+
+  handleChange = ({ target }) => {
+    const name = target.name;
+    const value = name === "includeSubject" ? target.checked : target.value;
+
+    this.setState((state) => {
+      return {
+        templateInputs: {
+          ...state.templateInputs,
+          [name]: value
+        }
+      }
+    });
+  };
+
+  handleEditor = (editor, content) => {
+    this.setState((state) => {
+      return {
+        templateInputs: {
+          ...state.templateInputs,
+          templateContent: content,
+          templateEditor: editor
+        }
+      }
+    });
+  };
+
+  static getDerivedStateFromProps(props, state) {
+    return {
+      templates: props.templates
+    };
+  }
 
   searchTemplate = ({ target }) => {
     const value = target.value.toLowerCase();
@@ -51,18 +76,25 @@ export default class TemplateUI extends Component {
   };
 
   templateForm = () => {
-    return <TemplateFormUI
-      updateTemplateInput={this.props.updateTemplateInput}
-      templateInputs={this.props.templateInputs}
-      updateTemplateEditorInput={this.props.updateTemplateEditorInput}
-    />
-  }
+    return (
+      <TemplateFormUI
+        updateTemplateInput={this.props.updateTemplateInput}
+        templateInputs={this.state.templateInputs}
+        updateTemplateEditorInput={this.props.updateTemplateEditorInput}
+        handleChange={this.handleChange}
+        handleEditor={this.handleEditor}
+      />
+    );
+  };
 
-  searchTemplateByName = (value) => {
-    const filteredTemplate = this.props.templates.filter((template) => {
+  searchTemplateByName = value => {
+    const templates = this.props.templates;
+    if (!templates.length) return [];
+
+    const filteredTemplate = this.props.templates.filter(template => {
       const { templateName } = template;
-      if (templateName.toLowerCase().indexOf(value) !== -1) {
-        return template
+      if (templateName && templateName.toLowerCase().indexOf(value) !== -1) {
+        return template;
       }
     });
 
@@ -70,19 +102,32 @@ export default class TemplateUI extends Component {
   };
 
   saveTemplate = () => {
-    const templateInputs = this.props.templateInputs;
+    const templateInputs = this.state.templateInputs;
     this.props.addTemplate(templateInputs);
-    this.props.resetTemplateInputs();
+    this.setState({
+      templateInputs: {
+        includeSubject: false,
+        templateContent: "",
+        templateEditor: EditorState.createEmpty() || {},
+        templateId: "",
+        templateName: "",
+        templateSubject: ""
+      }
+    });
   };
 
   isFormValid = () => {
-    const { templateEditor, templateName, templateSubject } = this.props.templateInputs;
+    const { templateEditor, templateName } = this.state.templateInputs;
 
-    if (templateName && templateSubject && templateEditor.getCurrentContent().hasText()) {
-      return true
+    if (templateName &&  templateEditor.getCurrentContent().hasText()) {
+      return true;
     }
 
     return false;
+  };
+
+  editTemplate = index => {
+    this.props.history.push(`/new/template/${index}`);
   };
 
   render() {
@@ -96,11 +141,7 @@ export default class TemplateUI extends Component {
           saveTemplate={this.saveTemplate}
           isFormValid={this.isFormValid}
         >
-          <Button
-            variant="outlined"
-            color="primary"
-            type="submit"
-          >
+          <Button variant="outlined" color="primary" type="submit">
             New Template
           </Button>
         </TemplateModal>
@@ -114,7 +155,9 @@ export default class TemplateUI extends Component {
 
         <DisplayTemplates
           handleClose={this.handleClose}
-          templates={this.props.templates}
+          templates={this.state.templates}
+          deleteTemplate={this.props.deleteTemplate}
+          editTemplate={this.editTemplate}
         />
       </Content>
     );
@@ -126,6 +169,7 @@ TemplateUI.propTypes = {
   updateTemplateInput: PropTypes.func.isRequired,
   updateTemplateEditorInput: PropTypes.func.isRequired,
   addTemplate: PropTypes.func.isRequired,
+  deleteTemplate: PropTypes.func.isRequired,
   resetTemplateInputs: PropTypes.func.isRequired,
-  templateInputs: PropTypes.object.isRequired,
+  templateInputs: PropTypes.object.isRequired
 };
