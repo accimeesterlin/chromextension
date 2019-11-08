@@ -18,6 +18,7 @@ export default class TemplateUI extends Component {
 
     this.state = {
       templates: this.props.templates,
+      templateSearchResults: [],
       templateInputs: {
         includeSubject: false,
         templateContent: "",
@@ -25,7 +26,9 @@ export default class TemplateUI extends Component {
         templateId: "",
         templateName: "",
         templateSubject: ""
-      }
+      },
+      isSearchMode: false,
+      searchValue: ''
     };
   }
 
@@ -67,14 +70,6 @@ export default class TemplateUI extends Component {
     };
   }
 
-  searchTemplate = ({ target }) => {
-    const value = target.value.toLowerCase();
-    const templates = this.props.templates.filter(({ templateName }) =>
-      templateName.toLowerCase().includes(value)
-    );
-    this.setState({ templates });
-  };
-
   templateForm = () => {
     return (
       <TemplateFormUI
@@ -85,8 +80,13 @@ export default class TemplateUI extends Component {
     );
   };
 
-  searchTemplateByName = value => {
+  handleSearchValue = (value) => {
+    this.setState({ searchValue: value });
+  };
+
+  searchTemplate = () => {
     const templates = this.props.templates;
+    const value = this.state.searchValue;
     if (!templates.length) return [];
 
     const filteredTemplate = templates.filter(template => {
@@ -96,7 +96,7 @@ export default class TemplateUI extends Component {
       }
     });
 
-    this.setState({ templates: filteredTemplate });
+    return filteredTemplate;
   };
 
   saveTemplate = () => {
@@ -147,13 +147,13 @@ export default class TemplateUI extends Component {
         <SearchBox
           label="Search template"
           filterByName="templateName"
-          searchTemplateByName={this.searchTemplateByName}
+          handleSearchValue={this.handleSearchValue}
           name="templateName"
         />
 
         <DisplayTemplates
           handleClose={this.handleClose}
-          templates={this.state.templates}
+          templates={this.searchTemplate()}
           deleteTemplate={this.props.deleteTemplate}
           editTemplate={this.editTemplate}
         />

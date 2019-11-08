@@ -7,7 +7,7 @@ const SearchBoxUI = (props) => {
   const handleChange = event => {
     const value = event.target.value;
 
-    props.searchTemplateByName(value);
+    props.handleSearchValue(value);
   }
 
   return (
@@ -27,7 +27,7 @@ SearchBoxUI.propTypes = {
   name: propTypes.string,
   label: propTypes.string,
   filterByName: propTypes.string.isRequired,
-  searchTemplateByName: propTypes.func.isRequired,
+  handleSearchValue: propTypes.func.isRequired,
 };
 
 export default SearchBoxUI;
