@@ -7,8 +7,8 @@ const DisplayStudents = (props) => {
 
   return (
     <div className="display-students">
-      {props.students.map((student) => (
-        <div className="student-profile">
+      {props.students.map((student, index) => (
+        <div className="student-profile" key={index} onClick={() => props.editStudent(index)}>
           <p>{student.name}</p>
           <p>{student.email}</p>
           <p>{student.githubUsername}</p>

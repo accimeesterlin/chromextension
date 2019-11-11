@@ -23,6 +23,14 @@ function studentReducer(state = initialState, action) {
                 ...newState,
                 ...action.students
             ]
+
+        case types.UPDATE_STUDENT:
+            const index = action.payload.studentIndex;
+            const student = action.payload;
+            newState[index] = student;
+            return [
+                ...newState
+            ];
         default:
             return state;
     };

@@ -3,6 +3,7 @@ export const INIT_APP = 'INIT_APP';
 export const LOAD_DATA = 'LOAD_DATA';
 // Students
 export const ADD_STUDENT = 'ADD_STUDENT';
+export const UPDATE_STUDENT = 'UPDATE_STUDENT';
 export const REMOVE_STUDENT = 'REMOVE_STUDENT';
 export const FETCH_STUDENTS = 'FETCH_STUDENTS';
 export const LOAD_STUDENTS_FROM_GOOGLE_SHEETS = 'LOAD_STUDENTS_FROM_GOOGLE_SHEETS';

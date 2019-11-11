@@ -50,6 +50,10 @@ export default class StudentUI extends Component {
     this.setState({ isAddStudentViewEnabled: false });
   };
 
+  editStudent = (index) => {
+    this.props.history.push(`/new/student/${index}`);
+  };
+
   render() {
     // JSX
 
@@ -64,7 +68,10 @@ export default class StudentUI extends Component {
         />
       );
     } else {
-      componentToRender = <DisplayStudents students={this.props.students}/>;
+      componentToRender = <DisplayStudents
+        students={this.props.students}
+        editStudent={this.editStudent}
+      />;
     }
 
     return (

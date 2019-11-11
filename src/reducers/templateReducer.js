@@ -3,15 +3,7 @@ import { EditorState } from "draft-js";
 
 
 const initialState = {
-    listTemplates:  [
-        {
-            templateId: 3,
-            templateContent: 'Sime test',
-            templateSubject: 'happpy',
-            templateName: 'moving forward',
-            templateEditor: EditorState.createEmpty() || {}
-        }
-    ],
+    listTemplates:  [],
     currentTemplate: {
         templateId: 3,
         templateContent: '',

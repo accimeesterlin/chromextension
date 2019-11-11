@@ -11,6 +11,7 @@ import {
   Tutor,
   Home,
   Student,
+  EditStudent,
   Profile,
   Calendar,
   Email,
@@ -73,7 +74,8 @@ export class App extends Component {
           <Route path="/new/home" component={Home} />
           <Route exact path="/new/template" component={Template} />
           <Route exact path="/new/template/:id" component={TemplateEdit} />
-          <Route path="/new/student" component={Student} />
+          <Route exact path="/new/student" component={Student} />
+          <Route exact path="/new/student/:id" component={EditStudent} />
           <Route path="/new/profile" component={Profile} />
           <Route path="/new/calendar" component={Calendar} />
           <Route path="/new/email" component={Email} />
