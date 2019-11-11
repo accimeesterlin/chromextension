@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import propTypes from "prop-types";
 import {
   TextField,
@@ -9,11 +9,24 @@ import {
 } from "@material-ui/core";
 
 const AddStudent = props => {
+  const isEditMode = props.isEditMode;
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [githubUsername, setGithubUsername] = useState("");
   const [studentCode, setStudentCode] = useState("");
-  const [studentTimeZone, setStudenTimeZone] = useState("");
+  const [studentTimeZone, setStudentTimeZone] = useState("");
+  
+  if (isEditMode) {
+    const student = props.currentStudent;
+    useEffect(() => {
+      setName(student.name);
+      setEmail(student.email);
+      setGithubUsername(student.githubUsername);
+      setStudentCode(student.studentCode);
+      setStudentTimeZone(student.studentTimeZone);
+    }, [props.currentStudent]);
+  }
 
   const listTimeZone = [
     "Alaska",
@@ -26,7 +39,7 @@ const AddStudent = props => {
   ];
 
   const selectTimeZone = target => {
-    setStudenTimeZone(target.value);
+    setStudentTimeZone(target.value);
   };
 
   const submitStudent = event => {
@@ -41,12 +54,17 @@ const AddStudent = props => {
     props.submit(student);
     props.sendNotification('success', 'student added');
 
+    resetUserInputs();
+  };
+
+
+  const resetUserInputs = () => {
     // Reset values
     setName('');
     setEmail('');
     setGithubUsername('');
     setStudentCode('');
-    setStudenTimeZone('');
+    setStudentTimeZone('');
   };
 
   return (
@@ -113,16 +131,16 @@ const AddStudent = props => {
         onClick={submitStudent}
         color="primary"
       >
-        Add Student
+        { isEditMode ? 'Update student' : 'Add student' }
       </Button>
     </form>
   );
 };
 
 AddStudent.propTypes = {
-  subject: propTypes.string,
-  receiver: propTypes.string,
-  updateReceiverDetails: propTypes.func
+  submit: propTypes.func,
+  sendNotification: propTypes.func,
+  currentStudent: propTypes.object,
 };
 
 export default AddStudent;
