@@ -1,0 +1,43 @@
+{
+  "name": "Tutor Chrome Extension",
+  "version": "1.5.3",
+  "description": "Build a basic extension",
+  "manifest_version": 2,
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "declarativeContent",
+    "storage",
+    "identity"
+  ],
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "Tutor App",
+    "default_icon": "TutorAndStudents.png"
+  },
+  "content_scripts": [{
+    "matches": [
+      "http://*/*",
+      "https://*/*"
+    ],
+    "js": [
+      "moment.js",
+      "jquery.js",
+      "autoprefill.js"
+    ],
+    "run_at": "document_end"
+  }],
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  },
+  "oauth2": {
+    "client_id": "55846227385-4merd0kkh2siu5ivc6ksdc4l71bfdlv7.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar.readonly"
+    ]
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiQKnVtdb1HcwYBOw6k4uRoaGHAUjGkmXTngeeHjBptoE7yRyo3lC+GcKzt7veSy2LJemxVMdQINhZOa27qsp1NWM2ANZ4WM4jK59C9X0JDfpXu+yH3dxGa0YDr+CDSSvM+waYVio4mvNu8EXl7vi4vTa5IeX/IxluLsuaoqOJqjtS6M1SJuQzAgLOtA8b+wETEFKF4yLK5EXCFhTBK+FYzXPcmAxGUBYJvSO/zblUIFeT+keT0ndynq6CVK2nyOQNsVY9dW2Y2PMjEJqwjz6ZfJPyc1my99w26NPPjhXKGzNgsgysXqcunIAL4M89J38lRw3cbmjS9EGpwqUUMygDQIDAQAB"
+}
